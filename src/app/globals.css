@@ -1,0 +1,298 @@
+.catalog {
+  --swiper-theme-color: #007aff;
+  --swiper-navigation-size: 44px;
+  --fontDesign: "5ka Sans","Futura Futuris",sans-serif;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+  outline: none;
+  box-sizing: inherit;
+  margin-left: 8.33333%;
+  width: 83.33333%;
+  padding: 0 15px;
+}
+.product_list {
+  --swiper-theme-color: #007aff;
+  --swiper-navigation-size: 44px;
+  --fontDesign: "5ka Sans","Futura Futuris",sans-serif;
+  -webkit-font-smoothing: antialiased;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+  list-style: none;
+  outline: none;
+  box-sizing: inherit;
+  display: flex;
+  margin: 0 -10px;
+  flex-wrap: wrap;
+}
+.product_card_container {
+  --swiper-theme-color: #007aff;
+  --swiper-navigation-size: 44px;
+  --fontDesign: "5ka Sans","Futura Futuris",sans-serif;
+  -webkit-font-smoothing: antialiased;
+  list-style: none;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+  outline: none;
+  box-sizing: inherit;
+  margin: 0 10px 20px;
+  width: calc(33% - 20px);
+}
+.produt_card {
+  --swiper-theme-color: #007aff;
+  --swiper-navigation-size: 44px;
+  --fontDesign: "5ka Sans","Futura Futuris",sans-serif;
+  -webkit-font-smoothing: antialiased;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+  outline: none;
+  box-sizing: inherit;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--fontDesign);
+  cursor: pointer;
+  height: 100%;
+}
+.image-cont {
+  --swiper-theme-color: #007aff;
+  --swiper-navigation-size: 44px;
+  --fontDesign: "5ka Sans","Futura Futuris",sans-serif;
+  -webkit-font-smoothing: antialiased;
+  list-style: none;
+  cursor: pointer;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+  outline: none;
+  box-sizing: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  margin: 0 auto;
+  position: relative;
+  width: 140px;
+  height: 140px;
+}
+.discount-hint {
+  --swiper-theme-color: #007aff;
+  --swiper-navigation-size: 44px;
+  --fontDesign: "5ka Sans","Futura Futuris",sans-serif;
+  -webkit-font-smoothing: antialiased;
+  list-style: none;
+  cursor: pointer;
+  margin: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+  outline: none;
+  box-sizing: inherit;
+  padding: 8px 12px;
+  border-radius: 100px;
+  text-align: center;
+  font-weight: 900;
+  font-size: .875rem;
+  color: #fff;
+  position: absolute;
+  top: 4px;
+  left: 0;
+  background: #fea807;
+}
+.product_img {
+  --swiper-theme-color: #007aff;
+  --swiper-navigation-size: 44px;
+  --fontDesign: "5ka Sans","Futura Futuris",sans-serif;
+  -webkit-font-smoothing: antialiased;
+  list-style: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  vertical-align: baseline;
+  outline: none;
+  box-sizing: inherit;
+  height: auto;
+  border: 0;
+  max-height: 66.47727%;
+  max-width: 55.11364%;
+  mix-blend-mode: multiply;
+}
+.prices {
+  --swiper-theme-color: #007aff;
+  --swiper-navigation-size: 44px;
+  --fontDesign: "5ka Sans","Futura Futuris",sans-serif;
+  -webkit-font-smoothing: antialiased;
+  list-style: none;
+  cursor: pointer;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+  outline: none;
+  box-sizing: inherit;
+  background: #fff;
+  box-shadow: 0 4.74459px 11.8615px hsla(0,0%,39.6%,.1);
+  border-radius: 1000px;
+  padding: 8px 20px;
+  margin: -27px auto 8px;
+  transition: all .2s ease-out;
+  position: relative;
+}
+.price-discount {
+  --swiper-theme-color: #007aff;
+  --swiper-navigation-size: 44px;
+  --fontDesign: "5ka Sans","Futura Futuris",sans-serif;
+  -webkit-font-smoothing: antialiased;
+  list-style: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+  outline: none;
+  box-sizing: inherit;
+  font-size: 2rem;
+  line-height: 84%;
+  letter-spacing: -.96px;
+  font-weight: 900;
+  display: flex;
+  align-items: flex-end;
+  white-space: nowrap;
+}
+.from {
+  --swiper-theme-color: #007aff;
+  --swiper-navigation-size: 44px;
+  --fontDesign: "5ka Sans","Futura Futuris",sans-serif;
+  -webkit-font-smoothing: antialiased;
+  list-style: none;
+  cursor: pointer;
+  white-space: nowrap;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+  outline: none;
+  box-sizing: inherit;
+  font-weight: 900;
+  font-size: .75rem;
+  letter-spacing: -.48px;
+  line-height: 100%;
+}
+.price-right {
+  --swiper-theme-color: #007aff;
+  --swiper-navigation-size: 44px;
+  --fontDesign: "5ka Sans","Futura Futuris",sans-serif;
+  -webkit-font-smoothing: antialiased;
+  list-style: none;
+  cursor: pointer;
+  letter-spacing: -.96px;
+  white-space: nowrap;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+  outline: none;
+  box-sizing: inherit;
+  display: flex;
+  flex-direction: column;
+  margin-left: 4px;
+}
+.price-discount_cents {
+  --swiper-theme-color: #007aff;
+  --swiper-navigation-size: 44px;
+  --fontDesign: "5ka Sans","Futura Futuris",sans-serif;
+  -webkit-font-smoothing: antialiased;
+  list-style: none;
+  cursor: pointer;
+  white-space: nowrap;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+  outline: none;
+  box-sizing: inherit;
+  font-weight: 900;
+  font-size: .75rem;
+  letter-spacing: -.48px;
+  line-height: 100%;
+}
+.price-regular {
+  --swiper-theme-color: #007aff;
+  --swiper-navigation-size: 44px;
+  --fontDesign: "5ka Sans","Futura Futuris",sans-serif;
+  -webkit-font-smoothing: antialiased;
+  list-style: none;
+  cursor: pointer;
+  letter-spacing: -.96px;
+  white-space: nowrap;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+  outline: none;
+  box-sizing: inherit;
+  opacity: .4;
+  font-weight: 500;
+  font-size: .75rem;
+  line-height: 100%;
+  text-decoration: line-through;
+}
+.item-name {
+  --swiper-theme-color: #007aff;
+  --swiper-navigation-size: 44px;
+  --fontDesign: "5ka Sans","Futura Futuris",sans-serif;
+  -webkit-font-smoothing: antialiased;
+  list-style: none;
+  cursor: pointer;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+  outline: none;
+  box-sizing: inherit;
+  font-size: 1.125rem;
+  line-height: 122.22222%;
+  text-align: center;
+  margin: 0 auto 3px;
+  max-width: 177px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.item-date {
+  --swiper-theme-color: #007aff;
+  --swiper-navigation-size: 44px;
+  --fontDesign: "5ka Sans","Futura Futuris",sans-serif;
+  -webkit-font-smoothing: antialiased;
+  list-style: none;
+  cursor: pointer;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+  outline: none;
+  box-sizing: inherit;
+  display: flex;
+  align-items: center;
+  margin: auto auto 0;
+  font-size: .875rem;
+  font-weight: 500;
+  color: #b2b2b2;
+}
