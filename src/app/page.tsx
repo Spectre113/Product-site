@@ -21,7 +21,5 @@ export default function Index() {
             <Product currentPrice={500} measure={'руб.'} lastPrice={650} title='Онигири' weight='450 гр.' imgSrc={onigiri}/>
             <Product currentPrice={500} measure={'руб.'} lastPrice={650} title='Онигири' weight='450 гр.' imgSrc={onigiri}/>
         </div>
-        {/* 
-        <div>Show more</div> */}
     </div>
 }
