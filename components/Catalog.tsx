@@ -1,6 +1,7 @@
-import Product from "./Product"
-import '../styles/catalog.css'
-import onigiri from '../img/Onigiri.jpeg'
+
+import '../src/css/catalog.css'
+import onigiri from '../src/img/Onigiri.jpeg'
+import Product from './Product'
 
 export default function Index() {
     return <div className="catalog">
