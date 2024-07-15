@@ -240,3 +240,42 @@ h1, h2, h3, p {
     font-size: 24px;
     line-height: 150%;
 }
+
+
+.combo-section {
+    background-color: #222;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.combo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.item {
+    text-align: center;
+}
+
+.item img {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+}
+
+.item p {
+    margin-top: 10px;
+}
+
+.plus, .equals {
+    font-size: 24px;
+    margin: 0 10px;
+	color: white;
+
+}
+
+
+
+

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+// import
 
 const Header: React.FC = () => {
     return (
@@ -25,7 +26,7 @@ const Header: React.FC = () => {
                             </a>
                         </li>
                         <li className="header__item">
-                            <a href="" className="header__link">
+                            <a href="/combo" className="header__link">
                                 Combo 
                             </a>
                         </li>
