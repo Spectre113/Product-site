@@ -8,8 +8,10 @@ const Footer: React.FC = () => {
         <footer className='footer'>
             <div className="container flex">
                 <div className="footer__logo">
-                    <a href="#" className="footer__logo-link">
-                    </a>
+                    <Link href="/" legacyBehavior>
+                        <a href="#" className="footer__logo-link">
+                        </a>
+                    </Link>
                 </div>
                 <div className="footer__social-block">
                     <ul className="footer__social-list list-reset flex">

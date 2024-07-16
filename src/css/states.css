@@ -2,6 +2,7 @@
 	--white: #fff;
 	--black: #000;
 	--l_black: #292E39;
+    --s_black: #1F1C1C;
 	--primary: #6D31EE;
 	--primary_shade: #4F28A5;
 	--primary_light: #AA9DFA;
@@ -47,9 +48,9 @@
     color: var(--primary_shade);
 }
 
-.header__link:hover:focus {
+/* .header__link:hover:focus {
     color: var(--white);
-}
+} */
 
 .header__search>svg>path {
     transition: stroke 0.3s ease-in-out;
@@ -288,4 +289,15 @@
     fill: var(--primary_shade);
 }
 
-/* apanel */
+/* Apanel */
+
+/* Products */
+
+.choices__inner:hover {
+    background-color: var(--s_black);
+    transition: background-color 0.5s ease;
+}
+
+.catalog__item>div:focus {
+    outline: none;
+}

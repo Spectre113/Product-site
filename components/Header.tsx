@@ -113,31 +113,41 @@ const Header: React.FC = () => {
         <header className="header">
             <div className="container flex">
                 <div className="header__logo">
-                    <a href="#" className="header__logo-link">
+                    <Link href="/" legacyBehavior>
+                        <a href="#" className="header__logo-link">
 
-                    </a>
+                        </a>
+                    </Link>
                 </div>
                 <nav className="header__nav">
                     <ul className="header__list list-reset flex">
                         <li className="header__item">
-                            <a href="" className="header__link">
-                                About-us
-                            </a>
+                            <Link href="/about" legacyBehavior>
+                                <a href="" className="header__link">
+                                    About-us
+                                </a>
+                            </Link>
                         </li>
                         <li className="header__item">
-                            <a href="" className="header__link">
-                                Products
-                            </a>
+                            <Link href="/products" legacyBehavior>
+                                <a href="" className="header__link">
+                                    Products
+                                </a>
+                            </Link>
                         </li>
                         <li className="header__item">
-                            <a href="" className="header__link">
-                                Combo 
-                            </a>
+                            <Link href="/combo" legacyBehavior>
+                                <a href="" className="header__link">
+                                    Combo 
+                                </a>
+                            </Link>
                         </li>
                         <li className="header__item">
-                            <a href="" className="header__link">
-                                Newsletter
-                            </a>
+                            <Link href="/news" legacyBehavior>
+                                <a href="" className="header__link">
+                                    Newsletter
+                                </a>
+                            </Link>
                         </li>
                     </ul>
                 </nav>
