@@ -15,7 +15,7 @@ const Header: React.FC = () => {
                 <nav className="header__nav">
                     <ul className="header__list list-reset flex">
                         <li className="header__item">
-                            <a href="" className="header__link">
+                            <a href="/about" className="header__link">
                                 About-us
                             </a>
                         </li>
