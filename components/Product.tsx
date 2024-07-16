@@ -3,6 +3,8 @@ import React, {useEffect, useState} from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props'
+import '../src/css/states.css';
+
 
 interface ProductProps {
     currentPrice: number,

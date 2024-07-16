@@ -10,6 +10,8 @@
 	--gray: #A1A6B4;
 	--s_gray: #D2D5DD;
 	--red: #FF0000;
+    --yellow: #F0D288;
+    --yellow_dark: #BB973E;
 }
 
 /* Header */
@@ -291,8 +293,71 @@
 
 /* Apanel */
 
-/* Products */
+/* Catalog */
+.catalog__item-btn {
+    transition: all 0.3s ease-in-out;
+}
+
+.catalog__item-btn:hover {
+    background-color: var(--primary_light);
+    border-color: var(--black);
+    
+}
+
+.catalog__item-btn:hover svg path {
+    stroke: var(--black);
+    
+}
+
+.catalog__item-btn:focus {
+    outline: 3px solid var(--primary);
+}
+
+.catalog__item-btn:active {
+    background-color: var(--primary_shade);
+}
+
+
+
 
 .catalog__item>div:focus {
     outline: none;
+}
+
+/*Newsletter*/
+
+.newsletter__btn:hover {
+    border: var(--yellow) 0.1rem solid;
+    background: var(--yellow);
+    color: var(--l_black);
+    cursor: pointer;
+}
+
+.newsletter__btn:focus {
+    outline: 3px solid #a58f69;
+}
+
+.newsletter__btn:active {
+    background: var(--yellow_dark);
+    color: var(--yellow);
+    border: none;
+}
+
+/*About*/
+.about__contact-copy {
+    transition: all 0.3s ease-in-out;
+}
+
+.about__contact-copy:hover {
+    background: var(--s_gray);
+    color: var(--white);
+}
+
+.about__contact-copy:focus {
+    outline: 3px solid var(--gray);
+}
+
+.about__contact-copy:active {
+    background: var(--gray);
+    
 }
