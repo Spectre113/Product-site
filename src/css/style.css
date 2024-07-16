@@ -854,3 +854,32 @@ a, a:focus, a:visited {
 [class*="zoom"], [class*="copyrights"], [class*="control_toolbar"] {
 	display: none !important;
 }
+
+.about__why-info {
+	margin-bottom: 30px;
+}
+
+.swiper-slide {
+	position: relative;
+	height: 300px;
+}
+
+#swiper-slide-1 {
+	background: url(../img/burgers.jpg);
+	background-size: cover;
+}
+
+#swiper-slide-2 {
+	background: url(../img/giros.jpg);
+	background-size: cover;
+}
+
+#swiper-slide-3 {
+	background: url(../img/sushi.jpg);
+	background-size: cover;
+}
+
+#swiper-slide-4 {
+	background: url(../img/mexican.jpg);
+	background-size: cover;
+}

@@ -6,6 +6,7 @@ import WhyWe from './AboutComponents/WhyWe';
 import Contacts from './AboutComponents/Contacts';
 import Location from './AboutComponents/Location';
 import Assortment from './AboutComponents/Assortment';
+import Swiper from 'swiper';
 
 type AboutCategories = 'Why we?' | 'option1' | 'option2' | 'option3';
 

@@ -1,49 +1,27 @@
-"use client";
 import React, { useEffect } from 'react';
-import Swiper from 'swiper';
-
-interface SwiperInstance {
-  realIndex: number;
-  params: {
-    slidesPerGroup: number;
-  };
-  slides: {
-    length: number;
-  };
-  loopedSlides: number;
-}
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
 
 const Assortment: React.FC = () => {
-    useEffect(() => {
-        new Swiper('.swiper', {
-          slidesPerView: 2,
-          centeredSlides: false,
-          slidesPerGroup: 2,
-          grabCursor: true,
-          keyboard: {
-            enabled: true,
-          },
-          loop: true,
-          spaceBetween: 50,
-          navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-          },
-          autoplay: {
-            delay: 10000,
-            disableOnInteraction: false,
-          },
-        });
-
-      }, []);
 
     return (
         <div className="about__assortment-block">
             <p className='about__why-info'>
-                Our fast food menu boasts a&nbsp;wide variety of&nbsp;delicious items, ranging from shawarma and sushi to&nbsp;burgers and gyros.
+                Our fast food menu boasts a&nbsp;wide variety of&nbsp;delicious items, ranging from shawarma and sushi to&nbsp;burgers and gyros. For more datails go to "Products" page!
             </p>
-
-            
+            <Swiper
+                modules={[Autoplay]}
+                spaceBetween={50}
+                slidesPerView={2}
+                autoplay={{ delay: 5000 }}
+                onSlideChange={() => console.log('slide change')}
+                onSwiper={(swiper) => console.log(swiper)}
+                >
+                <SwiperSlide id='swiper-slide-1'></SwiperSlide>
+                <SwiperSlide id='swiper-slide-2'></SwiperSlide>
+                <SwiperSlide id='swiper-slide-3'></SwiperSlide>
+                <SwiperSlide id='swiper-slide-4'></SwiperSlide>
+            </Swiper>    
         </div>
     );
 };
