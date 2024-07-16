@@ -1,0 +1,298 @@
+:root {
+	--white: #fff;
+	--black: #000;
+	--l_black: #292E39;
+    --s_black: #1F1C1C;
+	--primary: #6D31EE;
+	--primary_shade: #4F28A5;
+	--primary_light: #AA9DFA;
+	--light: #E6E8EC;
+	--gray: #A1A6B4;
+	--s_gray: #D2D5DD;
+	--red: #FF0000;
+}
+
+/* Header */
+
+.header__logo-link {
+    transition: outline-color 0.3s ease-in-out;
+}
+
+.header__logo-link:hover {
+    outline-color: var(--primary);
+}
+
+.header__logo-link:focus {
+    outline-color: var(--primary_light);
+}
+
+.header__logo-link:active {
+    outline-color: var(--primary_shade);
+}
+
+.header__link {
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.header__link:hover {
+    color: var(--primary);
+}
+
+.header__link:focus {
+    outline: none;
+    background-color: var(--primary_light);
+    color: var(--white);
+}
+
+.header__link:active {
+    color: var(--primary_shade);
+}
+
+/* .header__link:hover:focus {
+    color: var(--white);
+} */
+
+.header__search>svg>path {
+    transition: stroke 0.3s ease-in-out;
+}
+
+.header__search:hover>svg>path {
+    stroke: var(--primary);
+}
+
+.header__search:focus {
+    outline: none;
+}
+
+.header__search:focus>svg>path {
+    stroke: var(--primary_light);
+}
+
+.header__search:active>svg>path {
+    stroke: var(--primary_shade);
+}
+
+.header__log {
+    transition: border-color 0.3s ease-in-out;
+}
+
+.header__log>svg>path {
+    transition: stroke 0.3s ease-in-out;
+}
+
+.header__log>span {
+    transition: color 0.3s ease-in-out;
+}
+
+.header__log:hover {
+    border-color: var(--black);
+}
+
+.header__log:hover>svg>path {
+    stroke: var(--primary);
+}
+
+.header__log:hover>span {
+    color: var(--primary);
+}
+
+.header__log:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.header__log:focus>svg>path {
+    stroke: var(--primary_light);
+}
+
+.header__log:focus>span {
+    color: var(--primary_light);
+}
+
+.header__log:active {
+    outline: none;
+    border-color: var(--primary_light);
+}
+
+.header__log:active>svg>path {
+    stroke: var(--primary_shade);
+}
+
+.header__log:active>span {
+    color: var(--primary_shade);
+}
+
+.header__basket>svg {
+    transition: fill 0.3s ease-in-out;
+}
+
+.header__basket:focus {
+    outline: none;
+}
+
+.header__basket:hover>svg {
+    fill: var(--primary);
+}
+
+.header__basket:focus>svg {
+    fill: var(--primary_light);
+}
+
+.header__basket:active>svg {
+    fill: var(--primary_shade);
+}
+
+.header__search-button>svg>path {
+    transition: stroke 0.3s ease-in-out;
+}
+
+.header__search-button:hover>svg>path {
+    stroke: var(--primary);
+}
+
+.header__search-button:focus {
+    outline: none;
+}
+
+.header__search-button:focus>svg>path {
+    stroke: var(--primary_light);
+}
+
+.header__search-button:active>svg>path {
+    stroke: var(--primary_shade);
+}
+
+.header__log-close>svg>circle {
+	transition: stroke 0.3s ease-in-out;
+}
+
+.header__log-close>svg>path {
+	transition: stroke 0.3s ease-in-out;
+}
+
+.header__log-close:hover>svg>circle,
+.header__log-close:hover>svg>path {
+	stroke: var(--primary);
+}
+
+.header__log-close:focus>svg>circle,
+.header__log-close:focus>svg>path {
+	stroke: var(--primary_light);
+	outline: none;
+}
+
+.header__log-close:active>svg>circle,
+.header__log-close:active>svg>path {
+	stroke: var(--primary_shade);
+}
+
+.header__log-info>a {
+	transition: color 0.3s ease-in-out;
+}
+
+.header__log-info>a:hover {
+	color: var(--primary_light);
+	transition: color 0.3s ease-in-out;
+}
+
+.header__log-info>a:focus {
+	color: var(--primary_light);
+	outline: none;
+	transition: color 0.3s ease-in-out;
+}
+
+.header__log-info>a:active {
+	color: var(--primary_shade);
+	transition: color 0.3s ease-in-out;
+}
+
+.header__log-input {
+	transition: background-color 0.3s ease-in-out;
+}
+
+.header__log-input:hover {
+	background-color: var(--white);
+}
+
+.header__log-input:focus {
+	background-color: var(--light);
+	outline: none;
+}
+
+.header__log-input:active {
+	background-color: var(--white);
+}
+.header__log-button {
+	transition: background-color 0.3s ease-in-out;
+}
+
+.header__log-button:hover {
+	background-color: var(--primary_light);
+}
+
+.header__log-button:focus {
+	background-color: var(--primary_light);
+}
+
+.header__log-button:active {
+	background-color: var(--primary_shade);
+}
+
+/* Footer */
+
+.footer__logo-link {
+    transition: outline-color 0.3s ease-in-out;
+}
+
+.footer__logo-link:hover {
+    outline-color: var(--primary);
+}
+
+.footer__logo-link:focus {
+    outline-color: var(--primary_light);
+}
+
+.footer__logo-link:active {
+    outline-color: var(--primary_shade);
+}
+
+.footer__social-link {
+    transition: outline 0.3s ease-in-out;
+}
+
+.footer__social-link>svg>path {
+    transition: fill 0.3s ease-in-out;
+}
+
+.footer__social-link:hover {
+    outline: none;
+}
+
+.footer__social-link:hover>svg>path {
+    fill: var(--primary);
+}
+
+.footer__social-link:focus {
+    outline: 1px solid var(--primary);
+    outline-offset: 10px;
+}
+
+.footer__social-link:focus>svg>path {
+    fill: var(--white);
+}
+
+.footer__social-link:active {
+    outline: none;
+}
+
+.footer__social-link:active>svg>path {
+    fill: var(--primary_shade);
+}
+
+/* Apanel */
+
+/* Products */
+
+.catalog__item>div:focus {
+    outline: none;
+}

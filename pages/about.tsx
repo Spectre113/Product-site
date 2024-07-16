@@ -1,12 +1,10 @@
 import Layout from '../components/Layout';
-import Hero from '../components/Hero';
-import About from "@/components/About";
+import About from '../components/About';
 
-const Home = () => (
+const AboutPage = () => (
     <Layout>
-        <Hero />
         <About />
     </Layout>
 );
 
-export default Home;
+export default AboutPage;
