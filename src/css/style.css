@@ -240,3 +240,36 @@ h1, h2, h3, p {
     font-size: 24px;
     line-height: 150%;
 }
+
+.content {
+	padding: 20px;
+}
+.header {
+	font-size: 36px;
+	font-weight: bold;
+}
+.dropdown {
+	margin-top: 20px;
+	font-size: 16px;
+	padding: 10px;
+}
+.text {
+	margin-top: 20px;
+	font-size: 16px;
+	max-width: 400px;
+
+	margin-right: auto;
+}
+.fh {
+	text-align: center;
+	padding: 10px;
+	font-size: 12px;
+	background-color: #f1f1f1;
+}
+.abouth {
+	margin-top: 20px;
+	font-size: 40px;
+
+	font-weight: bold
+
+}
