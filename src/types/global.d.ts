@@ -3,15 +3,20 @@ declare module 'just-validate' {
     export default JustValidate;
 }
 
-declare module 'react-modal' {
-    const Modal: any;
-    export default Modal;
-}
-
 declare module 'choices.js' {
     const Choices: any;
     export default Choices;
 }
 
+declare module 'swiper' {
+    const Swiper: any;
+    export default Swiper;
+}
+
+interface Window {
+    ymaps: any;
+}
+
 declare const JustValidate: any;
 declare const Choices: any;
+declare const Swiper: any;

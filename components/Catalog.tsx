@@ -53,8 +53,8 @@ const Catalog: React.FC = () => {
     useEffect(() => {
         const mySelect = new Choices('#my-select', {
             shouldSort: false,
-            // value: 'option1', Fix required
         });
+        
     }, []);
 
     return (
@@ -69,7 +69,7 @@ const Catalog: React.FC = () => {
                     </p>
                     <div className="catalog__select">
                         <select id="my-select" className="my-select" value={selectedOption} onChange={handleChange}>
-                        <option value="Everything" selected>Everything</option>
+                        <option value="Everything">Everything</option>
                         <option value="option1">Sause</option>
                         <option value="option2">Giros</option>
                         <option value="option3">Salat</option>

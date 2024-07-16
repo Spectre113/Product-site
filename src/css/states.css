@@ -293,11 +293,6 @@
 
 /* Products */
 
-.choices__inner:hover {
-    background-color: var(--s_black);
-    transition: background-color 0.5s ease;
-}
-
 .catalog__item>div:focus {
     outline: none;
 }
