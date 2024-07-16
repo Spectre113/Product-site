@@ -2,19 +2,20 @@ import Image from 'next/image'
 
 import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 
-interface ProductProps {
-    currentPrice: number,
+export interface ProductProps {
+    category: string | undefined
+    currentPrice: string,
     measure: string,
-    lastPrice: number | undefined,
+    lastPrice: string | undefined,
     title: string,
     weight: string,
-    imgSrc: string | StaticImport
+    image: string | StaticImport
 }
 
 export default function Product(props: ProductProps) {
     return <div className="catalog_card">
         <div>
-            <Image src={props.imgSrc} alt={'company logo'} width={270} height={250} className='catalog_product-img'/>
+            <Image src={props.image} alt={'company logo'} width={270} height={250} className='catalog_product-img'/>
         </div>
         <div className='catalog_price-block'>
             <p className='catalog_real-price'>
