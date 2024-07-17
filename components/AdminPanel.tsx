@@ -174,20 +174,94 @@ const AdminPanel: React.FC = () => {
                     <Modal.Title>Add Item</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={onSubmit} className='flex'>
-                        <input onChange={(e) => setCategory(e.target.value)} name='category' type='text' />
-                        <input onChange={(e) => setCurrentPrice(e.target.value)} name='currentPrice' type='text' />
-                        <input onChange={(e) => setMeasure(e.target.value)} name='measure' type='text' />
-                        <input onChange={(e) => setLastPrice(e.target.value)} name='lastPrice' type='text' />
-                        <input onChange={(e) => setTitle(e.target.value)} name='title' type='text' />
-                        <input onChange={(e) => setWeight(e.target.value)} name='weight' type='text' />
-                        <input onChange={(e) => setImage(e.target.value)} name='image' type='text' />
-                        <input
-                            type="file"
-                            name="file"
-                            onChange={(e) => setFile(e.target.files?.[0])}
+                <Form onSubmit={onSubmit} className='d-flex flex-column'>
+                    <Form.Group controlId='category'>
+                        <Form.Label>Category</Form.Label>
+                        <Form.Control
+                        type='text'
+                        placeholder='Enter category'
+                        onChange={(e) => setCategory(e.target.value)}
+                        name='category'
                         />
-                        <Button type="submit">Add</Button>
+                    </Form.Group>
+
+                    <Form.Group controlId='currentPrice'>
+                        <Form.Label>Current Price</Form.Label>
+                        <Form.Control
+                        type='text'
+                        placeholder='Enter current price'
+                        onChange={(e) => setCurrentPrice(e.target.value)}
+                        name='currentPrice'
+                        />
+                    </Form.Group>
+
+                    <Form.Group controlId='measure'>
+                        <Form.Label>Measure</Form.Label>
+                        <Form.Control
+                        type='text'
+                        placeholder='Enter measure'
+                        onChange={(e) => setMeasure(e.target.value)}
+                        name='measure'
+                        />
+                    </Form.Group>
+
+                    <Form.Group controlId='lastPrice'>
+                        <Form.Label>Last Price</Form.Label>
+                        <Form.Control
+                        type='text'
+                        placeholder='Enter last price'
+                        onChange={(e) => setLastPrice(e.target.value)}
+                        name='lastPrice'
+                        />
+                    </Form.Group>
+
+                    <Form.Group controlId='title'>
+                        <Form.Label>Title</Form.Label>
+                        <Form.Control
+                        type='text'
+                        placeholder='Enter title'
+                        onChange={(e) => setTitle(e.target.value)}
+                        name='title'
+                        />
+                    </Form.Group>
+
+                    <Form.Group controlId='weight'>
+                        <Form.Label>Weight</Form.Label>
+                        <Form.Control
+                        type='text'
+                        placeholder='Enter weight'
+                        onChange={(e) => setWeight(e.target.value)}
+                        name='weight'
+                        />
+                    </Form.Group>
+
+                    <Form.Group controlId='image'>
+                        <Form.Label>Image</Form.Label>
+                        <Form.Control
+                        type='text'
+                        placeholder='Enter image URL'
+                        onChange={(e) => setImage(e.target.value)}
+                        name='image'
+                        />
+                    </Form.Group>
+
+                    <Form.Group controlId='file'>
+                        <Form.Label>File</Form.Label>
+                        <Form.Control
+                        type='file'
+                        name='file'
+                        onChange={(e) => {
+                            const target = e.target as HTMLInputElement;
+                            if (target.files) {
+                            setFile(target.files[0]);
+                            }
+                        }}
+                        />
+                    </Form.Group>
+
+                    <Button variant='primary' type='submit'>
+                        Add
+                    </Button>
                     </Form>
                 </Modal.Body>
             </Modal>

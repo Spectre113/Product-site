@@ -762,9 +762,9 @@ a, a:focus, a:visited {
 	color: var(--black);
 }
 
-.modal-body>form>div {
+/* .modal-body>form>div {
 	margin-bottom: 20px;
-}
+} */
 
 .modal-title {
 	font-size: 30px;
@@ -784,16 +784,6 @@ a, a:focus, a:visited {
 
 .form-label {
 	padding-left: .75rem;
-}
-
-.modal-body>.flex {
-	width: 250px;
-	flex-direction: column;
-}
-
-.modal-body>.flex>input {
-	margin-bottom: 30px;
-	border: 1px solid var(--black);
 }
 
 /* About */
