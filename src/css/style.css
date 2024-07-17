@@ -786,6 +786,16 @@ a, a:focus, a:visited {
 	padding-left: .75rem;
 }
 
+.modal-body>.flex {
+	width: 250px;
+	flex-direction: column;
+}
+
+.modal-body>.flex>input {
+	margin-bottom: 30px;
+	border: 1px solid var(--black);
+}
+
 /* About */
 
 .about {
@@ -882,5 +892,4 @@ a, a:focus, a:visited {
 #swiper-slide-4 {
 	background: url(../img/mexican.jpg);
 	background-size: cover;
-
 }

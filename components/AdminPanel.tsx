@@ -174,7 +174,7 @@ const AdminPanel: React.FC = () => {
                     <Modal.Title>Add Item</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={onSubmit}>
+                    <Form onSubmit={onSubmit} className='flex'>
                         <input onChange={(e) => setCategory(e.target.value)} name='category' type='text' />
                         <input onChange={(e) => setCurrentPrice(e.target.value)} name='currentPrice' type='text' />
                         <input onChange={(e) => setMeasure(e.target.value)} name='measure' type='text' />
