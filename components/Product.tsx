@@ -4,13 +4,14 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 
-interface ProductProps {
+export interface ProductProps {
+    category: string | undefined,
     currentPrice: number,
     measure: string,
     lastPrice: number | undefined,
     title: string,
     weight: string,
-    imgSrc: string | StaticImport
+    image: string | StaticImport
 }
 
 const Product: React.FC<ProductProps> = (props) => {
@@ -20,7 +21,8 @@ const Product: React.FC<ProductProps> = (props) => {
     return (
         <li className="catalog__item col-lg-6 col-md-6 col-sm-12 col-xl-4">
             <div className='catalog__item-block' tabIndex={0} onClick={handleShow}>
-                <Image src={props.imgSrc} alt={props.title} width={270} height={250} className='catalog_product-img' />
+                <Image src={props.image
+                } alt={props.title} width={270} height={250} className='catalog_product-img' />
                 <div>
                     <h3 className="catalog__item-title">
                         {props.title}

@@ -16,6 +16,47 @@ interface Item {
 }
 
 const AdminPanel: React.FC = () => {
+    const [file, setFile] = useState<File>()
+    const [category, setCategory] = useState<string>()
+    const [measure, setMeasure] = useState<string>()
+    const [lastPrice, setLastPrice] = useState<string>()
+    const [currentPrice, setCurrentPrice] = useState<string>()
+    const [title, setTitle] = useState<string>()
+    const [weight, setWeight] = useState<string>()
+    const [image, setImage] = useState<string>()
+    const [products, setProducts] = useState<any[]>([])
+
+
+
+    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        if (!file) return
+        try {
+            const data = new FormData()
+            data.set('file', file)
+            data.set('category', category as string)
+            data.set('currentPrice', currentPrice as string)
+            data.set('measure', measure as string)
+            data.set('lastPrice', lastPrice as string)
+            data.set('title', title as string)
+            data.set('weight', weight as string)
+            data.set('image', image as string)
+
+
+            const res = await fetch('/api/upload', {
+                method: 'POST',
+                body: data
+            })
+            // handle the error
+            if (!res.ok) throw new Error(await res.text())
+            setProducts(await res.json())
+        } catch (e: any) {
+            // Handle errors here
+            console.error(e)
+        }
+    }
+    console.log(products)
+
     const [items, setItems] = useState<Item[]>([]);
     const [isAdditionalInfoModalOpen, setIsAdditionalInfoModalOpen] = useState(false);
     const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] = useState(false);
@@ -23,13 +64,6 @@ const AdminPanel: React.FC = () => {
     const [selectedItem, setSelectedItem] = useState<Item | null>(null);
 
     const { register, handleSubmit, reset } = useForm<Item>();
-
-    useEffect(() => {
-        setItems([
-            { id: 1, category: "Category 1", currentPrice: 100, measure: "g", lastPrice: 120, title: "Item 1", weight: "500g", imgSrc: "https://via.placeholder.com/150" },
-            { id: 2, category: "Category 2", currentPrice: 200, measure: "g", lastPrice: 220, title: "Item 2", weight: "1000g", imgSrc: "https://via.placeholder.com/150" },
-        ]);
-    }, []);
 
     const handleAddItem = (data: Item) => {
         const newItem = { ...data, id: items.length + 1 };
@@ -50,12 +84,12 @@ const AdminPanel: React.FC = () => {
     const openAdditionalInfoModal = (item: Item) => {
         setSelectedItem(item);
         setIsAdditionalInfoModalOpen(true);
-      };
-    
-      const openDeleteConfirmModal = (item: Item) => {
+    };
+
+    const openDeleteConfirmModal = (item: Item) => {
         setSelectedItem(item);
         setIsDeleteConfirmModalOpen(true);
-      };
+    };
 
     return (
         <section className="apanel">
@@ -95,82 +129,66 @@ const AdminPanel: React.FC = () => {
             {/* Additional Info Modal */}
             <Modal show={isAdditionalInfoModalOpen} onHide={() => setIsAdditionalInfoModalOpen(false)}>
                 <Modal.Header closeButton>
-                <Modal.Title>Additional Info</Modal.Title>
+                    <Modal.Title>Additional Info</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                {selectedItem && (
-                    <div>
-                        <img src={selectedItem.imgSrc} alt={selectedItem.title} className="img-fluid" />
-                        <p>Category: {selectedItem.category}</p>
-                        <p>Current Price: {selectedItem.currentPrice}</p>
-                        <p>Measure: {selectedItem.measure}</p>
-                        <p>Last Price: {selectedItem.lastPrice}</p>
-                        <p>Weight: {selectedItem.weight}</p>
-                    </div>
-                )}
+                    {selectedItem && (
+                        <div>
+                            <img src={selectedItem.imgSrc} alt={selectedItem.title} className="img-fluid" />
+                            <p>Category: {selectedItem.category}</p>
+                            <p>Current Price: {selectedItem.currentPrice}</p>
+                            <p>Measure: {selectedItem.measure}</p>
+                            <p>Last Price: {selectedItem.lastPrice}</p>
+                            <p>Weight: {selectedItem.weight}</p>
+                        </div>
+                    )}
                 </Modal.Body>
                 <Modal.Footer>
-                <Button variant="secondary" onClick={() => setIsAdditionalInfoModalOpen(false)}>
-                    Close
-                </Button>
+                    <Button variant="secondary" onClick={() => setIsAdditionalInfoModalOpen(false)}>
+                        Close
+                    </Button>
                 </Modal.Footer>
             </Modal>
 
             {/* Delete Confirm Modal */}
             <Modal show={isDeleteConfirmModalOpen} onHide={() => setIsDeleteConfirmModalOpen(false)}>
                 <Modal.Header closeButton>
-                <Modal.Title>Confirm Deletion</Modal.Title>
+                    <Modal.Title>Confirm Deletion</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <p>Are you sure you want to delete this item?</p>
                 </Modal.Body>
                 <Modal.Footer>
-                <Button variant="danger" onClick={() => handleDeleteItem(selectedItem?.id ?? 0)}>
-                    Yes
-                </Button>
-                <Button variant="secondary" onClick={() => setIsDeleteConfirmModalOpen(false)}>
-                    No
-                </Button>
+                    <Button variant="danger" onClick={() => handleDeleteItem(selectedItem?.id ?? 0)}>
+                        Yes
+                    </Button>
+                    <Button variant="secondary" onClick={() => setIsDeleteConfirmModalOpen(false)}>
+                        No
+                    </Button>
                 </Modal.Footer>
             </Modal>
 
             {/* Add Item Modal */}
             <Modal show={isAddItemModalOpen} onHide={() => setIsAddItemModalOpen(false)}>
                 <Modal.Header closeButton>
-                <Modal.Title>Add Item</Modal.Title>
+                    <Modal.Title>Add Item</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                <Form onSubmit={handleSubmit(handleAddItem)}>
-                    <Form.Group>
-                    <Form.Label>Category</Form.Label>
-                    <Form.Control {...register("category")} placeholder="Category" />
-                    </Form.Group>
-                    <Form.Group>
-                    <Form.Label>Current Price</Form.Label>
-                    <Form.Control {...register("currentPrice", { valueAsNumber: true })} placeholder="Current Price" type="number" />
-                    </Form.Group>
-                    <Form.Group>
-                    <Form.Label>Measure</Form.Label>
-                    <Form.Control {...register("measure")} placeholder="Measure" />
-                    </Form.Group>
-                    <Form.Group>
-                    <Form.Label>Last Price</Form.Label>
-                    <Form.Control {...register("lastPrice", { valueAsNumber: true })} placeholder="Last Price" type="number" />
-                    </Form.Group>
-                    <Form.Group>
-                    <Form.Label>Title</Form.Label>
-                    <Form.Control {...register("title")} placeholder="Title" />
-                    </Form.Group>
-                    <Form.Group>
-                    <Form.Label>Weight</Form.Label>
-                    <Form.Control {...register("weight")} placeholder="Weight" />
-                    </Form.Group>
-                    <Form.Group>
-                    <Form.Label>Image URL</Form.Label>
-                    <Form.Control {...register("imgSrc")} placeholder="Image URL" />
-                    </Form.Group>
-                    <Button type="submit">Add</Button>
-                </Form>
+                    <Form onSubmit={onSubmit}>
+                        <input onChange={(e) => setCategory(e.target.value)} name='category' type='text' />
+                        <input onChange={(e) => setCurrentPrice(e.target.value)} name='currentPrice' type='text' />
+                        <input onChange={(e) => setMeasure(e.target.value)} name='measure' type='text' />
+                        <input onChange={(e) => setLastPrice(e.target.value)} name='lastPrice' type='text' />
+                        <input onChange={(e) => setTitle(e.target.value)} name='title' type='text' />
+                        <input onChange={(e) => setWeight(e.target.value)} name='weight' type='text' />
+                        <input onChange={(e) => setImage(e.target.value)} name='image' type='text' />
+                        <input
+                            type="file"
+                            name="file"
+                            onChange={(e) => setFile(e.target.files?.[0])}
+                        />
+                        <Button type="submit">Add</Button>
+                    </Form>
                 </Modal.Body>
             </Modal>
         </section>
