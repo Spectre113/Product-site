@@ -49,7 +49,7 @@ const AdminPanel: React.FC = () => {
             })
             // handle the error
             if (!res.ok) throw new Error(await res.text())
-            setProducts(await res.json())
+            setItems(await res.json())
         } catch (e: any) {
             // Handle errors here
             console.error(e)
@@ -62,6 +62,12 @@ const AdminPanel: React.FC = () => {
     const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] = useState(false);
     const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+    useEffect(() => {
+        fetch('/api/upload', {
+            method: 'GET',
+        }).then(resp => resp.json())
+            .then(resp => setItems(resp))
+    }, [])
 
     const { register, handleSubmit, reset } = useForm<Item>();
 
@@ -79,6 +85,15 @@ const AdminPanel: React.FC = () => {
     const handleDeleteItem = (id: number) => {
         setItems(items.filter(item => item.id !== id));
         setIsDeleteConfirmModalOpen(false);
+        const data = new FormData()
+        data.set('id', `${id}`)
+        fetch('/api/upload', {
+            method: 'DELETE',
+            body: data
+        }).then(resp => resp.json())
+            .then(resp => {
+                setItems(resp)
+            })
     };
 
     const openAdditionalInfoModal = (item: Item) => {
@@ -159,7 +174,9 @@ const AdminPanel: React.FC = () => {
                     <p>Are you sure you want to delete this item?</p>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="danger" onClick={() => handleDeleteItem(selectedItem?.id ?? 0)}>
+                    <Button variant="danger" onClick={() => {
+                        handleDeleteItem(selectedItem?.id ?? 0)
+                    }}>
                         Yes
                     </Button>
                     <Button variant="secondary" onClick={() => setIsDeleteConfirmModalOpen(false)}>
@@ -187,7 +204,14 @@ const AdminPanel: React.FC = () => {
                             name="file"
                             onChange={(e) => setFile(e.target.files?.[0])}
                         />
-                        <Button type="submit">Add</Button>
+                        <Button type="submit" onClick={() => {
+                            fetch('/api/upload', {
+                                method: 'GET',
+                            }).then(resp => resp.json())
+                                .then(resp => {
+                                    setItems(resp)
+                                })
+                        }}>Add</Button>
                     </Form>
                 </Modal.Body>
             </Modal>

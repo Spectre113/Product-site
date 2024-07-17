@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import path from 'path'
 import fs from 'fs'
 
-export const globalProducts: any[] = []
+export let globalProducts: any[] = []
 
 export async function POST(request: NextRequest) {
   const data = await request.formData()
@@ -36,11 +36,18 @@ export async function POST(request: NextRequest) {
 
   console.log(`open ${filePath} to see the uploaded file`)
   console.log(filePath)
-  globalProducts.push({ title, measure, image: fileName, lastPrice, weight, category, currentPrice })
+  globalProducts.push({ title, measure, image: fileName, lastPrice, weight, category, currentPrice, id: new Date().getTime() })
 
   return NextResponse.json(globalProducts)
 }
 
 export async function GET(params: NextRequest) {
+  return NextResponse.json(globalProducts)
+}
+
+export async function DELETE(request: NextRequest) {
+  const data = await request.formData()
+  const id = data.get("id")
+  globalProducts = globalProducts.filter(x => x.id != id)
   return NextResponse.json(globalProducts)
 }
