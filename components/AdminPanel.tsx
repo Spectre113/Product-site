@@ -147,7 +147,7 @@ const AdminPanel: React.FC = () => {
                 <Modal.Body>
                     {selectedItem && (
                         <div>
-                            <Image src={selectedItem.image} alt={selectedItem.title} className="img-fluid" width={100} height={100}/>
+                            <Image unoptimized={true} src={selectedItem.image} alt={selectedItem.title} className="img-fluid" width={100} height={100}/>
                             <p>Category: {selectedItem.category}</p>
                             <p>Current Price: {selectedItem.currentPrice}</p>
                             <p>Measure: {selectedItem.measure}</p>
