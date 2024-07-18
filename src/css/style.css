@@ -386,7 +386,7 @@ a, a:focus, a:visited {
     padding: 15px 48px;
     border: 1px solid var(--yellow);
     border-radius: 30px;
-	transition: all 0.3s ease-in-out;
+	transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, outline 0.3s ease-in-out;
 	color: var(--yellow)
 }
 
@@ -708,6 +708,7 @@ a, a:focus, a:visited {
 	font-weight: 400;
 	line-height: 34px;
 	letter-spacing: 0px;
+	transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out, outline 0.3s ease-in-out;
 }
 
 .apanel-row>.container>p {
@@ -737,8 +738,8 @@ a, a:focus, a:visited {
 
 .add-items {
 	margin-top: 30px;
+	
 }
-
 .add-items__button {
 	width: 250px;
 	margin-right: 20px;
@@ -750,6 +751,7 @@ a, a:focus, a:visited {
 	font-weight: 400;
 	line-height: 34px;
 	letter-spacing: 0px;
+	transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out, outline 0.3s ease-in-out;
 }
 
 .modal-body>div>img {
@@ -787,6 +789,11 @@ a, a:focus, a:visited {
 
 .form-label {
 	padding-left: .75rem;
+}
+
+
+.apanel__delete {
+	transition: stroke 0.3s ease-in-out, outline 0.3s ease-in-out;
 }
 
 /* About */

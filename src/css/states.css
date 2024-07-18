@@ -12,6 +12,9 @@
 	--red: #FF0000;
     --yellow: #F0D288;
     --yellow_dark: #BB973E;
+    --blue_light: #17A2B8;
+    --purple: #af5db9;
+    --purple_dark: #783d80;
 }
 
 /* Header */
@@ -293,14 +296,60 @@
 
 /* Apanel */
 
+.apanel__additional:hover {
+    background: var(--blue_light);
+    border-color:var(--blue_light);
+    color: var(--white);
+}
+
+.apanel__additional:focus {
+    outline: 3px solid rgb(42, 84, 156); 
+}
+
+.apanel__additional:active{
+    background: rgb(51, 117, 137);
+}
+
+.add-items__button:hover {
+    background: var(--purple) ;
+    border-color: var(--purple);
+    color: var(--white);
+}
+
+.add-items__button:focus {
+    outline: 3px solid rgb(96, 30, 141);
+}
+.add-items__button:active {
+    background: var(--purple_dark);
+}
+.apanel__delete circle,
+.apanel__delete svg path{
+    transition: stroke 0.3s ease-in-out, outline 0.3s ease-in-out;
+}
+
+.apanel__delete:hover circle,
+.apanel__delete:hover svg path {
+    stroke: rgb(180, 16, 57);
+}
+
+.apanel__delete:focus {
+    outline: 3px solid rgb(103, 32, 35);
+}
+
+.apanel__delete:active circle,
+.apanel__delete:active svg path {
+    stroke: rgb(110, 24, 28);
+}
+
 /* Catalog */
 .catalog__item-btn {
-    transition: all 0.3s ease-in-out;
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, outline 0.3s ease-in-out, stroke 0.3s ease-in-out;
 }
 
 .catalog__item-btn:hover {
     background-color: var(--primary_light);
     border-color: var(--black);
+    transition: background-color 0.3s ease-in-out;
     
 }
 
@@ -316,8 +365,6 @@
 .catalog__item-btn:active {
     background-color: var(--primary_shade);
 }
-
-
 
 
 .catalog__item>div:focus {
@@ -343,9 +390,35 @@
     border: none;
 }
 
+.newsletter__btn svg path {
+    transition: fill 0.3s ease-in-out;
+
+}
+
+.newsletter__btn:hover svg path:nth-of-type(2) {
+    fill: var(--yellow);
+    
+}
+
+.newsletter__btn:hover svg path:nth-of-type(1) {
+    fill: var(--black);
+}
+
+
+.newsletter__btn:active svg path:nth-of-type(2) {
+    fill: var(--black);
+
+}   
+
+.newsletter__btn:active svg path:nth-of-type(1) {
+    fill: var(--yellow);
+}
+
+
+
 /*About*/
 .about__contact-copy {
-    transition: all 0.3s ease-in-out;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, outline 0.3s ease-in-out;
 }
 
 .about__contact-copy:hover {
