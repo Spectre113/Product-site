@@ -3,9 +3,10 @@
 import Layout from '../components/Layout';
 import Catalog from '../components/Catalog';
 import { useEffect, useState } from 'react';
+import { ProductProps } from '@/components/Product';
 
 const Products = () => {
-    const [products, setProducts] = useState<any[]>([])
+    const [products, setProducts] = useState<ProductProps[]>([])
 
     console.log(products)
     useEffect(() => {

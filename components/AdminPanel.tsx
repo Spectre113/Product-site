@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Modal, Button, Form } from 'react-bootstrap';
+import { ProductProps } from './Product';
+import Image from 'next/image';
 
 interface Item {
     id: number;
@@ -24,9 +26,6 @@ const AdminPanel: React.FC = () => {
     const [title, setTitle] = useState<string>()
     const [weight, setWeight] = useState<string>()
     const [image, setImage] = useState<string>()
-    const [products, setProducts] = useState<any[]>([])
-
-
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -55,13 +54,12 @@ const AdminPanel: React.FC = () => {
             console.error(e)
         }
     }
-    console.log(products)
 
-    const [items, setItems] = useState<Item[]>([]);
+    const [items, setItems] = useState<ProductProps[]>([]);
     const [isAdditionalInfoModalOpen, setIsAdditionalInfoModalOpen] = useState(false);
     const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] = useState(false);
     const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
-    const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+    const [selectedItem, setSelectedItem] = useState<ProductProps | null>(null);
     useEffect(() => {
         fetch('/api/upload', {
             method: 'GET',
@@ -71,7 +69,7 @@ const AdminPanel: React.FC = () => {
 
     const { register, handleSubmit, reset } = useForm<Item>();
 
-    const handleAddItem = (data: Item) => {
+    const handleAddItem = (data: ProductProps) => {
         const newItem = { ...data, id: items.length + 1 };
         setItems([...items, newItem]);
         setIsAddItemModalOpen(false);
@@ -96,12 +94,12 @@ const AdminPanel: React.FC = () => {
             })
     };
 
-    const openAdditionalInfoModal = (item: Item) => {
+    const openAdditionalInfoModal = (item: ProductProps) => {
         setSelectedItem(item);
         setIsAdditionalInfoModalOpen(true);
     };
 
-    const openDeleteConfirmModal = (item: Item) => {
+    const openDeleteConfirmModal = (item: ProductProps) => {
         setSelectedItem(item);
         setIsDeleteConfirmModalOpen(true);
     };
@@ -149,7 +147,7 @@ const AdminPanel: React.FC = () => {
                 <Modal.Body>
                     {selectedItem && (
                         <div>
-                            <img src={selectedItem.imgSrc} alt={selectedItem.title} className="img-fluid" />
+                            <Image src={selectedItem.image} alt={selectedItem.title} className="img-fluid" width={100} height={100}/>
                             <p>Category: {selectedItem.category}</p>
                             <p>Current Price: {selectedItem.currentPrice}</p>
                             <p>Measure: {selectedItem.measure}</p>

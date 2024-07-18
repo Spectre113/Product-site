@@ -129,10 +129,8 @@ const Header: React.FC = () => {
                             </Link>
                         </li>
                         <li className="header__item">
-                            <Link href="/products" legacyBehavior>
-                                <a href="" className="header__link">
-                                    Products
-                                </a>
+                            <Link href="/products" className='header__link'>
+                            Products
                             </Link>
                         </li>
                         <li className="header__item">
