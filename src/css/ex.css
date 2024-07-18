@@ -103,6 +103,10 @@ h1, h2, h3, p {
 	width: 50.7%;
 }
 
+/* .header__item{
+
+} */
+
 .header__item:not(:last-child) {
 	margin-right: 40px;
 }
@@ -237,6 +241,7 @@ h1, h2, h3, p {
     line-height: 150%;
 }
 
+
 .combo-section {
     background-color: #222;
     padding: 20px;
@@ -268,100 +273,8 @@ h1, h2, h3, p {
     font-size: 24px;
     margin: 0 10px;
 	color: white;
+
 }
 
-@media (max-width: 1200px) {
-    .header__logo-link {
-        height: 100px;
-        width: 200px;
-    }
 
-    .header__link {
-        font-size: 24px;
-    }
 
-    .header__log {
-        width: 180px;
-        padding: 10px 15px;
-    }
-
-    .header__log>span {
-        font-size: 24px;
-    }
-
-    .hero__title {
-        font-size: 50px;
-    }
-
-    .hero_content {
-        width: 60%;
-    }
-
-    .hero__back {
-        width: 40%;
-    }
-}
-
-@media (max-width: 768px) {
-    .header {
-        padding: 20px 0;
-    }
-
-    .header>.container {
-        padding-bottom: 20px;
-    }
-
-    .header__logo-link {
-        height: 80px;
-        width: 180px;
-    }
-
-    .header__link {
-        font-size: 20px;
-    }
-
-    .header__log {
-        width: 150px;
-        padding: 8px 10px;
-    }
-
-    .header__log>span {
-        font-size: 20px;
-    }
-
-    .hero__title {
-        font-size: 40px;
-    }
-
-    .hero_content {
-        width: 100%;
-    }
-
-    .hero__back {
-        display: none;
-    }
-}
-
-@media (max-width: 480px) {
-    .header__link {
-        font-size: 16px;
-    }
-
-    .header__log {
-        width: 120px;
-        padding: 5px 8px;
-    }
-
-    .header__log>span {
-        font-size: 16px;
-    }
-
-    .hero__title {
-        font-size: 30px;
-    }
-
-    .hero__info {
-        width: 100%;
-        font-size: 14px;
-    }
-}
