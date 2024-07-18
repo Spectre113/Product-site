@@ -4,9 +4,12 @@ import React, { useEffect } from 'react';
 import Link from 'next/link';
 import JustValidate from 'just-validate';
 import { useRouter } from 'next/router';
+import { useCart } from './Basket';
 
 const Header: React.FC = () => {
     const router = useRouter();
+    const { cart, removeFromCart } = useCart();
+
     useEffect(() => {
         const basketBtn = document.querySelector('.header__basket');
         const basketBlock = document.querySelector('.header__basket-block');
@@ -311,9 +314,14 @@ const Header: React.FC = () => {
                         </svg>
                     </button>
                     <div className="header__basket-block none">
-                        <div className="basket-container">
-                            {/* Вот тут вот название товара и прайс товара и кнопка удалить */}
-                        </div>
+                        {cart.map((item, index) => (
+                            <div key={index} className="basket-item">
+                                <span>{item.title} - {item.price}</span>
+                                <button onClick={() => removeFromCart(item.title)} className="delete-btn btn-reset">
+                                    Delete
+                                </button>
+                            </div>
+                        ))}
                         <button className="header__basket-menu btn-reset">
                             Go to basket
                         </button>

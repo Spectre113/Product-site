@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props'
+import { useCart } from './Basket';
 
 export interface ProductProps {
     category: string | undefined,
@@ -18,6 +19,13 @@ const Product: React.FC<ProductProps> = (props) => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const { addToCart } = useCart();
+
+    const handleAddToCart = (event: React.MouseEvent) => {
+        event.stopPropagation();
+        addToCart({ title: props.title, price: props.currentPrice });
+    };
+
     return (
         <li className="catalog__item col-lg-6 col-md-6 col-sm-12 col-xl-4">
             <div className='catalog__item-block' tabIndex={0} onClick={handleShow}>
@@ -33,7 +41,7 @@ const Product: React.FC<ProductProps> = (props) => {
                     <p className="catalog__item-gramms">
                         {props.weight}
                     </p>
-                    <button className='catalog__item-btn btn-reset' onClick={(e) => e.stopPropagation()}>
+                    <button className='catalog__item-btn btn-reset' onClick={handleAddToCart}>
                         <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M4 12H20M12 4V20" stroke="#fff" strokeWidth="0.7" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
@@ -49,7 +57,7 @@ const Product: React.FC<ProductProps> = (props) => {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary">
+                <Button variant="primary" onClick={handleAddToCart}>
                     Add to basket
                 </Button>
                 </Modal.Footer>
