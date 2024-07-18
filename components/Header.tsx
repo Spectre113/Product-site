@@ -190,7 +190,7 @@ const Header: React.FC = () => {
                                 Log-in
                             </h2>
                             <p className="header__log-info">
-                                If you don't have an account yet, <a href="#">register here</a>.
+                                If you don`t have an account yet, <a href="#">register here</a>.
                             </p>
                             <form action="https://jsonplaceholder.typicode.com/posts" method="POST" className="header__log-form flex" id="log-form">
                                 <label htmlFor="name" className="header__log-label">

@@ -11,13 +11,7 @@ function save(products: ProductProps[]) {
   const jsonString = JSON.stringify(products, null, 4);
 
   // Write JSON string to a file
-  fs.writeFile('data.json', jsonString, (err: any) => {
-    if (err) {
-      console.error('Error writing file:', err);
-    } else {
-      console.log('File has been written');
-    }
-  });
+  fs.writeFileSync('data.json', jsonString)
 }
 
 function load() {
@@ -34,9 +28,6 @@ function load() {
   }
   return products
 }
-
-
-load()
 
 export async function POST(request: NextRequest) {
   const products = load()
@@ -57,20 +48,20 @@ export async function POST(request: NextRequest) {
   const bytes = await file.arrayBuffer()
   const buffer = Buffer.from(bytes)
 
+  const milliseconds = new Date().getTime()
+  const filename = path.join('public', 'uploads', milliseconds + file.name)
+  const dirname = path.join('public', 'uploads')
 
-
-  let fileName = '/uploads/' + new Date().valueOf() + file.name
-
-  const dir = path.resolve('./public')
-  if (!fs.existsSync(path.join(dir, './uploads'))) {
-    fs.mkdirSync(path.join(dir, './uploads'));
+  if (!fs.existsSync(dirname)) {
+    fs.mkdirSync(dirname);
   }
-  const filePath = path.join(dir, fileName)
-  await writeFile(filePath, buffer)
+  await writeFile(filename, buffer)
 
-  console.log(`open ${filePath} to see the uploaded file`)
-  console.log(filePath)
-  products.push({ title, measure, image: fileName, lastPrice, weight, category, currentPrice, id: new Date().getTime() })
+  console.log(`open ${filename} to see the uploaded file`)
+  console.log(filename)
+  const imageName = milliseconds + file.name
+  const imageSource = '/uploads/' + imageName
+  products.push({ title, measure, image: imageSource, lastPrice, weight, category, currentPrice, id: milliseconds })
   save(products)
   return NextResponse.json(products)
 }
@@ -82,9 +73,10 @@ export async function GET(params: NextRequest) {
 export async function DELETE(request: NextRequest) {
   let products = load()
   const data = await request.formData()
-  const id = parseInt(data.get("id") as string)
+  const id = parseFloat(data.get("id")?.toString() as string)
+  console.log(data.get("id"))
   fs.rmSync(path.join('public', products.find(x => x.id == id)?.image as string))
-  products = products.filter(x => x.id != id)
+  products = products.filter(x => x.id != id) 
   save(products)
   return NextResponse.json(products)
 }

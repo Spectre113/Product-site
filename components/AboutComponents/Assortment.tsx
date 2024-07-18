@@ -7,7 +7,7 @@ const Assortment: React.FC = () => {
     return (
         <div className="about__assortment-block">
             <p className='about__why-info'>
-                Our fast food menu boasts a&nbsp;wide variety of&nbsp;delicious items, ranging from shawarma and sushi to&nbsp;burgers and gyros. For more datails go to "Products" page!
+                Our fast food menu boasts a&nbsp;wide variety of&nbsp;delicious items, ranging from shawarma and sushi to&nbsp;burgers and gyros. For more datails go to `Products` page!
             </p>
             <Swiper
                 modules={[Autoplay]}
