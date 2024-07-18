@@ -134,6 +134,7 @@ a, a:focus, a:visited {
 }
 
 .header__controls {
+	position: relative;
 	width: 27.2%;
 }
 
@@ -301,6 +302,42 @@ a, a:focus, a:visited {
 
 .just-validate-error-field {
     border-color: var(--red);
+}
+
+.header__basket-block {
+	position: absolute;
+    width: 250px;
+    min-height: 100px;
+    background-color: var(--white);
+    padding: 20px;
+	box-shadow: 1px 2px 10px -3px #333;
+    bottom: -110px;
+	right: 21px;
+	z-index: 5;
+}
+
+.header__basket-block::before {
+    position: absolute;
+    top: -9px;
+    right: 18px;
+    width: 20px;
+    height: 20px;
+    content: '';
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    background: white;
+}
+
+.header__basket-menu {
+	width: 100%;
+	min-height: 35px;
+	background-color: var(--white);
+	border: 1px solid var(--l_black);
+	border-radius: 25px;
+	font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+	color: var(--black);
 }
 
 /* Hero */
@@ -766,6 +803,10 @@ a, a:focus, a:visited {
 	margin-bottom: 20px;
 } */
 
+#category {
+	margin-bottom: 30px;
+}
+
 .modal-title {
 	font-size: 30px;
     font-weight: 400;
@@ -784,6 +825,15 @@ a, a:focus, a:visited {
 
 .form-label {
 	padding-left: .75rem;
+}
+
+#log-form-2>div {
+	position: relative;
+}
+
+#log-form-2>div>.just-validate-error-label {
+	top: 27px;
+	font-size: 8px;
 }
 
 /* About */

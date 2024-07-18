@@ -91,10 +91,10 @@ const About: React.FC = () => {
                         </h2>
                         <div className="about__select">
                             <select id="my-select2" className="my-select" value={selectedOption} onChange={handleChange}>
-                            <option value="Why we?">Why we?</option>
-                            <option value="option1">Contacts</option>
-                            <option value="option2">Location</option>
-                            <option value="option3">Assortment</option>
+                                <option value="Why we?">Why we?</option>
+                                <option value="option1">Contacts</option>
+                                <option value="option2">Location</option>
+                                <option value="option3">Assortment</option>
                             </select>
                         </div>
                     </div>
