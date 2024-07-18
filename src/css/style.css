@@ -10,6 +10,7 @@
 	--s_gray: #D2D5DD;
 	--red: #FF0000;
 	--yellow: #F0D288;
+	--green: #008000
 }
 
 html {
@@ -252,7 +253,7 @@ a, a:focus, a:visited {
     color: var(--black);
 }
 
-.header__log-info>a {
+.header__log-info>button {
 	font-weight: 400;
     font-size: 20px;
     line-height: 20px;
@@ -338,6 +339,31 @@ a, a:focus, a:visited {
     font-size: 16px;
     line-height: 150%;
 	color: var(--black);
+}
+
+.header__register-block {
+	left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    position: fixed;
+    justify-content: center;
+    background-color: #0000009e;
+    top: 0;
+}
+
+.header__register-block>div {
+    position: absolute;
+    width: 824px;
+    min-height: 200px;
+    padding: 60px;
+    background: var(--white);
+    top: 80px;
+    z-index: 5;
+}
+
+.register--successful {
+	color: var(--green);
 }
 
 /* Hero */
