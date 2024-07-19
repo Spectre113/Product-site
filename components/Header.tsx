@@ -14,19 +14,33 @@ const Header: React.FC = () => {
         const basketBtn = document.querySelector('.header__basket');
         const basketBlock = document.querySelector('.header__basket-block');
 
-        if (basketBtn && basketBlock) {
-            basketBtn.addEventListener('click', function(event) {
-                event.stopPropagation();
-                basketBlock.classList.remove('none');
-            });
+        const handleBasketBtnClick = (event: Event) => {
+            event.stopPropagation();
+            basketBlock?.classList.remove('none');
+        };
 
-            document.addEventListener('click', function (event) {
-                if (!basketBlock.contains(event.target as Node)) {
-                    basketBlock.classList.add('none');
-                }
-            });
+        const handleDocumentClick = (event: Event) => {
+            if (basketBlock && !basketBlock.contains(event.target as Node)) {
+                basketBlock.classList.add('none');
+            }
+        };
+
+        if (basketBtn && basketBlock) {
+            if (cart.length > 0) {
+                basketBtn.addEventListener('click', handleBasketBtnClick);
+                document.addEventListener('click', handleDocumentClick);
+            } else {
+                basketBlock.classList.add('none');
+            }
         }
 
+        return () => {
+            basketBtn?.removeEventListener('click', handleBasketBtnClick);
+            document.removeEventListener('click', handleDocumentClick);
+        };
+    }, [cart]);
+
+    useEffect(() => {
         const search = document.querySelector('.header__search--disabled') as HTMLElement | null;
         const nav = document.querySelector('.header__nav') as HTMLElement | null;
         const searchContent = document.querySelector('.header__search-active') as HTMLElement | null;
@@ -58,9 +72,7 @@ const Header: React.FC = () => {
                     content.classList.remove('header__controls-active');
                 }
             });
-        } 
-        
-        else {
+        } else {
             console.error('One or more elements were not found.');
         }
 
@@ -94,9 +106,7 @@ const Header: React.FC = () => {
                 event.stopPropagation();
                 registerBlock.classList.add('none');
             });
-        }
-
-        else {
+        } else {
             console.error('One or more elements were not found.');
         }
 
@@ -141,9 +151,9 @@ const Header: React.FC = () => {
             } else {
               alert('Invalid login or password');
             }
-          });
+        });
 
-          const validator3 = new JustValidate('#log-form-3');
+        const validator3 = new JustValidate('#log-form-3');
 
         validator3
         .addField('#register-name', [
@@ -180,17 +190,17 @@ const Header: React.FC = () => {
                 logContent.classList.remove('none');
                 registerSuccessMessage.classList.remove('none');
             }
-          });
+        });
 
         const basketBtnPage = document.querySelector('.header__basket-menu');
 
         if (basketBtnPage) {
             basketBtnPage.addEventListener('click', function(event) {
-                event.stopPropagation;
+                event.stopPropagation();
                 router.push('/basket');
             });
         }
-      }, [router]);
+    }, [cart, router]);
 
     return (
         <header className="header">

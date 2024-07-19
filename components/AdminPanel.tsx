@@ -15,6 +15,7 @@ interface Item {
     title: string;
     weight: string;
     imgSrc: string;
+    description: string;
 }
 
 const AdminPanel: React.FC = () => {
@@ -27,6 +28,7 @@ const AdminPanel: React.FC = () => {
     const [weight, setWeight] = useState<string>()
     const [image, setImage] = useState<string>()
     const [products, setProducts] = useState<any[]>([])
+    const [description, setDescription] = useState<string>()
 
 
 
@@ -44,6 +46,7 @@ const AdminPanel: React.FC = () => {
             data.set('title', title as string)
             data.set('weight', weight as string)
             data.set('image', image as string)
+            data.set('description', description as string)
 
 
             const res = await fetch('/api/upload', {
@@ -133,6 +136,12 @@ const AdminPanel: React.FC = () => {
                     {
                         rule: 'required',
                         errorMessage: 'You did not enter a weight',
+                    },
+                ])
+                .addField('#description', [
+                    {
+                        rule: 'required',
+                        errorMessage: 'You did not enter a composition',
                     },
                 ])
                 .addField('#image', [
@@ -311,6 +320,16 @@ const AdminPanel: React.FC = () => {
                                         setFile(target.files[0]);
                                     }
                                 }}
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId='description'>
+                            <Form.Label>Сomposition</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Enter composition'
+                                onChange={(e) => setDescription(e.target.value)}
+                                name='composition'
                             />
                         </Form.Group>
 

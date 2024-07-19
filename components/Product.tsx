@@ -13,6 +13,7 @@ export interface ProductProps {
     title: string,
     weight: string,
     image: string | StaticImport
+    description: string;
 }
 
 const Product: React.FC<ProductProps> = (props) => {
@@ -23,7 +24,7 @@ const Product: React.FC<ProductProps> = (props) => {
 
     const handleAddToCart = (event: React.MouseEvent) => {
         event.stopPropagation();
-        addToCart({ title: props.title, price: props.currentPrice, measure: props.measure, image : props.image });
+        addToCart({ title: props.title, price: props.currentPrice, measure: props.measure, image : props.image, description : props.description });
         setShow(false);
     };
 
@@ -53,7 +54,11 @@ const Product: React.FC<ProductProps> = (props) => {
                 <Modal.Header closeButton>
                 <Modal.Title>{props.title}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>...</Modal.Body>
+                <Modal.Body>
+                    <p className="catalog__item-description">
+                        {props.description}
+                    </p>
+                </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                     Close

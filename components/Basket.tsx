@@ -9,6 +9,7 @@ export interface CartItem {
     lastPrice?: number;
     weight?: string;
     image?: string | StaticImport;
+    description?: string;
 }
 
 interface CartContextProps {
