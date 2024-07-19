@@ -1,8 +1,14 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
+import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 
-interface CartItem {
+export interface CartItem {
     title: string;
     price: number;
+    measure: string;
+    category?: string;
+    lastPrice?: number;
+    weight?: string;
+    image?: string | StaticImport;
 }
 
 interface CartContextProps {

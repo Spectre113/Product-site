@@ -184,8 +184,9 @@ const AdminPanel: React.FC = () => {
                         </div>
                     </div>
                 ))}
-                <div className="add-items container">
+                <div className="add-items container flex">
                     <button className="add-items__button btn-reset" onClick={() => setIsAddItemModalOpen(true)}>Add Items</button>
+                    <a href="/" className="return-link">Return</a>
                 </div>
             </div>
 

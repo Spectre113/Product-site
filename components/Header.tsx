@@ -146,7 +146,7 @@ const Header: React.FC = () => {
           const validator3 = new JustValidate('#log-form-3');
 
         validator3
-        .addField('#name', [
+        .addField('#register-name', [
             {
             rule: 'required',
             errorMessage: 'You did not enter a name',
@@ -162,7 +162,7 @@ const Header: React.FC = () => {
             errorMessage: '30 symbols maximum',
             },
         ])
-        .addField('#password', [
+        .addField('#register-password', [
             {
             rule: 'required',
             errorMessage: 'You did not enter a password',
@@ -181,6 +181,15 @@ const Header: React.FC = () => {
                 registerSuccessMessage.classList.remove('none');
             }
           });
+
+        const basketBtnPage = document.querySelector('.header__basket-menu');
+
+        if (basketBtnPage) {
+            basketBtnPage.addEventListener('click', function(event) {
+                event.stopPropagation;
+                router.push('/basket');
+            });
+        }
       }, [router]);
 
     return (
@@ -297,10 +306,10 @@ const Header: React.FC = () => {
                             </h2>
                             <form action="https://jsonplaceholder.typicode.com/posts" method="POST" className="header__log-form flex" id="log-form-3">
                                 <label htmlFor="name" className="header__log-label">
-                                    <input type="text" className="header__log-input" placeholder="Enter a name" name="name" id="name"></input>
+                                    <input type="text" className="header__log-input" placeholder="Enter a name" name="name" id="register-name"></input>
                                 </label>
                                 <label htmlFor="password" className="header__log-label">
-                                    <input type="password" className="header__log-input" placeholder="Enter your password" name="password" id="password"></input>
+                                    <input type="password" className="header__log-input" placeholder="Enter your password" name="password" id="register-password"></input>
                                 </label>
                                 <button className="header__log-button btn-reset">
                                     Register
@@ -314,17 +323,22 @@ const Header: React.FC = () => {
                         </svg>
                     </button>
                     <div className="header__basket-block none">
-                        {cart.map((item, index) => (
-                            <div key={index} className="basket-item">
-                                <span>{item.title} - {item.price}</span>
-                                <button onClick={() => removeFromCart(item.title)} className="delete-btn btn-reset">
-                                    Delete
-                                </button>
-                            </div>
-                        ))}
-                        <button className="header__basket-menu btn-reset">
-                            Go to basket
-                        </button>
+                        <div>
+                            {cart.map((item, index) => (
+                                <div key={index} className="basket-item flex">
+                                    <span>{item.title} - {item.price} {item.measure}</span>
+                                    <button onClick={() => removeFromCart(item.title)} className="delete-btn btn-reset">
+                                        <svg width="20" height="20" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="21" cy="21" r="19.5" stroke="#000" strokeWidth="3"></circle>
+                                            <path d="M29.6777 12L12 29.6777M29.6777 29.6777L12 12" stroke="#000" strokeWidth="3"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            ))}
+                            <button className="header__basket-menu btn-reset">
+                                Go to basket
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

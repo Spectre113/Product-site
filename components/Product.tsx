@@ -23,7 +23,8 @@ const Product: React.FC<ProductProps> = (props) => {
 
     const handleAddToCart = (event: React.MouseEvent) => {
         event.stopPropagation();
-        addToCart({ title: props.title, price: props.currentPrice });
+        addToCart({ title: props.title, price: props.currentPrice, measure: props.measure, image : props.image });
+        setShow(false);
     };
 
     return (

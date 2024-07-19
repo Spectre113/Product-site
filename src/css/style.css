@@ -306,15 +306,20 @@ a, a:focus, a:visited {
 }
 
 .header__basket-block {
-	position: absolute;
+    position: absolute;
     width: 250px;
-    min-height: 100px;
+    height: 180px;
     background-color: var(--white);
     padding: 20px;
-	box-shadow: 1px 2px 10px -3px #333;
-    bottom: -110px;
-	right: 21px;
-	z-index: 5;
+    box-shadow: 1px 2px 10px -3px #333;
+	bottom: -177px;
+    right: 24px;
+    z-index: 5;
+}
+
+.header__basket-block>div {
+	max-height: 180px;
+	overflow-y: auto;
 }
 
 .header__basket-block::before {
@@ -364,6 +369,22 @@ a, a:focus, a:visited {
 
 .register--successful {
 	color: var(--green);
+}
+
+.basket-item {
+	margin-bottom: 10px;
+	align-items: center;
+}
+
+.basket-item>span {
+	font-size: 20px;
+    font-weight: 500;
+    line-height: 40px;
+    color: var(--black);
+}
+
+.basket-item>.delete-btn {
+	margin-left: auto;
 }
 
 /* Hero */
@@ -797,11 +818,16 @@ a, a:focus, a:visited {
 
 .add-items {
 	margin-top: 30px;
+	align-items: center;
+	font-size: 28px;
+    font-weight: 400;
+    line-height: 34px;
+    letter-spacing: 0px;
 }
 
 .add-items__button {
 	width: 250px;
-	margin-right: 20px;
+	margin-right: 25px;
 	padding: 14px 20px;
 	background: var(--white);
 	border: 1px solid var(--white);
