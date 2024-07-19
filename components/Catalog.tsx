@@ -4,6 +4,7 @@ import React, { useEffect, useState, ChangeEvent } from 'react';
 import Product, { ProductProps } from "./Product";
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import placeholder from '../src/img/placeholder.png';
+import Header from './Header';
 
 type ProductCategories = 'Everything' | 'Sause' | 'Giros' | 'Salat' | 'Mexican' | 'Burgers';
 
@@ -76,19 +77,8 @@ const Catalog = (props: CatalogProps) => {
                 <div className="catalog__items-block">
                     <ul className="catalog__list list-reset row">
                     {true ?
-            props.products.map(x => <Product key={x.id} currentPrice={x.currentPrice} measure={x.measure} title={x.title} weight={x.weight} lastPrice={x.lastPrice} image={x.image} category={x.category} id={x.id}/>) :
-            props.products.filter(x => x.category == selectedOption).map(x => <Product key={x.id} currentPrice={x.currentPrice} measure={x.measure} title={x.title} weight={x.weight} lastPrice={x.lastPrice} image={x.image} category={x.category} id={x.id}/>)}
-                        {/* {props.products[selectedOption].map((product: ProductProps, index: number) => (
-                                <Product
-                                    key={index}
-                                    imgSrc={product.imgSrc}
-                                    currentPrice={product.currentPrice}
-                                    measure={product.measure}
-                                    lastPrice={product.lastPrice}
-                                    title={product.title}
-                                    weight={product.weight}
-                                />
-                            ))} */}
+                        props.products.map(x => <Product currentPrice={x.currentPrice} measure={x.measure} title={x.title} weight={x.weight} lastPrice={x.lastPrice} image={x.image} category={x.category}/>) :
+                        props.products.filter(x => x.category == selectedOption).map(x => <Product currentPrice={x.currentPrice} measure={x.measure} title={x.title} weight={x.weight} lastPrice={x.lastPrice} image={x.image} category={x.category}/>)}
                     </ul>
                 </div>
             </div>

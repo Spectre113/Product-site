@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { ProductProps } from './Product';
 import Image from 'next/image';
+import styled from 'styled-components';
+import JustValidate from 'just-validate';
 
 interface Item {
     id: number;
@@ -30,6 +32,7 @@ const AdminPanel: React.FC = () => {
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (!file) return
+        console.log('It is OK, bro!');
         try {
             const data = new FormData()
             data.set('file', file)
@@ -103,6 +106,66 @@ const AdminPanel: React.FC = () => {
         setSelectedItem(item);
         setIsDeleteConfirmModalOpen(true);
     };
+
+    useEffect(() => {
+        if (isAddItemModalOpen) {
+            const validator = new JustValidate('#log-form-2');
+
+            validator
+                .addField('#category', [
+                    {
+                        rule: 'required',
+                        errorMessage: 'You did not select a category',
+                    },
+                ])
+                .addField('#curPrice', [
+                    {
+                        rule: 'required',
+                        errorMessage: 'You did not enter a current price',
+                    },
+                ])
+                .addField('#measure', [
+                    {
+                        rule: 'required',
+                        errorMessage: 'You did not enter a measure',
+                    },
+                ])
+                .addField('#lastPrice', [
+                    {
+                        rule: 'required',
+                        errorMessage: 'You did not enter a last price',
+                    },
+                ])
+                .addField('#title', [
+                    {
+                        rule: 'required',
+                        errorMessage: 'You did not enter a title',
+                    },
+                ])
+                .addField('#weight', [
+                    {
+                        rule: 'required',
+                        errorMessage: 'You did not enter a weight',
+                    },
+                ])
+                .addField('#image', [
+                    {
+                        rule: 'required',
+                        errorMessage: 'You did not select a file',
+                    },
+                    {
+                        validator: (value : unknown, fields : unknown) => {
+                            const fileInput = document.querySelector<HTMLInputElement>('#image');
+                            return fileInput && fileInput.files && fileInput.files.length > 0;
+                        },
+                        errorMessage: 'You did not select a file',
+                    },
+                ])
+                .onSuccess((e: Event) => {
+                    onSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
+                });
+        }
+    }, [isAddItemModalOpen]);
 
     return (
         <section className="apanel">
@@ -189,27 +252,92 @@ const AdminPanel: React.FC = () => {
                     <Modal.Title>Add Item</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={onSubmit} className='flex'>
-                        <input onChange={(e) => setCategory(e.target.value)} name='category' type='text' />
-                        <input onChange={(e) => setCurrentPrice(e.target.value)} name='currentPrice' type='text' />
-                        <input onChange={(e) => setMeasure(e.target.value)} name='measure' type='text' />
-                        <input onChange={(e) => setLastPrice(e.target.value)} name='lastPrice' type='text' />
-                        <input onChange={(e) => setTitle(e.target.value)} name='title' type='text' />
-                        <input onChange={(e) => setWeight(e.target.value)} name='weight' type='text' />
-                        <input onChange={(e) => setImage(e.target.value)} name='image' type='text' />
-                        <input
-                            type="file"
-                            name="file"
-                            onChange={(e) => setFile(e.target.files?.[0])}
-                        />
-                        <Button type="submit" onClick={() => {
+                <Form className='d-flex flex-column' id="log-form-2" onSubmit={onSubmit}>
+                        <Form.Group controlId='category'>
+                            <Form.Label>Category</Form.Label>
+                            <Form.Select onChange={(e) => setCategory(e.target.value)} name='category'>
+                                <option value='Sause'>Sause</option>
+                                <option value='Giros'>Giros</option>
+                                <option value='Salat'>Salat</option>
+                                <option value='Mexican'>Mexican</option>
+                                <option value='Burgers'>Burgers</option>
+                            </Form.Select>
+                        </Form.Group>
+
+                        <Form.Group controlId='curPrice'>
+                            <Form.Label>Current Price</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Enter current price'
+                                onChange={(e) => setCurrentPrice(e.target.value)}
+                                name='currentPrice'
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId='measure'>
+                            <Form.Label>Measure</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Enter measure'
+                                onChange={(e) => setMeasure(e.target.value)}
+                                name='measure'
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId='lastPrice'>
+                            <Form.Label>Last Price</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Enter last price'
+                                onChange={(e) => setLastPrice(e.target.value)}
+                                name='lastPrice'
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId='title'>
+                            <Form.Label>Title</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Enter title'
+                                onChange={(e) => setTitle(e.target.value)}
+                                name='title'
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId='weight'>
+                            <Form.Label>Weight</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Enter weight'
+                                onChange={(e) => setWeight(e.target.value)}
+                                name='weight'
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId='image'>
+                            <Form.Label>File</Form.Label>
+                            <Form.Control
+                                type='file'
+                                name='file'
+                                onChange={(e) => {
+                                    const target = e.target as HTMLInputElement;
+                                    if (target.files) {
+                                        setFile(target.files[0]);
+                                    }
+                                }}
+                            />
+                        </Form.Group>
+
+                        <Button variant='primary' type='submit' onClick={() => {
                             fetch('/api/upload', {
                                 method: 'GET',
                             }).then(resp => resp.json())
                                 .then(resp => {
                                     setItems(resp)
                                 })
-                        }}>Add</Button>
+                        }}>
+                            Add
+                        </Button>
                     </Form>
                 </Modal.Body>
             </Modal>
