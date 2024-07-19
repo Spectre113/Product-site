@@ -1,21 +1,54 @@
 "use client"
 
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import JustValidate from 'just-validate';
 import { useRouter } from 'next/router';
 import { useCart } from './Basket';
+import { Form } from 'react-bootstrap';
 
 const Header: React.FC = () => {
     const router = useRouter();
     const { cart, removeFromCart } = useCart();
+
+    const [name, setName] = useState('')
+    const [password, setPassword] = useState('')
+
+    const onRegister = (registerBlock: any, logContent: any, registerSuccessMessage: any) => {
+        console.log(name, password);
+        try {
+            const data = new FormData()
+            data.set('name', name)
+            data.set('password', password)
+
+            const res = fetch('/api/register', {
+                method: 'POST',
+                body: data
+            }).then(res => res.json(), err => err.json())
+                .then((res) => {
+                    if (res.status == 'ok') {
+                        if (registerBlock && logContent && registerSuccessMessage) {
+                            registerBlock.classList.add('none');
+                            logContent.classList.remove('none');
+                            registerSuccessMessage.classList.remove('none');
+                        }
+                    } else {
+                        console.log(res.message)
+                    }
+                    console.log(res)
+                }, (err) => console.log(err))
+        } catch (e: any) {
+            // Handle errors here
+            console.error(e)
+        }
+    }
 
     useEffect(() => {
         const basketBtn = document.querySelector('.header__basket');
         const basketBlock = document.querySelector('.header__basket-block');
 
         if (basketBtn && basketBlock) {
-            basketBtn.addEventListener('click', function(event) {
+            basketBtn.addEventListener('click', function (event) {
                 event.stopPropagation();
                 basketBlock.classList.remove('none');
             });
@@ -58,8 +91,8 @@ const Header: React.FC = () => {
                     content.classList.remove('header__controls-active');
                 }
             });
-        } 
-        
+        }
+
         else {
             console.error('One or more elements were not found.');
         }
@@ -73,24 +106,24 @@ const Header: React.FC = () => {
         const registerSuccessMessage = document.querySelector('.register--successful');
 
         if (logBtn && logContent && logClose && registerBtn && registerBlock && registerClose && registerSuccessMessage) {
-            logBtn.addEventListener('click', function(event){
+            logBtn.addEventListener('click', function (event) {
                 event.stopPropagation();
                 logContent.classList.remove('none');
             });
 
-            logClose.addEventListener('click', function(event) {
+            logClose.addEventListener('click', function (event) {
                 event.stopPropagation();
                 logContent.classList.add('none');
                 registerSuccessMessage.classList.add('none');
             });
 
-            registerBtn.addEventListener('click', function(event) {
+            registerBtn.addEventListener('click', function (event) {
                 event.stopPropagation();
                 logContent.classList.add('none');
                 registerBlock.classList.remove('none');
             });
 
-            registerClose.addEventListener('click', function(event) {
+            registerClose.addEventListener('click', function (event) {
                 event.stopPropagation();
                 registerBlock.classList.add('none');
             });
@@ -103,85 +136,85 @@ const Header: React.FC = () => {
         const validator = new JustValidate('#log-form');
 
         validator
-        .addField('#name', [
-            {
-            rule: 'required',
-            errorMessage: 'You did not enter a login',
-            },
-            {
-            rule: 'minLength',
-            value: 3,
-            errorMessage: '3 symbols minimum',
-            },
-            {
-            rule: 'maxLength',
-            value: 30,
-            errorMessage: '30 symbols maximum',
-            },
-        ])
-        .addField('#password', [
-            {
-            rule: 'required',
-            errorMessage: 'You did not enter a password',
-            },
-            {
-            rule: 'minLength',
-            value: 3,
-            errorMessage: '3 symbols minimum',
-            },
-        ])
-        .onSuccess((event : Event) => {
-            event.preventDefault();
-            const formData = new FormData(event.target as HTMLFormElement);
-            const name = formData.get('name') as string;
-            const password = formData.get('password') as string;
-    
-            if (name === 'admin' && password === 'admin') {
-              router.push('/apanel');
-            } else {
-              alert('Invalid login or password');
-            }
-          });
+            .addField('#name', [
+                {
+                    rule: 'required',
+                    errorMessage: 'You did not enter a login',
+                },
+                {
+                    rule: 'minLength',
+                    value: 3,
+                    errorMessage: '3 symbols minimum',
+                },
+                {
+                    rule: 'maxLength',
+                    value: 30,
+                    errorMessage: '30 symbols maximum',
+                },
+            ])
+            .addField('#password', [
+                {
+                    rule: 'required',
+                    errorMessage: 'You did not enter a password',
+                },
+                {
+                    rule: 'minLength',
+                    value: 3,
+                    errorMessage: '3 symbols minimum',
+                },
+            ])
+            .onSuccess((event: Event) => {
+                event.preventDefault();
+                const formData = new FormData(event.target as HTMLFormElement);
+                const name = formData.get('name') as string;
+                const password = formData.get('password') as string;
 
-          const validator3 = new JustValidate('#log-form-3');
+                if (name === 'admin' && password === 'admin') {
+                    router.push('/apanel');
+                } else {
+                    alert('Invalid login or password');
+                }
+            });
+
+        const validator3 = new JustValidate('#log-form-3');
 
         validator3
-        .addField('#name', [
-            {
-            rule: 'required',
-            errorMessage: 'You did not enter a name',
-            },
-            {
-            rule: 'minLength',
-            value: 3,
-            errorMessage: '3 symbols minimum',
-            },
-            {
-            rule: 'maxLength',
-            value: 30,
-            errorMessage: '30 symbols maximum',
-            },
-        ])
-        .addField('#password', [
-            {
-            rule: 'required',
-            errorMessage: 'You did not enter a password',
-            },
-            {
-            rule: 'minLength',
-            value: 3,
-            errorMessage: '3 symbols minimum',
-            },
-        ])
-        .onSuccess((event : Event) => {
-            event.stopPropagation();
-            if (registerBlock && logContent && registerSuccessMessage) {
-                registerBlock.classList.add('none');
-                logContent.classList.remove('none');
-                registerSuccessMessage.classList.remove('none');
-            }
-          });
-      }, [router]);
+            .addField('#name', [
+                {
+                    rule: 'required',
+                    errorMessage: 'You did not enter a name',
+                },
+                {
+                    rule: 'minLength',
+                    value: 3,
+                    errorMessage: '3 symbols minimum',
+                },
+                {
+                    rule: 'maxLength',
+                    value: 30,
+                    errorMessage: '30 symbols maximum',
+                },
+            ])
+            .addField('#password', [
+                {
+                    rule: 'required',
+                    errorMessage: 'You did not enter a password',
+                },
+                {
+                    rule: 'minLength',
+                    value: 3,
+                    errorMessage: '3 symbols minimum',
+                },
+            ])
+            .onSuccess((event: Event) => {
+                event.stopPropagation();
+                event.preventDefault()
+                onRegister(registerBlock, logContent, registerSuccessMessage)
+                
+            });
+    }, [router, name, password]);
+
+
 
     return (
         <header className="header">
@@ -204,13 +237,13 @@ const Header: React.FC = () => {
                         </li>
                         <li className="header__item">
                             <Link href="/products" className='header__link'>
-                            Products
+                                Products
                             </Link>
                         </li>
                         <li className="header__item">
                             <Link href="/combo" legacyBehavior>
                                 <a href="" className="header__link">
-                                    Combo 
+                                    Combo
                                 </a>
                             </Link>
                         </li>
@@ -226,8 +259,8 @@ const Header: React.FC = () => {
                 <div className="header__controls flex">
                     <button className="header__search header__search--disabled btn-reset">
                         <svg width="33" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                            <path d="M20.9999 21L16.6499 16.65" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M20.9999 21L16.6499 16.65" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                     </button>
                     <div className="header__search-active none">
@@ -235,8 +268,8 @@ const Header: React.FC = () => {
                             <input type="text" className="header__search-content" placeholder="Search"></input>
                             <button className="header__search-button header__search-button-active btn-reset">
                                 <svg width="33" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                    <path d="M20.9999 21L16.6499 16.65" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                    <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                    <path d="M20.9999 21L16.6499 16.65" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                             </button>
                             <button className="header__search-close none">111</button>
@@ -244,9 +277,9 @@ const Header: React.FC = () => {
                     </div>
                     <button className="header__log btn-reset flex">
                         <svg width="28" height="28" viewBox="0 0 19 18" fill="#fff" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9.5 1.5L2 5.25L9.5 9L17 5.25L9.5 1.5Z" stroke="#121723" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                            <path d="M2 12.75L9.5 16.5L17 12.75" stroke="#121723" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                            <path d="M2 9L9.5 12.75L17 9" stroke="#121723" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M9.5 1.5L2 5.25L9.5 9L17 5.25L9.5 1.5Z" stroke="#121723" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M2 12.75L9.5 16.5L17 12.75" stroke="#121723" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M2 9L9.5 12.75L17 9" stroke="#121723" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                         <span>
                             Log-in
@@ -293,12 +326,15 @@ const Header: React.FC = () => {
                             <h2 className="header__log-title">
                                 Register
                             </h2>
-                            <form action="https://jsonplaceholder.typicode.com/posts" method="POST" className="header__log-form flex" id="log-form-3">
+                            <form action={'/api/register'} method='POST' className="header__log-form flex" id="log-form-3">
                                 <label htmlFor="name" className="header__log-label">
-                                    <input type="text" className="header__log-input" placeholder="Enter a name" name="name" id="name"></input>
+                                    <input value={name} onChange={(e => {
+                                        console.log(e.target.value, name)
+                                        setName(e.target.value)
+                                    })} type="text" className="header__log-input" placeholder="Enter a name" name="name" id="name"></input>
                                 </label>
                                 <label htmlFor="password" className="header__log-label">
-                                    <input type="password" className="header__log-input" placeholder="Enter your password" name="password" id="password"></input>
+                                    <input value={password} onChange={e => setPassword(e.target.value)} type="password" className="header__log-input" placeholder="Enter your password" name="password" id="password"></input>
                                 </label>
                                 <button className="header__log-button btn-reset">
                                     Register

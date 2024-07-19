@@ -8,6 +8,7 @@
 /public/uploads
 /data.json
 /.idea
+/users.json
 
 # testing
 /coverage
