@@ -8,33 +8,6 @@ import Header from './Header';
 
 type ProductCategories = 'Everything' | 'Sause' | 'Giros' | 'Salat' | 'Mexican' | 'Burgers';
 
-// const products: Record<ProductCategories, ProductProps[]> = {
-//     Everything: [
-//         { imgSrc: placeholder, currentPrice: 500, measure: 'руб.', title: 'Onigiri', weight: '450 гр.' },
-//         { imgSrc: placeholder, currentPrice: 600, measure: 'руб.', lastPrice: 700, title: 'Sushi', weight: '300 гр.' },
-//         { imgSrc: placeholder, currentPrice: 700, measure: 'руб.', lastPrice: 800, title: 'Giros', weight: '400 гр.' },
-//         { imgSrc: placeholder, currentPrice: 400, measure: 'руб.', title: 'Salat', weight: '250 гр.' },
-//         { imgSrc: placeholder, currentPrice: 800, measure: 'руб.', lastPrice: 900, title: 'Mexican', weight: '500 гр.' },
-//         { imgSrc: placeholder, currentPrice: 900, measure: 'руб.', lastPrice: 1000, title: 'Burger', weight: '350 гр.' },
-//     ],
-//     option1: [
-//         { imgSrc: placeholder, currentPrice: 500, measure: 'руб.', title: 'Onigiri', weight: '450 гр.' },
-//         { imgSrc: placeholder, currentPrice: 600, measure: 'руб.', lastPrice: 700, title: 'Sushi', weight: '300 гр.' },
-//     ],
-//     option2: [
-//         { imgSrc: placeholder, currentPrice: 700, measure: 'руб.', lastPrice: 800, title: 'Giros', weight: '400 гр.' },
-//     ],
-//     option3: [
-//         { imgSrc: placeholder, currentPrice: 400, measure: 'руб.', title: 'Salat', weight: '250 гр.' },
-//     ],
-//     option4: [
-//         { imgSrc: placeholder, currentPrice: 800, measure: 'руб.', lastPrice: 900, title: 'Mexican', weight: '500 гр.' },
-//     ],
-//     option5: [
-//         { imgSrc: placeholder, currentPrice: 900, measure: 'руб.', lastPrice: 1000, title: 'Burger', weight: '350 гр.' },
-//     ]
-// };
-
 export interface CatalogProps {
     products: ProductProps[]
 }
@@ -65,12 +38,12 @@ const Catalog = (props: CatalogProps) => {
                     </p>
                     <div className="catalog__select">
                         <select id="my-select" className="my-select" value={selectedOption} onChange={handleChange}>
-                        <option value="Everything">Everything</option>
-                        <option value="Sause">Sause</option>
-                        <option value="Giros">Giros</option>
-                        <option value="Salat">Salat</option>
-                        <option value="Mexicam">Mexican</option>
-                        <option value="Burgers">Burgers</option>
+                            <option value="Everything">Everything</option>
+                            <option value="Sause">Sause</option>
+                            <option value="Giros">Giros</option>
+                            <option value="Salat">Salat</option>
+                            <option value="Mexicam">Mexican</option>
+                            <option value="Burgers">Burgers</option>
                         </select>
                     </div>
                 </div>

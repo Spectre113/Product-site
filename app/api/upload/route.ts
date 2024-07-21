@@ -4,18 +4,12 @@ import path from 'path'
 import fs from 'fs'
 import { ProductProps } from '@/components/Product';
 
-
-
 function save(products: ProductProps[]) {
-  // Convert JSON object to string
   const jsonString = JSON.stringify(products, null, 4);
-
-  // Write JSON string to a file
   fs.writeFileSync('data.json', jsonString)
 }
 
 function load() {
-  // Read JSON file
   let products: ProductProps[] = []
   if (!fs.existsSync('data.json')) save(products)
   const data = fs.readFileSync('data.json', 'utf8')
@@ -67,7 +61,16 @@ export async function POST(request: NextRequest) {
   return NextResponse.json(products)
 }
 
-export async function GET(params: NextRequest) {
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get('id');
+  
+  if (id) {
+    const products = load();
+    const product = products.find(p => p.id.toString() === id);
+    return NextResponse.json(product ? product : { error: 'Product not found' });
+  }
+
   return NextResponse.json(load())
 }
 

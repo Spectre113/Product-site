@@ -104,6 +104,18 @@
         width: 30%;
         margin-right: auto;
     }
+
+    /* item */
+
+    .item__info-block>p {
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+
+    .item__img {
+        width: 180px;
+        height: 180px;
+    }
 }
 
 @media (max-width: 910px) {
@@ -287,6 +299,20 @@
 
     .footer__rights {
         font-size: 15px;
+    }
+
+    /* item */
+
+    .item__block {
+        flex-direction: column;
+    }
+
+    .item__img {
+        margin-bottom: 20px;
+    }
+
+    .item__info-block {
+        width: 100%;
     }
 }
 

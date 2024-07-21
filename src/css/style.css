@@ -533,6 +533,45 @@ a, a:focus, a:visited {
     color: var(--black);
 }
 
+/* item */
+
+.item {
+	background: var(--l_black);
+	padding-bottom: 30px;
+}
+
+.item__title {
+	margin-bottom: 30px;
+	font-weight: 600;
+    font-size: 48px;
+    line-height: 100%;
+	color: var(--white);
+}
+
+.item__img {
+	margin-right: auto;
+}
+
+.item__info-block {
+	width: 70%;
+}
+
+.item__info-block>p {
+	margin-bottom: 15px;
+	font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+	color: var(--white);
+}
+
+.item__block {
+	margin-bottom: 30px;
+}
+
+.item__return {
+	margin-right: 15px;
+}
+
 /* Newsletter */
 
 .newsletter {
