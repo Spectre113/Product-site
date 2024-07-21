@@ -35,20 +35,13 @@ export async function POST(request: NextRequest) {
     const data = await request.formData()
     const name: string = data.get('name') as string
     const password: string = data.get('password') as string
-    console.log('name and password', name, password)
+    console.log(name, password, 'fdsfsdf')
     let containsSameName: boolean = false
-    console.log(products)
-    for (let i = 0; i < products.length; i++) {
-        if (products[i].name == name) {
-            containsSameName = true;
-            console.log(products[i], name)
-            break;
+    products.forEach(x => {
+        if (x.name == name) {
+            containsSameName = true
         }
-    }
-
-    if (name.length < 3 || password.length < 3) {
-        return NextResponse.json({ status: 'fail', message: 'Password or name is too short' })
-    }
+    })
 
     if (containsSameName) {
         return NextResponse.json({ status: 'fail', message: 'Account with this name already exists' })
