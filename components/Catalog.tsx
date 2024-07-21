@@ -1,31 +1,35 @@
-"use client"
+"use client";
 
-import React, { useEffect, useState, ChangeEvent } from 'react';
+import React, { useEffect, useState, ChangeEvent } from "react";
 import Product, { ProductProps } from "./Product";
-import { StaticImport } from 'next/dist/shared/lib/get-img-props';
-import placeholder from '../src/img/placeholder.png';
-import Header from './Header';
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import placeholder from "../src/img/placeholder.png";
+import Header from "./Header";
 
-type ProductCategories = 'Everything' | 'Sause' | 'Giros' | 'Salat' | 'Mexican' | 'Burgers';
+type ProductCategories =
+  | "Everything"
+  | "Sause"
+  | "Giros"
+  | "Salat"
+  | "Mexican"
+  | "Burgers";
 
 export interface CatalogProps {
-    products: ProductProps[]
+  products: ProductProps[];
 }
 
 const Catalog = (props: CatalogProps) => {
     const [selectedOption, setSelectedOption] = useState<ProductCategories>('Everything');
 
-    const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-        setSelectedOption(event.target.value as ProductCategories);
-    };
+  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedOption(event.target.value as ProductCategories);
+  };
 
-    useEffect(() => {
-        const mySelect = new Choices('#my-select', {
-            shouldSort: false,
-        });
-        
-    }, []);
-
+  useEffect(() => {
+    const mySelect = new Choices("#my-select", {
+      shouldSort: false,
+    });
+  }, []);
     return (
         <section className="catalog">
             <div className="container flex">
