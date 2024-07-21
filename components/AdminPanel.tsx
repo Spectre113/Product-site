@@ -6,18 +6,9 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { ProductProps } from './Product';
 import Image from 'next/image';
 import styled from 'styled-components';
+import Image from 'next/image';
 import JustValidate from 'just-validate';
-
-interface Item {
-    id: number;
-    category: string | undefined;
-    currentPrice: number;
-    measure: string;
-    lastPrice: number | undefined;
-    title: string;
-    weight: string;
-    imgSrc: string;
-}
+import {ProductProps} from './Product';
 
 const AdminPanel: React.FC = () => {
     const [file, setFile] = useState<File>()
@@ -28,6 +19,8 @@ const AdminPanel: React.FC = () => {
     const [title, setTitle] = useState<string>()
     const [weight, setWeight] = useState<string>()
     const [image, setImage] = useState<string>()
+    const [products, setProducts] = useState<ProductProps[]>([])
+    const [description, setDescription] = useState<string>()
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -43,17 +36,17 @@ const AdminPanel: React.FC = () => {
             data.set('title', title as string)
             data.set('weight', weight as string)
             data.set('image', image as string)
+            data.set('description', description as string)
 
 
             const res = await fetch('/api/upload', {
                 method: 'POST',
                 body: data
             })
-            // handle the error
             if (!res.ok) throw new Error(await res.text())
-            setItems(await res.json())
-        } catch (e: any) {
-            // Handle errors here
+            setProducts(await res.json())
+        } 
+        catch (e: any) {
             console.error(e)
         }
     }
@@ -70,7 +63,7 @@ const AdminPanel: React.FC = () => {
             .then(resp => setItems(resp))
     }, [])
 
-    const { register, handleSubmit, reset } = useForm<Item>();
+    const { register, handleSubmit, reset } = useForm<ProductProps>();
 
     const handleAddItem = (data: ProductProps) => {
         const newItem = { ...data, id: items.length + 1 };
@@ -148,6 +141,12 @@ const AdminPanel: React.FC = () => {
                         errorMessage: 'You did not enter a weight',
                     },
                 ])
+                .addField('#description', [
+                    {
+                        rule: 'required',
+                        errorMessage: 'You did not enter a composition',
+                    },
+                ])
                 .addField('#image', [
                     {
                         rule: 'required',
@@ -197,8 +196,9 @@ const AdminPanel: React.FC = () => {
                         </div>
                     </div>
                 ))}
-                <div className="add-items container">
+                <div className="add-items container flex">
                     <button className="add-items__button btn-reset" onClick={() => setIsAddItemModalOpen(true)}>Add Items</button>
+                    <a href="/" className="return-link">Return</a>
                 </div>
             </div>
 
@@ -327,7 +327,17 @@ const AdminPanel: React.FC = () => {
                                 }}
                             />
                         </Form.Group>
-
+                  
+                        <Form.Group controlId='description'>
+                            <Form.Label>Сomposition</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Enter composition'
+                                onChange={(e) => setDescription(e.target.value)}
+                                name='composition'
+                            />
+                        </Form.Group>
+                  
                         <Button variant='primary' type='submit' onClick={() => {
                             fetch('/api/upload', {
                                 method: 'GET',

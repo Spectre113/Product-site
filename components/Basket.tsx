@@ -1,22 +1,19 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
-
-interface CartItem {
-    title: string;
-    price: number;
-}
+import { StaticImport } from 'next/dist/shared/lib/get-img-props'
+import { ProductProps } from './Product';
 
 interface CartContextProps {
-    cart: CartItem[];
-    addToCart: (item: CartItem) => void;
+    cart: ProductProps[];
+    addToCart: (item: ProductProps) => void;
     removeFromCart: (title: string) => void;
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [cart, setCart] = useState<CartItem[]>([]);
+    const [cart, setCart] = useState<ProductProps[]>([]);
 
-    const addToCart = (item: CartItem) => {
+    const addToCart = (item: ProductProps) => {
         setCart([...cart, item]);
     };
 

@@ -15,7 +15,8 @@ export interface ProductProps {
     lastPrice: number,
     title: string,
     weight: string,
-    image: string | StaticImport
+    image: string | StaticImport,
+    description: string;
 }
 
 const Product: React.FC<ProductProps> = (props) => {
@@ -26,7 +27,8 @@ const Product: React.FC<ProductProps> = (props) => {
 
     const handleAddToCart = (event: React.MouseEvent) => {
         event.stopPropagation();
-        addToCart({ title: props.title, price: props.currentPrice });
+        addToCart({ title: props.title, currentPrice: props.currentPrice, lastPrice: props.lastPrice, measure: props.measure, image : props.image, description : props.description, id: props.id, category: props.category, weight: props.weight });
+        setShow(false);
     };
 
     return (
@@ -55,7 +57,11 @@ const Product: React.FC<ProductProps> = (props) => {
                 <Modal.Header closeButton>
                     <Modal.Title>{props.title}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>...</Modal.Body>
+                <Modal.Body>
+                    <p className="catalog__item-description">
+                        {props.description}
+                    </p>
+                </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                     Close
