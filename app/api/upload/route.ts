@@ -6,7 +6,7 @@ import { ProductProps } from '@/components/Product';
 
 
 
-function save(products: ProductProps[]) {
+export function save(products: ProductProps[]) {
   // Convert JSON object to string
   const jsonString = JSON.stringify(products, null, 4);
 
@@ -14,7 +14,7 @@ function save(products: ProductProps[]) {
   fs.writeFileSync('data.json', jsonString)
 }
 
-function load() {
+export function load() {
   // Read JSON file
   let products: ProductProps[] = []
   if (!fs.existsSync('data.json')) save(products)
