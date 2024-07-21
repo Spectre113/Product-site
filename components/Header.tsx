@@ -323,7 +323,7 @@ const Header: React.FC = () => {
                                 Log-in
                             </h2>
                             <p className="header__log-info">
-                                If you don't have an account yet, <button className='btn-reset header__log-register'>register here</button>.
+                                If you do not have an account yet, <button className='btn-reset header__log-register'>register here</button>.
                             </p>
                             <form action="https://jsonplaceholder.typicode.com/posts" method="POST" className="header__log-form flex" id="log-form">
                                 <label htmlFor="name" className="header__log-label">

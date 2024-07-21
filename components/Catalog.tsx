@@ -49,9 +49,11 @@ const Catalog = (props: CatalogProps) => {
                 </div>
                 <div className="catalog__items-block">
                     <ul className="catalog__list list-reset row">
-                    {true ?
-                        props.products.map(x => <Product currentPrice={x.currentPrice} measure={x.measure} title={x.title} weight={x.weight} lastPrice={x.lastPrice} image={x.image} category={x.category} description={x.description} id={x.id}/>) :
-                        props.products.filter(x => x.category == selectedOption).map(x => <Product currentPrice={x.currentPrice} measure={x.measure} title={x.title} weight={x.weight} lastPrice={x.lastPrice} image={x.image} category={x.category} description={x.description} id={x.id}/>)}
+                        {true ?
+                            props.products.map(x => <Product key={x.id} currentPrice={x.currentPrice} measure={x.measure} title={x.title} weight={x.weight} lastPrice={x.lastPrice} image={x.image} category={x.category} description={x.description} id={x.id} />) :
+                            props.products.filter(x => x.category == selectedOption).map(x => <Product key={x.id} currentPrice={x.currentPrice} measure={x.measure} title={x.title} weight={x.weight} lastPrice={x.lastPrice} image={x.image} category={x.category} description={x.description} id={x.id} />)
+                        }
+
                     </ul>
                 </div>
             </div>
