@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextApiRequest, NextApiResponse } from 'next';
 import fs from 'fs';
 import path from 'path';
 import { ProductProps } from '@/components/Product';
@@ -15,19 +15,18 @@ function load() {
   return products;
 }
 
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const id = searchParams.get('id');
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  const { id } = req.query;
 
   if (id) {
     const products = load();
     const product = products.find(p => p.id.toString() === id);
     if (product) {
-      return NextResponse.json(product);
+      res.status(200).json(product);
     } else {
-      return NextResponse.json({ error: 'Product not found' }, { status: 404 });
+      res.status(404).json({ error: 'Product not found' });
     }
+  } else {
+    res.status(200).json(load());
   }
-
-  return NextResponse.json(load());
 }
