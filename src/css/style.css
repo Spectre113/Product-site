@@ -10,6 +10,7 @@
 	--s_gray: #D2D5DD;
 	--red: #FF0000;
 	--yellow: #F0D288;
+	--green: #008000
 }
 
 html {
@@ -134,6 +135,8 @@ a, a:focus, a:visited {
 }
 
 .header__controls {
+	position: relative;
+	align-items: center;
 	width: 27.2%;
 }
 
@@ -251,7 +254,7 @@ a, a:focus, a:visited {
     color: var(--black);
 }
 
-.header__log-info>a {
+.header__log-info>button {
 	font-weight: 400;
     font-size: 20px;
     line-height: 20px;
@@ -303,6 +306,153 @@ a, a:focus, a:visited {
     border-color: var(--red);
 }
 
+.header__basket-content {
+	position: relative;
+}
+
+.header__basket-block {
+    position: absolute;
+    width: 250px;
+    height: 180px;
+    background-color: var(--white);
+    padding: 20px;
+    padding-right: 0;
+    box-shadow: 1px 2px 10px -3px #333;
+    bottom: -197px;
+    right: -15px;
+    z-index: 5;
+}
+
+.header__basket-block>div {
+	max-height: 150px;
+	padding-right: 15px;
+	overflow-y: auto;
+}
+
+.header__basket-block::before {
+    position: absolute;
+    top: -9px;
+    right: 18px;
+    width: 20px;
+    height: 20px;
+    content: '';
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    background: white;
+}
+
+.header__basket-menu {
+	width: 100%;
+	min-height: 35px;
+	background-color: var(--white);
+	border: 1px solid var(--l_black);
+	border-radius: 25px;
+	font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+	color: var(--black);
+}
+
+.header__register-block {
+	left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    position: fixed;
+    justify-content: center;
+    background-color: #0000009e;
+    top: 0;
+}
+
+.header__register-block>div {
+    position: absolute;
+    width: 824px;
+    min-height: 200px;
+    padding: 60px;
+    background: var(--white);
+    top: 80px;
+    z-index: 5;
+}
+
+.register--successful {
+	color: var(--green);
+}
+
+/* Basket && Header-Basket */
+
+.basket {
+	padding-bottom: 30px;
+}
+
+.basket-item {
+	margin-bottom: 20px;
+	align-items: center;
+}
+
+.basket-item>img {
+	width: 200px;
+	height: 200px;
+}
+
+.basket-item-details {
+	margin-left: 40px;
+}
+
+.basket-item-details>div>span {
+	margin-right: 20px;
+}
+
+.basket-item-details {
+	width: 35%;
+	min-height: 200px;
+    padding: 10px;
+}
+
+.basket-item-details>div {
+	margin-right: 20px;
+}
+
+.basket-item-details>div>p {
+	margin-top: 25px;
+	color: var(--black);
+}
+
+.basket__del {
+	width: 40%;
+}
+
+.basket-item>span {
+	font-size: 13px;
+    font-weight: 500;
+    line-height: 40px;
+    color: var(--black);
+}
+
+.basket-item>.delete-btn {
+	margin-left: auto;
+}
+
+.basket__btn {
+	position: relative;
+	width: 200px;
+	min-height: 30px;
+	padding: 15px;
+	border: 1px solid var(--black);
+	border-radius: 25px;
+	left: 40%;
+	font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+	color: var(--black);
+}
+
+.basket-item-details {
+	font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+	color: var(--black);
+}
+
 /* Hero */
 
 .hero {
@@ -344,7 +494,6 @@ a, a:focus, a:visited {
 
 .newsletter {
 	min-height: 530px;
-	padding-top: 56px;
 	padding-bottom: 43px;
 	background-color: var(--l_black);
 }
@@ -574,8 +723,8 @@ a, a:focus, a:visited {
 }
 
 .catalog__info-block {
-	width: 25%;
-	margin-right: auto;
+	width: fit-content;
+	margin-right: 30px;
 }
 
 .catalog__list {
@@ -734,11 +883,16 @@ a, a:focus, a:visited {
 
 .add-items {
 	margin-top: 30px;
+	align-items: center;
+	font-size: 28px;
+    font-weight: 400;
+    line-height: 34px;
+    letter-spacing: 0px;
 }
 
 .add-items__button {
 	width: 250px;
-	margin-right: 20px;
+	margin-right: 25px;
 	padding: 14px 20px;
 	background: var(--white);
 	border: 1px solid var(--white);
@@ -762,8 +916,12 @@ a, a:focus, a:visited {
 	color: var(--black);
 }
 
-.modal-body>form>div {
+/* .modal-body>form>div {
 	margin-bottom: 20px;
+} */
+
+#category {
+	margin-bottom: 30px;
 }
 
 .modal-title {
@@ -786,10 +944,20 @@ a, a:focus, a:visited {
 	padding-left: .75rem;
 }
 
+#log-form-2>div {
+	position: relative;
+}
+
+#log-form-2>div>.just-validate-error-label {
+	top: 27px;
+	font-size: 8px;
+}
+
 /* About */
 
 .about {
 	min-height: 500px;
+	padding-bottom: 40px;
 	background-color: var(--white);
 }
 
@@ -882,5 +1050,4 @@ a, a:focus, a:visited {
 #swiper-slide-4 {
 	background: url(../img/mexican.jpg);
 	background-size: cover;
-
 }

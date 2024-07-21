@@ -48,9 +48,9 @@
     color: var(--primary_shade);
 }
 
-/* .header__link:hover:focus {
+.header__link:hover:focus {
     color: var(--white);
-} */
+}
 
 .header__search>svg>path {
     transition: stroke 0.3s ease-in-out;
@@ -186,22 +186,22 @@
 	stroke: var(--primary_shade);
 }
 
-.header__log-info>a {
+.header__log-info>button {
 	transition: color 0.3s ease-in-out;
 }
 
-.header__log-info>a:hover {
+.header__log-info>button:hover {
 	color: var(--primary_light);
 	transition: color 0.3s ease-in-out;
 }
 
-.header__log-info>a:focus {
+.header__log-info>button:focus {
 	color: var(--primary_light);
 	outline: none;
 	transition: color 0.3s ease-in-out;
 }
 
-.header__log-info>a:active {
+.header__log-info>button:active {
 	color: var(--primary_shade);
 	transition: color 0.3s ease-in-out;
 }

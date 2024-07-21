@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Modal, Button, Form } from 'react-bootstrap';
+import styled from 'styled-components';
+import JustValidate from 'just-validate';
 
 interface Item {
     id: number;
@@ -13,9 +15,54 @@ interface Item {
     title: string;
     weight: string;
     imgSrc: string;
+    description: string;
 }
 
 const AdminPanel: React.FC = () => {
+    const [file, setFile] = useState<File>()
+    const [category, setCategory] = useState<string>()
+    const [measure, setMeasure] = useState<string>()
+    const [lastPrice, setLastPrice] = useState<string>()
+    const [currentPrice, setCurrentPrice] = useState<string>()
+    const [title, setTitle] = useState<string>()
+    const [weight, setWeight] = useState<string>()
+    const [image, setImage] = useState<string>()
+    const [products, setProducts] = useState<any[]>([])
+    const [description, setDescription] = useState<string>()
+
+
+
+    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        if (!file) return
+        console.log('It is OK, bro!');
+        try {
+            const data = new FormData()
+            data.set('file', file)
+            data.set('category', category as string)
+            data.set('currentPrice', currentPrice as string)
+            data.set('measure', measure as string)
+            data.set('lastPrice', lastPrice as string)
+            data.set('title', title as string)
+            data.set('weight', weight as string)
+            data.set('image', image as string)
+            data.set('description', description as string)
+
+
+            const res = await fetch('/api/upload', {
+                method: 'POST',
+                body: data
+            })
+            // handle the error
+            if (!res.ok) throw new Error(await res.text())
+            setProducts(await res.json())
+        } catch (e: any) {
+            // Handle errors here
+            console.error(e)
+        }
+    }
+    console.log(products)
+
     const [items, setItems] = useState<Item[]>([]);
     const [isAdditionalInfoModalOpen, setIsAdditionalInfoModalOpen] = useState(false);
     const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] = useState(false);
@@ -23,13 +70,6 @@ const AdminPanel: React.FC = () => {
     const [selectedItem, setSelectedItem] = useState<Item | null>(null);
 
     const { register, handleSubmit, reset } = useForm<Item>();
-
-    useEffect(() => {
-        setItems([
-            { id: 1, category: "Category 1", currentPrice: 100, measure: "g", lastPrice: 120, title: "Item 1", weight: "500g", imgSrc: "https://via.placeholder.com/150" },
-            { id: 2, category: "Category 2", currentPrice: 200, measure: "g", lastPrice: 220, title: "Item 2", weight: "1000g", imgSrc: "https://via.placeholder.com/150" },
-        ]);
-    }, []);
 
     const handleAddItem = (data: Item) => {
         const newItem = { ...data, id: items.length + 1 };
@@ -50,12 +90,78 @@ const AdminPanel: React.FC = () => {
     const openAdditionalInfoModal = (item: Item) => {
         setSelectedItem(item);
         setIsAdditionalInfoModalOpen(true);
-      };
-    
-      const openDeleteConfirmModal = (item: Item) => {
+    };
+
+    const openDeleteConfirmModal = (item: Item) => {
         setSelectedItem(item);
         setIsDeleteConfirmModalOpen(true);
-      };
+    };
+
+    useEffect(() => {
+        if (isAddItemModalOpen) {
+            const validator = new JustValidate('#log-form-2');
+
+            validator
+                .addField('#category', [
+                    {
+                        rule: 'required',
+                        errorMessage: 'You did not select a category',
+                    },
+                ])
+                .addField('#curPrice', [
+                    {
+                        rule: 'required',
+                        errorMessage: 'You did not enter a current price',
+                    },
+                ])
+                .addField('#measure', [
+                    {
+                        rule: 'required',
+                        errorMessage: 'You did not enter a measure',
+                    },
+                ])
+                .addField('#lastPrice', [
+                    {
+                        rule: 'required',
+                        errorMessage: 'You did not enter a last price',
+                    },
+                ])
+                .addField('#title', [
+                    {
+                        rule: 'required',
+                        errorMessage: 'You did not enter a title',
+                    },
+                ])
+                .addField('#weight', [
+                    {
+                        rule: 'required',
+                        errorMessage: 'You did not enter a weight',
+                    },
+                ])
+                .addField('#description', [
+                    {
+                        rule: 'required',
+                        errorMessage: 'You did not enter a composition',
+                    },
+                ])
+                .addField('#image', [
+                    {
+                        rule: 'required',
+                        errorMessage: 'You did not select a file',
+                    },
+                    {
+                        validator: (value : unknown, fields : unknown) => {
+                            const fileInput = document.querySelector<HTMLInputElement>('#image');
+                            return fileInput && fileInput.files && fileInput.files.length > 0;
+                        },
+                        errorMessage: 'You did not select a file',
+                    },
+                ])
+                .onSuccess((e: Event) => {
+                    onSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
+                });
+        }
+    }, [isAddItemModalOpen]);
 
     return (
         <section className="apanel">
@@ -87,90 +193,150 @@ const AdminPanel: React.FC = () => {
                         </div>
                     </div>
                 ))}
-                <div className="add-items container">
+                <div className="add-items container flex">
                     <button className="add-items__button btn-reset" onClick={() => setIsAddItemModalOpen(true)}>Add Items</button>
+                    <a href="/" className="return-link">Return</a>
                 </div>
             </div>
 
             {/* Additional Info Modal */}
             <Modal show={isAdditionalInfoModalOpen} onHide={() => setIsAdditionalInfoModalOpen(false)}>
                 <Modal.Header closeButton>
-                <Modal.Title>Additional Info</Modal.Title>
+                    <Modal.Title>Additional Info</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                {selectedItem && (
-                    <div>
-                        <img src={selectedItem.imgSrc} alt={selectedItem.title} className="img-fluid" />
-                        <p>Category: {selectedItem.category}</p>
-                        <p>Current Price: {selectedItem.currentPrice}</p>
-                        <p>Measure: {selectedItem.measure}</p>
-                        <p>Last Price: {selectedItem.lastPrice}</p>
-                        <p>Weight: {selectedItem.weight}</p>
-                    </div>
-                )}
+                    {selectedItem && (
+                        <div>
+                            <img src={selectedItem.imgSrc} alt={selectedItem.title} className="img-fluid" />
+                            <p>Category: {selectedItem.category}</p>
+                            <p>Current Price: {selectedItem.currentPrice}</p>
+                            <p>Measure: {selectedItem.measure}</p>
+                            <p>Last Price: {selectedItem.lastPrice}</p>
+                            <p>Weight: {selectedItem.weight}</p>
+                        </div>
+                    )}
                 </Modal.Body>
                 <Modal.Footer>
-                <Button variant="secondary" onClick={() => setIsAdditionalInfoModalOpen(false)}>
-                    Close
-                </Button>
+                    <Button variant="secondary" onClick={() => setIsAdditionalInfoModalOpen(false)}>
+                        Close
+                    </Button>
                 </Modal.Footer>
             </Modal>
 
             {/* Delete Confirm Modal */}
             <Modal show={isDeleteConfirmModalOpen} onHide={() => setIsDeleteConfirmModalOpen(false)}>
                 <Modal.Header closeButton>
-                <Modal.Title>Confirm Deletion</Modal.Title>
+                    <Modal.Title>Confirm Deletion</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <p>Are you sure you want to delete this item?</p>
                 </Modal.Body>
                 <Modal.Footer>
-                <Button variant="danger" onClick={() => handleDeleteItem(selectedItem?.id ?? 0)}>
-                    Yes
-                </Button>
-                <Button variant="secondary" onClick={() => setIsDeleteConfirmModalOpen(false)}>
-                    No
-                </Button>
+                    <Button variant="danger" onClick={() => handleDeleteItem(selectedItem?.id ?? 0)}>
+                        Yes
+                    </Button>
+                    <Button variant="secondary" onClick={() => setIsDeleteConfirmModalOpen(false)}>
+                        No
+                    </Button>
                 </Modal.Footer>
             </Modal>
 
             {/* Add Item Modal */}
             <Modal show={isAddItemModalOpen} onHide={() => setIsAddItemModalOpen(false)}>
                 <Modal.Header closeButton>
-                <Modal.Title>Add Item</Modal.Title>
+                    <Modal.Title>Add Item</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                <Form onSubmit={handleSubmit(handleAddItem)}>
-                    <Form.Group>
-                    <Form.Label>Category</Form.Label>
-                    <Form.Control {...register("category")} placeholder="Category" />
-                    </Form.Group>
-                    <Form.Group>
-                    <Form.Label>Current Price</Form.Label>
-                    <Form.Control {...register("currentPrice", { valueAsNumber: true })} placeholder="Current Price" type="number" />
-                    </Form.Group>
-                    <Form.Group>
-                    <Form.Label>Measure</Form.Label>
-                    <Form.Control {...register("measure")} placeholder="Measure" />
-                    </Form.Group>
-                    <Form.Group>
-                    <Form.Label>Last Price</Form.Label>
-                    <Form.Control {...register("lastPrice", { valueAsNumber: true })} placeholder="Last Price" type="number" />
-                    </Form.Group>
-                    <Form.Group>
-                    <Form.Label>Title</Form.Label>
-                    <Form.Control {...register("title")} placeholder="Title" />
-                    </Form.Group>
-                    <Form.Group>
-                    <Form.Label>Weight</Form.Label>
-                    <Form.Control {...register("weight")} placeholder="Weight" />
-                    </Form.Group>
-                    <Form.Group>
-                    <Form.Label>Image URL</Form.Label>
-                    <Form.Control {...register("imgSrc")} placeholder="Image URL" />
-                    </Form.Group>
-                    <Button type="submit">Add</Button>
-                </Form>
+                    <Form className='d-flex flex-column' id="log-form-2" onSubmit={onSubmit}>
+                        <Form.Group controlId='category'>
+                            <Form.Label>Category</Form.Label>
+                            <Form.Select onChange={(e) => setCategory(e.target.value)} name='category'>
+                                <option value='Sause'>Sause</option>
+                                <option value='Giros'>Giros</option>
+                                <option value='Salat'>Salat</option>
+                                <option value='Mexican'>Mexican</option>
+                                <option value='Burgers'>Burgers</option>
+                            </Form.Select>
+                        </Form.Group>
+
+                        <Form.Group controlId='curPrice'>
+                            <Form.Label>Current Price</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Enter current price'
+                                onChange={(e) => setCurrentPrice(e.target.value)}
+                                name='currentPrice'
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId='measure'>
+                            <Form.Label>Measure</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Enter measure'
+                                onChange={(e) => setMeasure(e.target.value)}
+                                name='measure'
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId='lastPrice'>
+                            <Form.Label>Last Price</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Enter last price'
+                                onChange={(e) => setLastPrice(e.target.value)}
+                                name='lastPrice'
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId='title'>
+                            <Form.Label>Title</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Enter title'
+                                onChange={(e) => setTitle(e.target.value)}
+                                name='title'
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId='weight'>
+                            <Form.Label>Weight</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Enter weight'
+                                onChange={(e) => setWeight(e.target.value)}
+                                name='weight'
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId='image'>
+                            <Form.Label>File</Form.Label>
+                            <Form.Control
+                                type='file'
+                                name='file'
+                                onChange={(e) => {
+                                    const target = e.target as HTMLInputElement;
+                                    if (target.files) {
+                                        setFile(target.files[0]);
+                                    }
+                                }}
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId='description'>
+                            <Form.Label>Сomposition</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Enter composition'
+                                onChange={(e) => setDescription(e.target.value)}
+                                name='composition'
+                            />
+                        </Form.Group>
+
+                        <Button variant='primary' type='submit'>
+                            Add
+                        </Button>
+                    </Form>
                 </Modal.Body>
             </Modal>
         </section>
