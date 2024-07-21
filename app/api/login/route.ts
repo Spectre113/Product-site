@@ -39,20 +39,13 @@ export async function POST(request: NextRequest) {
     console.log(products)
     for (let i = 0; i < products.length; i++) {
         if (products[i].name == name) {
-            containsSameName = true;
-            console.log(products[i], name)
+            if (products[i].password == password) containsSameName = true;
+            else containsSameName = false;
             break;
         }
     }
-
-    if (name.length < 3 || password.length < 3) {
-        return NextResponse.json({ status: 'fail', message: 'Password or name is too short' })
-    }
-
     if (containsSameName) {
-        return NextResponse.json({ status: 'fail', message: 'Account with this name already exists' })
+        return NextResponse.json({ status: 'ok'})
     }
-    products.push({ name, password })
-    save(products)
-    return NextResponse.json({ status: 'ok', message: products })
+    return NextResponse.json({ status: 'fail' })
 }

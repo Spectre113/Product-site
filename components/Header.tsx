@@ -5,7 +5,6 @@ import Link from 'next/link';
 import JustValidate from 'just-validate';
 import { useRouter } from 'next/router';
 import { useCart } from './Basket';
-import { Form } from 'react-bootstrap';
 
 const Header: React.FC = () => {
     const router = useRouter();
@@ -41,6 +40,22 @@ const Header: React.FC = () => {
             // Handle errors here
             console.error(e)
         }
+    }
+
+    const onLogin = async (name: string, password: string) => {
+        console.log(name, password);
+
+        const data = new FormData()
+        data.set('name', name)
+        data.set('password', password)
+
+        const res = await fetch('/api/login', {
+            method: 'POST',
+            body: data
+        })
+        const js = await res.json()
+        if (js.status == 'ok') return true;
+        else return false;
     }
 
     useEffect(() => {
@@ -133,6 +148,28 @@ const Header: React.FC = () => {
             console.error('One or more elements were not found.');
         }
 
+    }, [])
+
+    useEffect(() => {
+        const basketBtn = document.querySelector('.header__basket');
+        const basketBlock = document.querySelector('.header__basket-block');
+
+        const search = document.querySelector('.header__search--disabled') as HTMLElement | null;
+        const nav = document.querySelector('.header__nav') as HTMLElement | null;
+        const searchContent = document.querySelector('.header__search-active') as HTMLElement | null;
+        const content = document.querySelector('.header__controls') as HTMLElement | null;
+        const close = document.querySelector('.header__search-close') as HTMLElement | null;
+
+        
+        const logBtn = document.querySelector('.header__log');
+        const logContent = document.querySelector('.header__log-content');
+        const logClose = document.querySelector('.header__log-close');
+        const registerBtn = document.querySelector('.header__log-register');
+        const registerBlock = document.querySelector('.header__register-block');
+        const registerClose = document.querySelector('.register-close');
+        const registerSuccessMessage = document.querySelector('.register--successful');
+
+
         const validator = new JustValidate('#log-form');
 
         validator
@@ -163,13 +200,19 @@ const Header: React.FC = () => {
                     errorMessage: '3 symbols minimum',
                 },
             ])
-            .onSuccess((event: Event) => {
+            .onSuccess(async (event: Event) => {
                 event.preventDefault();
                 const formData = new FormData(event.target as HTMLFormElement);
                 const name = formData.get('name') as string;
                 const password = formData.get('password') as string;
+                console.log(name, password)
 
-                if (name === 'admin' && password === 'admin') {
+                event.stopPropagation();
+                event.preventDefault()
+                onRegister(registerBlock, logContent, registerSuccessMessage)
+
+                const res = await onLogin(name, password)
+                if (res) {
                     router.push('/apanel');
                 } else {
                     alert('Invalid login or password');
@@ -206,13 +249,13 @@ const Header: React.FC = () => {
                     errorMessage: '3 symbols minimum',
                 },
             ])
-            .onSuccess((event: Event) => {
+            .onSuccess(async (event: Event) => {
                 event.stopPropagation();
                 event.preventDefault()
                 onRegister(registerBlock, logContent, registerSuccessMessage)
-                
+
             });
-    }, [router, name, password]);
+    }, []);
 
 
 
@@ -328,13 +371,16 @@ const Header: React.FC = () => {
                             </h2>
                             <form action={'/api/register'} method='POST' className="header__log-form flex" id="log-form-3">
                                 <label htmlFor="name" className="header__log-label">
-                                    <input value={name} onChange={(e => {
+                                    <input id="name" value={name} onChange={(e => {
                                         console.log(e.target.value, name)
                                         setName(e.target.value)
-                                    })} type="text" className="header__log-input" placeholder="Enter a name" name="name" id="name"></input>
+                                    })} type="text" className="header__log-input" placeholder="Enter a name" name="name"></input>
                                 </label>
                                 <label htmlFor="password" className="header__log-label">
-                                    <input value={password} onChange={e => setPassword(e.target.value)} type="password" className="header__log-input" placeholder="Enter your password" name="password" id="password"></input>
+                                    <input id="password" value={password} onChange={(e => {
+                                        console.log(e.target.value, password)
+                                        setPassword(e.target.value)
+                                    })} type="password" className="header__log-input" placeholder="Enter your password" name="password"></input>
                                 </label>
                                 <button className="header__log-button btn-reset">
                                     Register
