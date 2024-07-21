@@ -351,6 +351,7 @@ a, a:focus, a:visited {
     font-size: 16px;
     line-height: 150%;
 	color: var(--black);
+	transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, outline 0.3s ease-in-out;
 }
 
 .header__register-block {
@@ -421,6 +422,9 @@ a, a:focus, a:visited {
 	width: 40%;
 }
 
+.basket__del svg path {
+	transition: fill 0.3s ease-in-out;
+}
 .basket-item>span {
 	font-size: 13px;
     font-weight: 500;
@@ -444,6 +448,7 @@ a, a:focus, a:visited {
     font-size: 16px;
     line-height: 150%;
 	color: var(--black);
+	transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, outline 0.3s ease-in-out;
 }
 
 .basket-item-details {

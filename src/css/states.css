@@ -296,3 +296,67 @@
 .catalog__item>div:focus {
     outline: none;
 }
+
+/*Basket*/
+
+.basket__btn:hover {
+    background: var(--s_gray);   
+}
+
+.basket__btn:focus {
+    outline: 3px solid var(--gray);
+}
+
+.basket__btn:active {
+   background: var(--gray);
+   color: var(--white);
+}
+
+
+.basket__del:hover svg path,
+.basket__del:hover circle
+{
+    transition: stroke 0.3s ease-in-out;
+}
+
+.basket__del:hover circle,
+.basket__del:hover svg path
+
+ {
+    stroke: rgb(180, 16, 57);
+}
+
+.basket__del:active circle,
+.basket__del:active svg path {
+    stroke: rgb(110, 24, 28);
+}
+
+.header__basket-menu:hover {
+    background: var(--primary_light);
+    color: var(--white);
+}
+
+.header__basket-menu:focus {
+    outline: 3px solid var(--primary);
+}
+
+.header__basket-menu:active {
+    background: var(--primary);
+    color: var(--white);
+}
+
+.delete-btn svg path,
+.delete-btn circle {
+    transition: stroke 0.3s ease-in-out;
+}
+
+.delete-btn:hover svg path,
+.delete-btn:hover circle {
+    stroke: rgb(180, 16, 57);
+}
+
+.delete-btn:active circle,
+.delete-btn:active svg path {
+    stroke: rgb(110, 24, 28);
+}
+
