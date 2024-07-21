@@ -3,25 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import path from 'path'
 import fs from 'fs'
 import { ProductProps } from '@/components/Product';
-
-const save = (products: ProductProps[]) => {
-    const jsonString = JSON.stringify(products, null, 4);
-    fs.writeFileSync('data.json', jsonString);
-  };
-  
-  const load = (): ProductProps[] => {
-    let products: ProductProps[] = [];
-    if (!fs.existsSync('data.json')) save(products);
-    const data = fs.readFileSync('data.json', 'utf8');
-    try {
-      const jsonObject = JSON.parse(data);
-      products = jsonObject;
-      console.log('JSON object:', jsonObject);
-    } catch (err) {
-      console.error('Error parsing JSON string:', err);
-    }
-    return products;
-  };
+import { load, save } from '../upload/route';
 
 export async function POST(request: NextRequest) {
     const products = load();

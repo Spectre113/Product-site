@@ -10,7 +10,7 @@ export default function Document() {
           href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/base.min.css"
         />
         <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
-        <link rel="icon" href="#" />
+        <link rel="icon" href="ico.ico" />
       </Head>
       <body>
         <Main />

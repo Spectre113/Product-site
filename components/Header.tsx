@@ -270,7 +270,7 @@ const Header: React.FC = () => {
                 burgerMenu.classList.remove('header__burger--active');
             });
         }
-  }, [onRegister]);
+  }, []);
 
   return (
     <header className="header">
@@ -313,7 +313,7 @@ const Header: React.FC = () => {
         <div className="header__burger-menu none">
             <button className="header__burger-btn btn-reset">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g clipPath="url(#clip0_24531_4514)">
+                    <g clip-path="url(#clip0_24531_4514)">
                         <rect width="24" height="3" rx="1.5" fill="#fff"/>
                         <rect y="21" width="24" height="3" rx="1.5" fill="#fff"/>
                         <rect y="11" width="24" height="3" rx="1.5" fill="#fff"/>
