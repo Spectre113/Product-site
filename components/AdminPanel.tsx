@@ -3,10 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Modal, Button, Form } from 'react-bootstrap';
+import { ProductProps } from './Product';
 import styled from 'styled-components';
 import Image from 'next/image';
 import JustValidate from 'just-validate';
-import {ProductProps} from './Product';
 
 const AdminPanel: React.FC = () => {
     const [file, setFile] = useState<File>()
@@ -17,10 +17,8 @@ const AdminPanel: React.FC = () => {
     const [title, setTitle] = useState<string>()
     const [weight, setWeight] = useState<string>()
     const [image, setImage] = useState<string>()
-    const [products, setProducts] = useState<unknown[]>([])
+    const [products, setProducts] = useState<ProductProps[]>([])
     const [description, setDescription] = useState<string>()
-
-
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -50,13 +48,18 @@ const AdminPanel: React.FC = () => {
             console.error(e)
         }
     }
-    console.log(products)
 
     const [items, setItems] = useState<ProductProps[]>([]);
     const [isAdditionalInfoModalOpen, setIsAdditionalInfoModalOpen] = useState(false);
     const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] = useState(false);
     const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState<ProductProps | null>(null);
+    useEffect(() => {
+        fetch('/api/upload', {
+            method: 'GET',
+        }).then(resp => resp.json())
+            .then(resp => setItems(resp))
+    }, [])
 
     const { register, handleSubmit, reset } = useForm<ProductProps>();
 
@@ -74,6 +77,15 @@ const AdminPanel: React.FC = () => {
     const handleDeleteItem = (id: number) => {
         setItems(items.filter(item => item.id !== id));
         setIsDeleteConfirmModalOpen(false);
+        const data = new FormData()
+        data.set('id', `${id}`)
+        fetch('/api/upload', {
+            method: 'DELETE',
+            body: data
+        }).then(resp => resp.json())
+            .then(resp => {
+                setItems(resp)
+            })
     };
 
     const openAdditionalInfoModal = (item: ProductProps) => {
@@ -196,12 +208,13 @@ const AdminPanel: React.FC = () => {
                 <Modal.Body>
                     {selectedItem && (
                         <div>
-                            <Image src={selectedItem.image as string} alt={selectedItem.title} width={50} height={50} className='img-fluid' />
+                            <Image unoptimized={true} src={selectedItem.image} alt={selectedItem.title} className="img-fluid" width={100} height={100}/>
                             <p>Category: {selectedItem.category}</p>
                             <p>Current Price: {selectedItem.currentPrice}</p>
                             <p>Measure: {selectedItem.measure}</p>
                             <p>Last Price: {selectedItem.lastPrice}</p>
                             <p>Weight: {selectedItem.weight}</p>
+                            <p>Info: {selectedItem.description}</p>
                         </div>
                     )}
                 </Modal.Body>
@@ -221,7 +234,9 @@ const AdminPanel: React.FC = () => {
                     <p>Are you sure you want to delete this item?</p>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="danger" onClick={() => handleDeleteItem(selectedItem?.id ?? 0)}>
+                    <Button variant="danger" onClick={() => {
+                        handleDeleteItem(selectedItem?.id ?? 0)
+                    }}>
                         Yes
                     </Button>
                     <Button variant="secondary" onClick={() => setIsDeleteConfirmModalOpen(false)}>
@@ -236,7 +251,7 @@ const AdminPanel: React.FC = () => {
                     <Modal.Title>Add Item</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form className='d-flex flex-column' id="log-form-2" onSubmit={onSubmit}>
+                <Form className='d-flex flex-column' id="log-form-2" onSubmit={onSubmit}>
                         <Form.Group controlId='category'>
                             <Form.Label>Category</Form.Label>
                             <Form.Select onChange={(e) => setCategory(e.target.value)} name='category'>
@@ -311,7 +326,7 @@ const AdminPanel: React.FC = () => {
                                 }}
                             />
                         </Form.Group>
-
+                  
                         <Form.Group controlId='description'>
                             <Form.Label>Сomposition</Form.Label>
                             <Form.Control
@@ -321,7 +336,7 @@ const AdminPanel: React.FC = () => {
                                 name='composition'
                             />
                         </Form.Group>
-
+                  
                         <Button variant='primary' type='submit' onClick={() => {
                             fetch('/api/upload', {
                                 method: 'GET',
