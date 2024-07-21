@@ -9,83 +9,74 @@ import styled from 'styled-components';
 import JustValidate from 'just-validate';
 
 const AdminPanel: React.FC = () => {
-    const [file, setFile] = useState<File>()
-    const [category, setCategory] = useState<string>()
-    const [measure, setMeasure] = useState<string>()
-    const [lastPrice, setLastPrice] = useState<string>()
-    const [currentPrice, setCurrentPrice] = useState<string>()
-    const [title, setTitle] = useState<string>()
-    const [weight, setWeight] = useState<string>()
-    const [image, setImage] = useState<string>()
-    const [products, setProducts] = useState<ProductProps[]>([])
-    const [description, setDescription] = useState<string>()
-
-    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        if (!file) return
-        console.log('It is OK, bro!');
-        try {
-            const data = new FormData()
-            data.set('file', file)
-            data.set('category', category as string)
-            data.set('currentPrice', currentPrice as string)
-            data.set('measure', measure as string)
-            data.set('lastPrice', lastPrice as string)
-            data.set('title', title as string)
-            data.set('weight', weight as string)
-            data.set('image', image as string)
-            data.set('description', description as string)
-
-
-            const res = await fetch('/api/upload', {
-                method: 'POST',
-                body: data
-            })
-            if (!res.ok) throw new Error(await res.text())
-            setProducts(await res.json())
-        } 
-        catch (e: any) {
-            console.error(e)
-        }
-    }
+    const [file, setFile] = useState<File | null>(null);
+    const [category, setCategory] = useState<string>('');
+    const [measure, setMeasure] = useState<string>('');
+    const [lastPrice, setLastPrice] = useState<string>('');
+    const [currentPrice, setCurrentPrice] = useState<string>('');
+    const [title, setTitle] = useState<string>('');
+    const [weight, setWeight] = useState<string>('');
+    const [image, setImage] = useState<string>('');
+    const [description, setDescription] = useState<string>('');
+    const [fileName, setFileName] = useState<string>('');
 
     const [items, setItems] = useState<ProductProps[]>([]);
     const [isAdditionalInfoModalOpen, setIsAdditionalInfoModalOpen] = useState(false);
     const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] = useState(false);
     const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
+    const [isUpdateItemModalOpen, setIsUpdateItemModalOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState<ProductProps | null>(null);
+
     useEffect(() => {
         fetch('/api/upload', {
             method: 'GET',
         }).then(resp => resp.json())
-            .then(resp => setItems(resp))
-    }, [])
+            .then(resp => Array.isArray(resp) && setItems(resp));
+    }, []);
 
-    const { register, handleSubmit, reset } = useForm<ProductProps>();
+    const { register, handleSubmit, reset, setValue } = useForm<ProductProps>();
 
-    const handleAddItem = (data: ProductProps) => {
-        const newItem = { ...data, id: items.length + 1 };
-        setItems([...items, newItem]);
-        setIsAddItemModalOpen(false);
-        reset();
+    const handleAddItem = async (data: ProductProps) => {
+        try {
+            const response = await fetch('/api/upload', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.statusText}`);
+            }
+
+            const newItems = await response.json();
+            if (Array.isArray(newItems)) {
+                setItems(newItems);
+            } else {
+                throw new Error('Invalid response format');
+            }
+            setIsAddItemModalOpen(false);
+            reset();
+        } catch (error) {
+            console.error('Add item error:', error);
+        }
     };
 
-    const handleUpdateItem = (id: number) => {
-        setItems(items.map(item => item.id === id ? { ...item, title: `${item.title} (updated)` } : item));
+    const handleUpdateItem = async (data: ProductProps) => {
+        return
     };
 
     const handleDeleteItem = (id: number) => {
         setItems(items.filter(item => item.id !== id));
         setIsDeleteConfirmModalOpen(false);
-        const data = new FormData()
-        data.set('id', `${id}`)
+        const data = new FormData();
+        data.set('id', `${id}`);
         fetch('/api/upload', {
             method: 'DELETE',
             body: data
         }).then(resp => resp.json())
-            .then(resp => {
-                setItems(resp)
-            })
+            .then(resp => Array.isArray(resp) && setItems(resp));
     };
 
     const openAdditionalInfoModal = (item: ProductProps) => {
@@ -98,9 +89,24 @@ const AdminPanel: React.FC = () => {
         setIsDeleteConfirmModalOpen(true);
     };
 
+    const openUpdateItemModal = (item: ProductProps) => {
+        setSelectedItem(item);
+        setValue('category', item.category);
+        setValue('currentPrice', item.currentPrice);
+        setValue('measure', item.measure);
+        setValue('lastPrice', item.lastPrice);
+        setValue('title', item.title);
+        setValue('weight', item.weight);
+        setValue('image', item.image);
+        setValue('description', item.description);
+        setIsUpdateItemModalOpen(true);
+        setFileName('');
+    };
+
     useEffect(() => {
-        if (isAddItemModalOpen) {
-            const validator = new JustValidate('#log-form-2');
+        if (isAddItemModalOpen || isUpdateItemModalOpen) {
+            const formId = isAddItemModalOpen ? '#log-form-2' : '#log-form-4';
+            const validator = new JustValidate(formId);
 
             validator
                 .addField('#category', [
@@ -151,7 +157,7 @@ const AdminPanel: React.FC = () => {
                         errorMessage: 'You did not select a file',
                     },
                     {
-                        validator: (value : unknown, fields : unknown) => {
+                        validator: (value: unknown, fields: unknown) => {
                             const fileInput = document.querySelector<HTMLInputElement>('#image');
                             return fileInput && fileInput.files && fileInput.files.length > 0;
                         },
@@ -162,7 +168,50 @@ const AdminPanel: React.FC = () => {
                     onSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
                 });
         }
-    }, [isAddItemModalOpen]);
+    }, [isAddItemModalOpen, isUpdateItemModalOpen]);
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const target = e.target as HTMLInputElement;
+        if (target.files) {
+            setFile(target.files[0]);
+            setFileName(target.files[0].name);
+        }
+    };
+
+    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (!file) return;
+        console.log('It is OK, bro!');
+        try {
+            const data = new FormData();
+            data.set('file', file);
+            data.set('category', category as string);
+            data.set('currentPrice', currentPrice as string);
+            data.set('measure', measure as string);
+            data.set('lastPrice', lastPrice as string);
+            data.set('title', title as string);
+            data.set('weight', weight as string);
+            data.set('image', image as string);
+            data.set('description', description as string);
+
+            const res = await fetch('/api/upload', {
+                method: 'POST',
+                body: data
+            });
+            if (!res.ok) throw new Error(await res.text());
+            const newItems = await res.json();
+            if (Array.isArray(newItems)) {
+                setItems(newItems);
+            } else {
+                throw new Error('Invalid response format');
+            }
+            setIsAddItemModalOpen(false);
+            reset();
+        } 
+        catch (e: any) {
+            console.error(e);
+        }
+    };
 
     return (
         <section className="apanel">
@@ -182,7 +231,7 @@ const AdminPanel: React.FC = () => {
                             <button className="apanel__additional btn-reset" onClick={() => openAdditionalInfoModal(item)}>
                                 Show Additional Info
                             </button>
-                            <button className="apanel__update btn-reset" disabled onClick={() => handleUpdateItem(item.id)}>
+                            <button className="apanel__update btn-reset" onClick={() => openUpdateItemModal(item)}>
                                 Update Info
                             </button>
                             <button className="apanel__delete btn-reset" onClick={() => openDeleteConfirmModal(item)}>
@@ -235,7 +284,7 @@ const AdminPanel: React.FC = () => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="danger" onClick={() => {
-                        handleDeleteItem(selectedItem?.id ?? 0)
+                        handleDeleteItem(selectedItem?.id ?? 0);
                     }}>
                         Yes
                     </Button>
@@ -251,7 +300,7 @@ const AdminPanel: React.FC = () => {
                     <Modal.Title>Add Item</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                <Form className='d-flex flex-column' id="log-form-2" onSubmit={onSubmit}>
+                    <Form className='d-flex flex-column' id="log-form-2" onSubmit={onSubmit}>
                         <Form.Group controlId='category'>
                             <Form.Label>Category</Form.Label>
                             <Form.Select onChange={(e) => setCategory(e.target.value)} name='category'>
@@ -318,15 +367,13 @@ const AdminPanel: React.FC = () => {
                             <Form.Control
                                 type='file'
                                 name='file'
-                                onChange={(e) => {
-                                    const target = e.target as HTMLInputElement;
-                                    if (target.files) {
-                                        setFile(target.files[0]);
-                                    }
-                                }}
+                                onChange={handleFileChange}
                             />
+                            <Form.Text className="text-muted">
+                                {fileName ? `Selected file: ${fileName}` : 'No file selected'}
+                            </Form.Text>
                         </Form.Group>
-                  
+
                         <Form.Group controlId='description'>
                             <Form.Label>Сomposition</Form.Label>
                             <Form.Control
@@ -341,11 +388,103 @@ const AdminPanel: React.FC = () => {
                             fetch('/api/upload', {
                                 method: 'GET',
                             }).then(resp => resp.json())
-                                .then(resp => {
-                                    setItems(resp)
-                                })
+                                .then(resp => Array.isArray(resp) && setItems(resp));
                         }}>
                             Add
+                        </Button>
+                    </Form>
+                </Modal.Body>
+            </Modal>
+
+            {/* Update Item Modal */}
+            <Modal show={isUpdateItemModalOpen} onHide={() => setIsUpdateItemModalOpen(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Update Item</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form className='d-flex flex-column' id="log-form-4" onSubmit={handleSubmit(handleUpdateItem)}>
+                        <Form.Group controlId='category'>
+                            <Form.Label>Category</Form.Label>
+                            <Form.Select {...register('category')} name='category'>
+                                <option value='Sause'>Sause</option>
+                                <option value='Giros'>Giros</option>
+                                <option value='Salat'>Salat</option>
+                                <option value='Mexican'>Mexican</option>
+                                <option value='Burgers'>Burgers</option>
+                            </Form.Select>
+                        </Form.Group>
+
+                        <Form.Group controlId='curPrice'>
+                            <Form.Label>Current Price</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Enter current price'
+                                {...register('currentPrice')}
+                                name='currentPrice'
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId='measure'>
+                            <Form.Label>Measure</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Enter measure'
+                                {...register('measure')}
+                                name='measure'
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId='lastPrice'>
+                            <Form.Label>Last Price</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Enter last price'
+                                {...register('lastPrice')}
+                                name='lastPrice'
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId='title'>
+                            <Form.Label>Title</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Enter title'
+                                {...register('title')}
+                                name='title'
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId='weight'>
+                            <Form.Label>Weight</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Enter weight'
+                                {...register('weight')}
+                                name='weight'
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId='image'>
+                            <Form.Label>File</Form.Label>
+                            <Form.Control
+                                type='file'
+                                name='file'
+                                onChange={handleFileChange}
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId='description'>
+                            <Form.Label>Composition</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Enter composition'
+                                {...register('description')}
+                                name='description'
+                            />
+                        </Form.Group>
+
+                        <Button variant='primary' type='submit'>
+                            Update
                         </Button>
                     </Form>
                 </Modal.Body>

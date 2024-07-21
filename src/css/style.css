@@ -453,6 +453,16 @@ a, a:focus, a:visited {
 	color: var(--black);
 }
 
+
+#log-form-4>div {
+	position: relative;
+}
+
+#log-form-4>div>.just-validate-error-label {
+    top: 27px;
+    font-size: 8px;
+}
+
 /* Hero */
 
 .hero {
