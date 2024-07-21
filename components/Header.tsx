@@ -189,7 +189,6 @@ const Header: React.FC = () => {
                 
             });
 
-
         const basketBtnPage = document.querySelector('.header__basket-menu');
 
         if (basketBtnPage) {
