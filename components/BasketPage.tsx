@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useCart } from './Basket';
 import { ProductProps } from './Product';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props'
+import '../src/css/media.css';
 
 const BasketPage: React.FC = () => {
     const { cart, removeFromCart } = useCart();

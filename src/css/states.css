@@ -10,6 +10,10 @@
 	--gray: #A1A6B4;
 	--s_gray: #D2D5DD;
 	--red: #FF0000;
+    --yellow: #F0D288;
+    --yellow_dark: #BB973E;
+    --promo: #F0D288;
+	--promo_shade: #BB973E;
 }
 
 /* Header */
@@ -48,7 +52,11 @@
     color: var(--primary_shade);
 }
 
-.header__link:hover:focus {
+.header__link:hover:active {
+    color: var(--white);
+}
+
+.header__link:focus:active {
     color: var(--white);
 }
 
@@ -162,46 +170,68 @@
     stroke: var(--primary_shade);
 }
 
-.header__log-close>svg>circle {
+.header__log-close>svg>circle,
+.delete-btn>svg>circle,
+.basket__del>svg>circle {
 	transition: stroke 0.3s ease-in-out;
 }
 
-.header__log-close>svg>path {
+.header__log-close>svg>path,
+.delete-btn>svg>path,
+.basket__del>svg>path {
 	transition: stroke 0.3s ease-in-out;
 }
 
 .header__log-close:hover>svg>circle,
-.header__log-close:hover>svg>path {
+.header__log-close:hover>svg>path,
+.delete-btn:hover>svg>path,
+.delete-btn:hover>svg>circle,
+.basket__del:hover>svg>path,
+.basket__del:hover>svg>circle {
 	stroke: var(--primary);
 }
 
+.header__log-close:focus,
+.delete-btn:focus,
+.basket__del:focus {
+    outline: none;
+}
+
 .header__log-close:focus>svg>circle,
-.header__log-close:focus>svg>path {
+.header__log-close:focus>svg>path,
+.delete-btn:focus>svg>path,
+.delete-btn:focus>svg>circle,
+.basket__del:focus>svg>path,
+.basket__del:focus>svg>circle {
 	stroke: var(--primary_light);
 	outline: none;
 }
 
 .header__log-close:active>svg>circle,
-.header__log-close:active>svg>path {
+.header__log-close:active>svg>path,
+.delete-btn:active>svg>path,
+.delete-btn:active>svg>circle,
+.basket__del:active>svg>path,
+.basket__del:active>svg>circle {
 	stroke: var(--primary_shade);
 }
 
-.header__log-info>button {
+.header__log-info>a {
 	transition: color 0.3s ease-in-out;
 }
 
-.header__log-info>button:hover {
+.header__log-info>a:hover {
 	color: var(--primary_light);
 	transition: color 0.3s ease-in-out;
 }
 
-.header__log-info>button:focus {
+.header__log-info>a:focus {
 	color: var(--primary_light);
 	outline: none;
 	transition: color 0.3s ease-in-out;
 }
 
-.header__log-info>button:active {
+.header__log-info>a:active {
 	color: var(--primary_shade);
 	transition: color 0.3s ease-in-out;
 }
@@ -291,8 +321,262 @@
 
 /* Apanel */
 
-/* Products */
+.apanel__additional,
+.add-items__button,
+.apanel__update,
+.header__basket-menu,
+.basket__btn {
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
+.apanel__additional:hover,
+.add-items__button:hover,
+.apanel__update:hover,
+.header__basket-menu:hover,
+.basket__btn:hover {
+    background-color: var(--primary);
+    border-color: var(--primary_light);
+    color: var(--white);
+}
+
+.apanel__additional:focus,
+.add-items__button:focus,
+.apanel__update:focus,
+.header__basket-menu:focus,
+.basket__btn:focus {
+    outline: none;
+    background-color: var(--primary_light);
+    border-color: var(--primary);
+    color: var(--white);
+}
+
+.apanel__additional:active,
+.add-items__button:active,
+.apanel__update:active,
+.header__basket-menu:active,
+.basket__btn:active {
+    background-color: var(--primary_shade);
+    border-color: var(--primary_light);
+    color: var(--white);
+}
+
+.apanel__additional:focus:active
+.add-items__button:focus:active,
+.apanel__update:focus:active {
+    color: var(--white);
+}
+
+.apanel__delete circle,
+.apanel__delete svg path{
+    transition: stroke 0.3s ease-in-out, outline 0.3s ease-in-out;
+}
+
+.apanel__delete:hover circle,
+.apanel__delete:hover svg path {
+    stroke: var(--red);
+}
+
+.apanel__delete:focus {
+    outline: none;
+}
+
+.apanel__delete:focus circle,
+.apanel__delete:active svg path {
+    stroke: var(--red);
+}
+
+.apanel__delete:active circle,
+.apanel__delete:active svg path {
+    stroke: var(--red);
+}
+
+.return-link {
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.return-link:hover {
+    color: var(--primary);
+}
+
+.return-link:focus {
+    outline: none;
+    color: var(--white);
+    background-color: var(--primary_light);
+}
+
+.return-link:active {
+    background-color: none;
+    color: var(--primary_shade);
+}
+
+.return-link:focus:active {
+    color: var(--white);
+}
+
+/* Catalog */
+.catalog__item-btn>svg>path {
+    transition: stroke 0.3s ease-in-out;
+}
+.catalog__item-btn {
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
+.catalog__item-btn:hover {
+    background-color: var(--primary_light);
+    border-color: var(--primary_light);
+    transition: background-color 0.3s ease-in-out;
+    
+}
+
+.catalog__item-btn:hover svg path {
+    stroke: var(--black);
+    
+}
+
+.catalog__item-btn:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.catalog__item-btn:active {
+    background-color: var(--primary_shade);
+}
+
 
 .catalog__item>div:focus {
     outline: none;
+}
+
+.catalog__item-block {
+    outline: 2px solid var(--l_black);
+    outline-offset: 20px;
+    transition: outline-color 0.3s ease-in-out;
+}
+
+.catalog__item-block:hover {
+    outline-color: var(--primary);
+}
+
+.catalog__item-block:focus-within {
+    outline-color: var(--primary_light);
+}
+
+.catalog__item-block:active {
+    outline-color: var(--primary_shade);
+}
+
+/*Newsletter*/
+
+.newsletter__btn {
+    transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.newsletter__btn>span {
+    transition: color 0.3s ease-in-out;
+}
+
+.newsletter__btn>svg>path:nth-child(1) {
+    transition: fill 0.3s ease-in-out;
+}
+
+.newsletter__btn>svg>path:nth-child(2) {
+    transition: fill 0.3s ease-in-out;
+}
+
+.newsletter__btn:hover {
+    background-color: var(--promo);
+}
+
+.newsletter__btn:hover>span {
+    color: var(--black);
+}
+
+.newsletter__btn:hover>svg>path:nth-child(1) {
+    fill: var(--black);
+}
+
+.newsletter__btn:hover>svg>path:nth-child(2) {
+    fill: var(--promo);
+}
+
+.newsletter__btn:focus {
+    outline: none;
+	background-color: var(--promo_shade);
+}
+
+.newsletter__btn:focus>span {
+    color: var(--black);
+}
+
+.newsletter__btn:focus>svg>path:nth-child(1) {
+    fill: var(--black);
+}
+
+.newsletter__btn:focus>svg>path:nth-child(2) {
+    fill: var(--promo);
+}
+
+.newsletter__btn:active {
+    background-color: var(--promo_shade);
+	border-color: var(--promo_shade);
+}
+
+.newsletter__btn:active>span {
+    color: var(--black);
+}
+
+.newsletter__btn:active>svg>path:nth-child(1) {
+    fill: var(--black);
+}
+
+.newsletter__btn:active>svg>path:nth-child(2) {
+    fill: var(--promo_shade);
+}
+
+/*About*/
+.about__contact-copy {
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.about__contact-copy:hover {
+    background-color: var(--s_gray);
+    color: var(--white);
+}
+
+.about__contact-copy:focus {
+    outline: none;
+    border-color: var(--s_gray);
+}
+
+.about__contact-copy:active {
+    background-color: var(--gray);
+}
+
+.about__contact-copy:focus:active {
+    color: var(--white);
+}
+
+/* Combo */
+
+.combo__copy {
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
+.combo__copy:hover {
+    background-color: var(--s_gray);
+    color: var(--white);
+}
+
+.combo__copy:focus {
+    outline: none;
+    border-color: var(--s_gray);
+}
+
+.combo__copy:active {
+    border-color: var(--gray);
+    background-color: var(--gray);
+}
+
+.combo__copy:focus:active {
+    color: var(--white);
 }

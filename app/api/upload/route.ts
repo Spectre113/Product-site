@@ -55,6 +55,7 @@ export async function POST(request: NextRequest) {
   if (!fs.existsSync(dirname)) {
     fs.mkdirSync(dirname);
   }
+  
   await writeFile(filename, buffer);
 
   console.log(`open ${filename} to see the uploaded file`);
