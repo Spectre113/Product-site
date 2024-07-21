@@ -69,7 +69,6 @@ const AdminPanel: React.FC = () => {
         console.log('It is OK, bro!');
         try {
             const data = new FormData();
-            // data.set('file', dataProps.image);
             data.set('category', dataProps.category);
             data.set('currentPrice', dataProps.currentPrice + '');
             data.set('measure', dataProps.measure);
