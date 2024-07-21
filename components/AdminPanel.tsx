@@ -369,9 +369,6 @@ const AdminPanel: React.FC = () => {
                                 name='file'
                                 onChange={handleFileChange}
                             />
-                            <Form.Text className="text-muted">
-                                {fileName ? `Selected file: ${fileName}` : 'No file selected'}
-                            </Form.Text>
                         </Form.Group>
 
                         <Form.Group controlId='description'>

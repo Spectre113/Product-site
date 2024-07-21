@@ -1,9 +1,7 @@
-'use client'
-
-import Image from 'next/image'
-import React from 'react'
+import Image from 'next/image';
+import React from 'react';
 import { useRouter } from 'next/router';
-import { StaticImport } from 'next/dist/shared/lib/get-img-props'
+import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import { useCart } from './Basket';
 
 export interface ProductProps {
@@ -38,7 +36,7 @@ const Product: React.FC<ProductProps> = (props) => {
     };
 
     const handleRedirect = () => {
-        router.push(`/products/${props.id}.html`);
+        router.push(`/products/${props.id}`);
     };
 
     return (

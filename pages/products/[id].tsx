@@ -1,4 +1,3 @@
-// pages/products/[id].tsx
 import React from 'react';
 import { GetServerSideProps } from 'next';
 import Header from '@/components/Header';
@@ -11,11 +10,7 @@ import '../../src/css/states.css';
 import '../../src/css/media.css';
 import '../../src/css/style.css';
 
-interface ProductPageProps {
-    product: ProductProps | null;
-}
-
-const ProductPage: React.FC<ProductPageProps> = ({ product }) => {
+const ProductPage: React.FC<ProductProps> = (product: ProductProps) => {
     const router = useRouter();
     const { addToCart } = useCart();
 
@@ -43,36 +38,32 @@ const ProductPage: React.FC<ProductPageProps> = ({ product }) => {
         router.push('/products');
     };
 
-    if (!product) {
-        return <div>Product not found</div>;
-    }
-
     return (
         <div>
             <Header />
-                <section className="item">
-                    <div className="container">
-                        <h2 className='item__title'>{product.title}</h2>
-                        <div className='item__block flex'>
-                            <img className='item__img' src={product.image as string} alt={product.title} width="270" height="250" />
-                            <div className='item__info-block'>
-                                <p className='item__category item__info'>Category: {product.category}</p>
-                                <p className='item__category item__info'>Current Price: {product.currentPrice} {product.measure}</p>
-                                <p className='item__category item__info'>Last Price: {product.lastPrice}</p>
-                                <p className='item__category item__info'>Weight: {product.weight}</p>
-                                <p className='item__category item__info'>Description: {product.description}</p>
-                        </div>
-                        </div>
-                        <div>
-                            <Button variant="secondary" onClick={handleReturn} className='item__return'>
-                                Return
-                            </Button>
-                            <Button variant="primary" onClick={handleAddToCart} className='item__add'>
-                                Add to basket
-                            </Button>
+            <section className="item">
+                <div className="container">
+                    <h2 className='item__title'>{product.title}</h2>
+                    <div className='item__block flex'>
+                        <img className='item__img' src={product.image as string} alt={product.title} width="270" height="250" />
+                        <div className='item__info-block'>
+                            <p className='item__info'>Category: {product.category}</p>
+                            <p className='item__info'>Current Price: {product.currentPrice} {product.measure}</p>
+                            <p className='item__info'>Last Price: {product.lastPrice}</p>
+                            <p className='item__info'>Weight: {product.weight}</p>
+                            <p className='item__info'>Description: {product.description}</p>
                         </div>
                     </div>
-                </section>
+                    <div>
+                        <Button variant="secondary" onClick={handleReturn} className='item__return'>
+                            Return
+                        </Button>
+                        <Button variant="primary" onClick={handleAddToCart} className='item__add'>
+                            Add to basket
+                        </Button>
+                    </div>
+                </div>
+            </section>
             <Footer />
         </div>
     );
@@ -80,7 +71,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ product }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const { id } = context.params!;
-    const response = await fetch(`http://localhost:3000/api/upload?id=${id}`);
+    const response = await fetch(`http://localhost:3000/api/create?id=${id}`);
 
     if (!response.ok) {
         console.error('Failed to fetch data:', response.statusText);
@@ -92,9 +83,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const product = await response.json();
 
     return {
-        props: {
-            product,
-        },
+        props: product
     };
 };
 
