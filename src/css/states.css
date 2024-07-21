@@ -48,9 +48,9 @@
     color: var(--primary_shade);
 }
 
-/* .header__link:hover:focus {
+.header__link:hover:focus {
     color: var(--white);
-} */
+}
 
 .header__search>svg>path {
     transition: stroke 0.3s ease-in-out;

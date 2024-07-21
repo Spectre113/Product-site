@@ -40,6 +40,7 @@ export async function POST(request: NextRequest) {
   const image: string = data.get('image') as string
   const category: string = data.get('category') as string
   const currentPrice: number = parseInt(data.get('currentPrice') as string)
+  const description: string = data.get('description') as string
 
   if (!file) {
     return NextResponse.json({ success: false })
@@ -55,7 +56,12 @@ export async function POST(request: NextRequest) {
   if (!fs.existsSync(dirname)) {
     fs.mkdirSync(dirname);
   }
-  await writeFile(filename, buffer)
+  const filePath = path.join(dir, fileName)
+  await writeFile(filePath, buffer)
+
+  console.log(`open ${filePath} to see the uploaded file`)
+  console.log(filePath)
+  globalProducts.push({ title, measure, image: fileName, lastPrice, weight, category, currentPrice, description })
 
   console.log(`open ${filename} to see the uploaded file`)
   console.log(filename)
