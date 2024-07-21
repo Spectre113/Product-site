@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { useCart } from './Basket';
-import { CartItem } from './Basket';
+import { ProductProps } from './Product';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 
 const BasketPage: React.FC = () => {
@@ -15,14 +15,14 @@ const BasketPage: React.FC = () => {
                 {cart.length === 0 ? (
                     <p>Your basket is empty</p>
                 ) : (
-                    cart.map((item: CartItem, index: number) => (
+                    cart.map((item: ProductProps, index: number) => (
                         <div key={index} className="basket-item flex">
                             <Image src={item.image as string} alt={item.title} width={50} height={50} />
                             <div className="basket-item-details flex">
                                 <div>
                                     <span className="basket-item-title">{item.title}</span>
-                                    <span className="basket-item-weight">{item.weight}</span>
-                                    <span className="basket-item-price">{item.price} {item.measure}</span>
+                                    <span className="basket-item-weight">{item.weight} gramms</span>
+                                    <span className="basket-item-price">{item.currentPrice} {item.measure}</span>
                                     <p>
                                         {item.description}
                                     </p>

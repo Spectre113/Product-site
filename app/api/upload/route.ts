@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
   const weight: string = data.get('weight') as string
   const image: string = data.get('image') as string
   const category: string = data.get('category') as string
-  const currentPrice: string = data.get('currentPrice') as string
+  const currentPrice: number = parseInt(data.get('currentPrice') as string)
   const description: string = data.get('description') as string
 
   if (!file) {

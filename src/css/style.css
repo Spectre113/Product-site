@@ -916,9 +916,10 @@ a, a:focus, a:visited {
 	color: var(--black);
 }
 
-/* .modal-body>form>div {
-	margin-bottom: 20px;
-} */
+.img-fluid {
+	width: 200px;
+	height: 200px;
+}
 
 #category {
 	margin-bottom: 30px;

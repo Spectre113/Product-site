@@ -6,13 +6,14 @@ import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 import { useCart } from './Basket';
 
 export interface ProductProps {
+    id: number,
     category: string | undefined,
     currentPrice: number,
     measure: string,
     lastPrice: number | undefined,
     title: string,
     weight: string,
-    image: string | StaticImport
+    image: string | StaticImport,
     description: string;
 }
 
@@ -24,7 +25,7 @@ const Product: React.FC<ProductProps> = (props) => {
 
     const handleAddToCart = (event: React.MouseEvent) => {
         event.stopPropagation();
-        addToCart({ title: props.title, price: props.currentPrice, measure: props.measure, image : props.image, description : props.description });
+        addToCart({ title: props.title, currentPrice: props.currentPrice, lastPrice: props.lastPrice, measure: props.measure, image : props.image, description : props.description, id: props.id, category: props.category, weight: props.weight });
         setShow(false);
     };
 

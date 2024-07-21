@@ -344,7 +344,7 @@ const Header: React.FC = () => {
                             <div>
                                 {cart.map((item, index) => (
                                     <div key={index} className="basket-item flex">
-                                        <span>{item.title} - {item.price} {item.measure}</span>
+                                        <span>{item.title} - {item.currentPrice} {item.measure}</span>
                                         <button onClick={() => removeFromCart(item.title)} className="delete-btn btn-reset">
                                             <svg width="20" height="20" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <circle cx="21" cy="21" r="19.5" stroke="#000" strokeWidth="3"></circle>

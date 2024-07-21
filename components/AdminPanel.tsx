@@ -4,19 +4,9 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Modal, Button, Form } from 'react-bootstrap';
 import styled from 'styled-components';
+import Image from 'next/image';
 import JustValidate from 'just-validate';
-
-interface Item {
-    id: number;
-    category: string | undefined;
-    currentPrice: number;
-    measure: string;
-    lastPrice: number | undefined;
-    title: string;
-    weight: string;
-    imgSrc: string;
-    description: string;
-}
+import {ProductProps} from './Product';
 
 const AdminPanel: React.FC = () => {
     const [file, setFile] = useState<File>()
@@ -27,7 +17,7 @@ const AdminPanel: React.FC = () => {
     const [title, setTitle] = useState<string>()
     const [weight, setWeight] = useState<string>()
     const [image, setImage] = useState<string>()
-    const [products, setProducts] = useState<any[]>([])
+    const [products, setProducts] = useState<unknown[]>([])
     const [description, setDescription] = useState<string>()
 
 
@@ -53,25 +43,24 @@ const AdminPanel: React.FC = () => {
                 method: 'POST',
                 body: data
             })
-            // handle the error
             if (!res.ok) throw new Error(await res.text())
             setProducts(await res.json())
-        } catch (e: any) {
-            // Handle errors here
+        } 
+        catch (e: any) {
             console.error(e)
         }
     }
     console.log(products)
 
-    const [items, setItems] = useState<Item[]>([]);
+    const [items, setItems] = useState<ProductProps[]>([]);
     const [isAdditionalInfoModalOpen, setIsAdditionalInfoModalOpen] = useState(false);
     const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] = useState(false);
     const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
-    const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+    const [selectedItem, setSelectedItem] = useState<ProductProps | null>(null);
 
-    const { register, handleSubmit, reset } = useForm<Item>();
+    const { register, handleSubmit, reset } = useForm<ProductProps>();
 
-    const handleAddItem = (data: Item) => {
+    const handleAddItem = (data: ProductProps) => {
         const newItem = { ...data, id: items.length + 1 };
         setItems([...items, newItem]);
         setIsAddItemModalOpen(false);
@@ -87,12 +76,12 @@ const AdminPanel: React.FC = () => {
         setIsDeleteConfirmModalOpen(false);
     };
 
-    const openAdditionalInfoModal = (item: Item) => {
+    const openAdditionalInfoModal = (item: ProductProps) => {
         setSelectedItem(item);
         setIsAdditionalInfoModalOpen(true);
     };
 
-    const openDeleteConfirmModal = (item: Item) => {
+    const openDeleteConfirmModal = (item: ProductProps) => {
         setSelectedItem(item);
         setIsDeleteConfirmModalOpen(true);
     };
@@ -207,7 +196,7 @@ const AdminPanel: React.FC = () => {
                 <Modal.Body>
                     {selectedItem && (
                         <div>
-                            <img src={selectedItem.imgSrc} alt={selectedItem.title} className="img-fluid" />
+                            <Image src={selectedItem.image as string} alt={selectedItem.title} width={50} height={50} className='img-fluid' />
                             <p>Category: {selectedItem.category}</p>
                             <p>Current Price: {selectedItem.currentPrice}</p>
                             <p>Measure: {selectedItem.measure}</p>
@@ -333,7 +322,14 @@ const AdminPanel: React.FC = () => {
                             />
                         </Form.Group>
 
-                        <Button variant='primary' type='submit'>
+                        <Button variant='primary' type='submit' onClick={() => {
+                            fetch('/api/upload', {
+                                method: 'GET',
+                            }).then(resp => resp.json())
+                                .then(resp => {
+                                    setItems(resp)
+                                })
+                        }}>
                             Add
                         </Button>
                     </Form>
