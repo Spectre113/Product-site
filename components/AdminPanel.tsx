@@ -214,6 +214,7 @@ const AdminPanel: React.FC = () => {
                             <p>Measure: {selectedItem.measure}</p>
                             <p>Last Price: {selectedItem.lastPrice}</p>
                             <p>Weight: {selectedItem.weight}</p>
+                            <p>Info: {selectedItem.description}</p>
                         </div>
                     )}
                 </Modal.Body>

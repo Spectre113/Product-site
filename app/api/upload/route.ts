@@ -56,18 +56,13 @@ export async function POST(request: NextRequest) {
   if (!fs.existsSync(dirname)) {
     fs.mkdirSync(dirname);
   }
-  const filePath = path.join(dir, fileName)
-  await writeFile(filePath, buffer)
-
-  console.log(`open ${filePath} to see the uploaded file`)
-  console.log(filePath)
-  globalProducts.push({ title, measure, image: fileName, lastPrice, weight, category, currentPrice, description })
+  await writeFile(filename, buffer)
 
   console.log(`open ${filename} to see the uploaded file`)
   console.log(filename)
   const imageName = milliseconds + file.name
   const imageSource = '/uploads/' + imageName
-  products.push({ title, measure, image: imageSource, lastPrice, weight, category, currentPrice, id: milliseconds })
+  products.push({ title, measure, image: imageSource, lastPrice, weight, category, currentPrice, id: milliseconds, description })
   save(products)
   return NextResponse.json(products)
 }
