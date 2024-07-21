@@ -35,6 +35,7 @@ export async function POST(request: NextRequest) {
     const data = await request.formData()
     const name: string = data.get('name') as string
     const password: string = data.get('password') as string
+    console.log('name and password', name, password)
     let containsSameName: boolean = false
     console.log(products)
     for (let i = 0; i < products.length; i++) {

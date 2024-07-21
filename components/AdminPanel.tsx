@@ -3,9 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { ProductProps } from './Product';
-import Image from 'next/image';
-import styled from 'styled-components';
 import Image from 'next/image';
 import JustValidate from 'just-validate';
 import {ProductProps} from './Product';

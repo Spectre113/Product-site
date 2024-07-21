@@ -6,19 +6,23 @@ import JustValidate from 'just-validate';
 import { useRouter } from 'next/router';
 import { useCart } from './Basket';
 
+let globalName = '', globalPassword = '';
+
 const Header: React.FC = () => {
     const router = useRouter();
     const { cart, removeFromCart } = useCart();
 
     const [name, setName] = useState('')
+    globalName = name
     const [password, setPassword] = useState('')
+    globalPassword = password
 
     const onRegister = (registerBlock: any, logContent: any, registerSuccessMessage: any) => {
         console.log(name, password);
         try {
             const data = new FormData()
-            data.set('name', name)
-            data.set('password', password)
+            data.set('name', globalName)
+            data.set('password', globalPassword)
 
             const res = fetch('/api/register', {
                 method: 'POST',
@@ -42,12 +46,14 @@ const Header: React.FC = () => {
         }
     }
 
-    const onLogin = async (name: string, password: string) => {
-        console.log(name, password);
+    const onLogin = async () => {
+        console.log(globalName, globalPassword);
 
         const data = new FormData()
-        data.set('name', name)
-        data.set('password', password)
+        // const name = (document.querySelector('input[name="register-name"]') as HTMLInputElement).value
+        // const password = (document.querySelector('input[name="register-password"]') as HTMLInputElement).value
+        data.set('name', globalName)
+        data.set('password', globalPassword)
 
         const res = await fetch('/api/login', {
             method: 'POST',
@@ -71,13 +77,13 @@ const Header: React.FC = () => {
                 basketBlock.classList.add('none');
             }
         };
-      
+
         if (basketBtn && basketBlock) {
             if (cart.length > 0) {
                 basketBtn.addEventListener('click', handleBasketBtnClick);
                 document.addEventListener('click', handleDocumentClick);
-            } 
-            
+            }
+
             else {
                 basketBlock.classList.add('none');
             }
@@ -136,7 +142,7 @@ const Header: React.FC = () => {
         const content = document.querySelector('.header__controls') as HTMLElement | null;
         const close = document.querySelector('.header__search-close') as HTMLElement | null;
 
-        
+
         const logBtn = document.querySelector('.header__log');
         const logContent = document.querySelector('.header__log-content');
         const logClose = document.querySelector('.header__log-close');
@@ -178,17 +184,8 @@ const Header: React.FC = () => {
             ])
             .onSuccess(async (event: Event) => {
                 event.preventDefault();
-                const formData = new FormData(event.target as HTMLFormElement);
-                const name = formData.get('name') as string;
-                const password = formData.get('password') as string;
-                console.log(name, password)
-
-                event.stopPropagation();
-                event.preventDefault()
-                onRegister(registerBlock, logContent, registerSuccessMessage)
-
-                const res = await onLogin(name, password)
-                if (res) {
+                // let func = useCallback(() => onLogin(), [])
+                if (await onLogin()) {
                     router.push('/apanel');
                 } else {
                     alert('Invalid login or password');
@@ -279,13 +276,13 @@ const Header: React.FC = () => {
                     <button className="header__burger-btn btn-reset">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0_24531_4514)">
-                                <rect width="24" height="3" rx="1.5" fill="#fff"/>
-                                <rect y="21" width="24" height="3" rx="1.5" fill="#fff"/>
-                                <rect y="11" width="24" height="3" rx="1.5" fill="#fff"/>
+                                <rect width="24" height="3" rx="1.5" fill="#fff" />
+                                <rect y="21" width="24" height="3" rx="1.5" fill="#fff" />
+                                <rect y="11" width="24" height="3" rx="1.5" fill="#fff" />
                             </g>
                             <defs>
                                 <clipPath id="clip0_24531_4514">
-                                    <rect width="24" height="24" fill="white"/>
+                                    <rect width="24" height="24" fill="white" />
                                 </clipPath>
                             </defs>
                         </svg>
@@ -310,7 +307,7 @@ const Header: React.FC = () => {
                                 <li className="header__item">
                                     <Link href="/combo" legacyBehavior>
                                         <a href="" className="header__link">
-                                            Combo 
+                                            Combo
                                         </a>
                                     </Link>
                                 </li>
@@ -355,10 +352,16 @@ const Header: React.FC = () => {
                             </p>
                             <form action="https://jsonplaceholder.typicode.com/posts" method="POST" className="header__log-form flex" id="log-form">
                                 <label htmlFor="name" className="header__log-label">
-                                    <input type="text" className="header__log-input" placeholder="Login" name="name" id="name"></input>
+                                    <input onChange={(e => {
+                                        console.log(e.target.value, name)
+                                        setName(e.target.value)
+                                    })} type="text" className="header__log-input" placeholder="Login" name="login-name" id="name"></input>
                                 </label>
                                 <label htmlFor="password" className="header__log-label">
-                                    <input type="password" className="header__log-input" placeholder="Password" name="password" id="password"></input>
+                                    <input onChange={(e => {
+                                        console.log(e.target.value, password)
+                                        setPassword(e.target.value)
+                                    })} type="password" className="header__log-input" placeholder="Password" name="login-password" id="password"></input>
                                 </label>
                                 <button className="header__log-button btn-reset">
                                     Enter
@@ -382,13 +385,13 @@ const Header: React.FC = () => {
                                     <input id="name" value={name} onChange={(e => {
                                         console.log(e.target.value, name)
                                         setName(e.target.value)
-                                    })} type="text" className="header__log-input" placeholder="Enter a name" name="name"></input>
+                                    })} type="text" className="header__log-input" placeholder="Enter a name" name="register-name"></input>
                                 </label>
                                 <label htmlFor="password" className="header__log-label">
                                     <input id="password" value={password} onChange={(e => {
                                         console.log(e.target.value, password)
                                         setPassword(e.target.value)
-                                    })} type="password" className="header__log-input" placeholder="Enter your password" name="password"></input>
+                                    })} type="password" className="header__log-input" placeholder="Enter your password" name="register-password"></input>
                                 </label>
                                 <button className="header__log-button btn-reset">
                                     Register
@@ -397,12 +400,12 @@ const Header: React.FC = () => {
                         </div>
                     </div>
                     <div className='header__basket-content'>
-                    <button className="header__basket btn-reset">
-                        <svg fill="#fff" width="32px" height="30px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M31.739 8.875c-0.186-0.264-0.489-0.422-0.812-0.422h-21.223l-1.607-5.54c-0.63-2.182-2.127-2.417-2.741-2.417h-4.284c-0.549 0-0.993 0.445-0.993 0.993s0.445 0.993 0.993 0.993h4.283c0.136 0 0.549 0 0.831 0.974l5.527 20.311c0.12 0.428 0.511 0.724 0.956 0.724h13.499c0.419 0 0.793-0.262 0.934-0.657l4.758-14.053c0.11-0.304 0.064-0.643-0.122-0.907zM25.47 22.506h-12.046l-3.161-12.066h19.253zM23.5 26.504c-1.381 0-2.5 1.119-2.5 2.5s1.119 2.5 2.5 2.5 2.5-1.119 2.5-2.5c0-1.381-1.119-2.5-2.5-2.5zM14.5 26.504c-1.381 0-2.5 1.119-2.5 2.5s1.119 2.5 2.5 2.5 2.5-1.119 2.5-2.5c0-1.381-1.119-2.5-2.5-2.5z"></path>
-                        </svg>
-                    </button>
-                    <div className="header__basket-block none">
+                        <button className="header__basket btn-reset">
+                            <svg fill="#fff" width="32px" height="30px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M31.739 8.875c-0.186-0.264-0.489-0.422-0.812-0.422h-21.223l-1.607-5.54c-0.63-2.182-2.127-2.417-2.741-2.417h-4.284c-0.549 0-0.993 0.445-0.993 0.993s0.445 0.993 0.993 0.993h4.283c0.136 0 0.549 0 0.831 0.974l5.527 20.311c0.12 0.428 0.511 0.724 0.956 0.724h13.499c0.419 0 0.793-0.262 0.934-0.657l4.758-14.053c0.11-0.304 0.064-0.643-0.122-0.907zM25.47 22.506h-12.046l-3.161-12.066h19.253zM23.5 26.504c-1.381 0-2.5 1.119-2.5 2.5s1.119 2.5 2.5 2.5 2.5-1.119 2.5-2.5c0-1.381-1.119-2.5-2.5-2.5zM14.5 26.504c-1.381 0-2.5 1.119-2.5 2.5s1.119 2.5 2.5 2.5 2.5-1.119 2.5-2.5c0-1.381-1.119-2.5-2.5-2.5z"></path>
+                            </svg>
+                        </button>
+                        <div className="header__basket-block none">
                             <div>
                                 {cart.map((item, index) => (
                                     <div key={index} className="basket-item flex">
