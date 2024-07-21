@@ -32,13 +32,16 @@ const Header: React.FC = () => {
                             logContent.classList.remove('none');
                             registerSuccessMessage.classList.remove('none');
                         }
-                    } else {
+                    } 
+                    
+                    else {
                         console.log(res.message)
                     }
                     console.log(res)
                 }, (err) => console.log(err))
-        } catch (e: any) {
-            // Handle errors here
+        } 
+        
+        catch (e: any) {
             console.error(e)
         }
     }
@@ -199,12 +202,21 @@ const Header: React.FC = () => {
         }
 
         const burgerBtn = document.querySelector('.header__burger-btn');
-        const burgerMenu = document.querySelector('.header__burger--active');
+        const burgerMenu = document.querySelector('.header__burger');
         const burgerClose = document.querySelector('.header__burger-close')
         
         if(burgerBtn && burgerMenu && burgerClose) {
+            burgerBtn.addEventListener('click', function(event) {
+                event.stopPropagation();
+                burgerMenu.classList.add('header__burger--active');
+            });
 
+            burgerClose.addEventListener('click', function(event) {
+                event.stopPropagation();
+                burgerMenu.classList.remove('header__burger--active');
+            });
         }
+
     }, [cart, router, name, password]);
 
     return (
@@ -262,39 +274,47 @@ const Header: React.FC = () => {
                             </defs>
                         </svg>
                     </button>
-                    <div className="header__burger--active">
-                        <nav className="header__nav header__nav--active">
-                            <ul className="header__list list-reset flex">
-                                <li className="header__item">
-                                    <Link href="/about" legacyBehavior>
-                                        <a href="" className="header__link">
-                                            About-us
-                                        </a>
-                                    </Link>
-                                </li>
-                                <li className="header__item">
-                                    <Link href="/products" legacyBehavior>
-                                        <a href="" className="header__link">
-                                            Products
-                                        </a>
-                                    </Link>
-                                </li>
-                                <li className="header__item">
-                                    <Link href="/combo" legacyBehavior>
-                                        <a href="" className="header__link">
-                                            Combo 
-                                        </a>
-                                    </Link>
-                                </li>
-                                <li className="header__item">
-                                    <Link href="/news" legacyBehavior>
-                                        <a href="" className="header__link">
-                                            Newsletter
-                                        </a>
-                                    </Link>
-                                </li>
-                            </ul>
-                        </nav>
+                    <div className="header__burger">
+                        <div>
+                            <button className="header__burger-close btn-reset">
+                                <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="21" cy="21" r="19.5" stroke="#A1A6B4" strokeWidth="3"></circle>
+                                    <path d="M29.6777 12L12 29.6777M29.6777 29.6777L12 12" stroke="#A1A6B4" strokeWidth="3"></path>
+                                </svg>
+                            </button>
+                            <nav className="header__burger-nav header__burger-nav--active">
+                                <ul className="header__burger-list list-reset flex">
+                                    <li className="header__burger-item">
+                                        <Link href="/about" legacyBehavior>
+                                            <a href="" className="header__link">
+                                                About-us
+                                            </a>
+                                        </Link>
+                                    </li>
+                                    <li className="header__burger-item">
+                                        <Link href="/products" legacyBehavior>
+                                            <a href="" className="header__link">
+                                                Products
+                                            </a>
+                                        </Link>
+                                    </li>
+                                    <li className="header__burger-item">
+                                        <Link href="/combo" legacyBehavior>
+                                            <a href="" className="header__link">
+                                                Combo 
+                                            </a>
+                                        </Link>
+                                    </li>
+                                    <li className="header__burger-item">
+                                        <Link href="/news" legacyBehavior>
+                                            <a href="" className="header__link">
+                                                Newsletter
+                                            </a>
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
                 <div className="header__controls flex">
