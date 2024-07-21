@@ -1,16 +1,13 @@
-import { writeFile } from 'fs/promises'
-import { NextRequest, NextResponse } from 'next/server'
-import path from 'path'
-import fs from 'fs'
-import { ProductProps } from '@/components/Product'
+import { writeFile } from 'fs/promises';
+import { NextRequest, NextResponse } from 'next/server';
+import path from 'path';
+import fs from 'fs';
+import { ProductProps } from '@/components/Product';
 
 export const save = (products: ProductProps[]) => {
-  // Convert JSON object to string
   const jsonString = JSON.stringify(products, null, 4);
-
-  // Write JSON string to a file
   fs.writeFileSync('data.json', jsonString);
-}
+};
 
 export const load = (): ProductProps[] => {
   let products: ProductProps[] = [];
@@ -24,7 +21,7 @@ export const load = (): ProductProps[] => {
     console.error('Error parsing JSON string:', err);
   }
   return products;
-}
+};
 
 export const POST = async (request: NextRequest) => {
   const products = load();
@@ -62,11 +59,11 @@ export const POST = async (request: NextRequest) => {
   products.push({ title, measure, image: imageSource, lastPrice, weight, category, currentPrice, id: milliseconds, description });
   save(products);
   return NextResponse.json(products);
-}
+};
 
 export const GET = async (request: NextRequest) => {
   return NextResponse.json(load());
-}
+};
 
 export const DELETE = async (request: NextRequest) => {
   let products = load();
@@ -77,4 +74,4 @@ export const DELETE = async (request: NextRequest) => {
   products = products.filter(x => x.id != id);
   save(products);
   return NextResponse.json(products);
-}
+};
