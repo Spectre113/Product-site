@@ -1,31 +1,45 @@
 "use client";
 
-import React from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
 
 const Footer: React.FC = () => {
-    return (
-        <footer className='footer'>
-            <div className="container flex">
-                <div className="footer__logo">
-                    <Link href="/" legacyBehavior>
-                        <a href="#" className="footer__logo-link">
-                        </a>
-                    </Link>
-                </div>
-                <div className="footer__social-block">
-                    <ul className="footer__social-list list-reset flex">
-                        <li className="footer__social-item">
-                            <a href="#" className="footer__social-link">
-                                <svg fill="#fff" width="60px" height="60px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="m12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12c0-6.627-5.373-12-12-12zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
-                                </svg>
-                            </a>
-                        </li>
-                        <li className="footer__social-item">
-                            <a href="#" className="footer__social-link">
-                                <svg fill="#fff" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" width="60px" height="60px" viewBox="0 0 97.75 97.75">
-                                    <path d="M48.875,0C21.883,0,0,21.882,0,48.875S21.883,97.75,48.875,97.75S97.75,75.868,97.75,48.875S75.867,0,48.875,0z
+  return (
+    <footer className="footer">
+      <div className="container flex">
+        <div className="footer__logo">
+          <Link href="/" legacyBehavior>
+            <a href="#" className="footer__logo-link"></a>
+          </Link>
+        </div>
+        <div className="footer__social-block">
+          <ul className="footer__social-list list-reset flex">
+            <li className="footer__social-item">
+              <a href="#" className="footer__social-link">
+                <svg
+                  fill="#fff"
+                  width="60px"
+                  height="60px"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="m12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12c0-6.627-5.373-12-12-12zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z" />
+                </svg>
+              </a>
+            </li>
+            <li className="footer__social-item">
+              <a href="#" className="footer__social-link">
+                <svg
+                  fill="#fff"
+                  version="1.1"
+                  id="Capa_1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="60px"
+                  height="60px"
+                  viewBox="0 0 97.75 97.75"
+                >
+                  <path
+                    d="M48.875,0C21.883,0,0,21.882,0,48.875S21.883,97.75,48.875,97.75S97.75,75.868,97.75,48.875S75.867,0,48.875,0z
                                         M73.667,54.161c2.278,2.225,4.688,4.319,6.733,6.774c0.906,1.086,1.76,2.209,2.41,3.472c0.928,1.801,0.09,3.776-1.522,3.883
                                         l-10.013-0.002c-2.586,0.214-4.644-0.829-6.379-2.597c-1.385-1.409-2.67-2.914-4.004-4.371c-0.545-0.598-1.119-1.161-1.803-1.604
                                         c-1.365-0.888-2.551-0.616-3.333,0.81c-0.797,1.451-0.979,3.059-1.055,4.674c-0.109,2.361-0.821,2.978-3.19,3.089
@@ -37,20 +51,19 @@ const Footer: React.FC = () => {
                                         l0.01,12.572c-0.021,0.695,0.349,2.755,1.597,3.21c1,0.33,1.66-0.472,2.258-1.105c2.713-2.879,4.646-6.277,6.377-9.794
                                         c0.764-1.551,1.423-3.156,2.063-4.764c0.476-1.189,1.216-1.774,2.558-1.754l10.894,0.013c0.321,0,0.647,0.003,0.965,0.058
                                         c1.836,0.314,2.339,1.104,1.771,2.895c-0.894,2.814-2.631,5.158-4.329,7.508c-1.82,2.516-3.761,4.944-5.563,7.471
-                                        C71.48,50.992,71.611,52.155,73.667,54.161z"/>
-                                </svg>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div className="footer__rights-block">
-                    <p className="footer__rights">
-                        All rights reserved. &copy; 2024
-                    </p>
-                </div>
-            </div>
-        </footer>
-    );
+                                        C71.48,50.992,71.611,52.155,73.667,54.161z"
+                  />
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div className="footer__rights-block">
+          <p className="footer__rights">All rights reserved. &copy; 2024</p>
+        </div>
+      </div>
+    </footer>
+  );
 };
 
 export default Footer;

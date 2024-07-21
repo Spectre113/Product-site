@@ -1,12 +1,18 @@
-"use client"
+"use client";
 
-import React, { useEffect, useState, ChangeEvent } from 'react';
+import React, { useEffect, useState, ChangeEvent } from "react";
 import Product, { ProductProps } from "./Product";
-import { StaticImport } from 'next/dist/shared/lib/get-img-props';
-import placeholder from '../src/img/placeholder.png';
-import Header from './Header';
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import placeholder from "../src/img/placeholder.png";
+import Header from "./Header";
 
-type ProductCategories = 'Everything' | 'Sause' | 'Giros' | 'Salat' | 'Mexican' | 'Burgers';
+type ProductCategories =
+  | "Everything"
+  | "Sause"
+  | "Giros"
+  | "Salat"
+  | "Mexican"
+  | "Burgers";
 
 // const products: Record<ProductCategories, ProductProps[]> = {
 //     Everything: [
@@ -36,54 +42,65 @@ type ProductCategories = 'Everything' | 'Sause' | 'Giros' | 'Salat' | 'Mexican' 
 // };
 
 export interface CatalogProps {
-    products: ProductProps[]
+  products: ProductProps[];
 }
 
 const Catalog = (props: CatalogProps) => {
-    const [selectedOption, setSelectedOption] = useState<string>('Everything');
+  const [selectedOption, setSelectedOption] = useState<string>("Everything");
 
-    const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-        setSelectedOption(event.target.value as ProductCategories);
-    };
+  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedOption(event.target.value as ProductCategories);
+  };
 
-    useEffect(() => {
-        const mySelect = new Choices('#my-select', {
-            shouldSort: false,
-        });
-        
-    }, []);
+  useEffect(() => {
+    const mySelect = new Choices("#my-select", {
+      shouldSort: false,
+    });
+  }, []);
 
-    return (
-        <section className="catalog">
-            <div className="container flex">
-                <div className="catalog__info-block">
-                    <h2 className="catalog__title">
-                        Products
-                    </h2>
-                    <p className="catalog__info">
-                        You can sort by category
-                    </p>
-                    <div className="catalog__select">
-                        <select id="my-select" className="my-select" value={selectedOption} onChange={handleChange}>
-                        <option value="Everything">Everything</option>
-                        <option value="Sause">Sause</option>
-                        <option value="Giros">Giros</option>
-                        <option value="Salat">Salat</option>
-                        <option value="Mexicam">Mexican</option>
-                        <option value="Burgers">Burgers</option>
-                        </select>
-                    </div>
-                </div>
-                <div className="catalog__items-block">
-                    <ul className="catalog__list list-reset row">
-                    {true ?
-                        props.products.map(x => <Product currentPrice={x.currentPrice} measure={x.measure} title={x.title} weight={x.weight} lastPrice={x.lastPrice} image={x.image} category={x.category} description={x.description} id={x.id}/>) :
-                        props.products.filter(x => x.category == selectedOption).map(x => <Product currentPrice={x.currentPrice} measure={x.measure} title={x.title} weight={x.weight} lastPrice={x.lastPrice} image={x.image} category={x.category} description={x.description} id={x.id}/>)}
-                    </ul>
-                </div>
-            </div>
-        </section>
-    );
+  return (
+    <section className="catalog">
+      <div className="container flex">
+        <div className="catalog__info-block">
+          <h2 className="catalog__title">Products</h2>
+          <p className="catalog__info">You can sort by category</p>
+          <div className="catalog__select">
+            <select
+              id="my-select"
+              className="my-select"
+              value={selectedOption}
+              onChange={handleChange}
+            >
+              <option value="Everything">Everything</option>
+              <option value="Sause">Sause</option>
+              <option value="Giros">Giros</option>
+              <option value="Salat">Salat</option>
+              <option value="Mexicam">Mexican</option>
+              <option value="Burgers">Burgers</option>
+            </select>
+          </div>
+        </div>
+        <div className="catalog__items-block">
+          <ul className="catalog__list list-reset row">
+            {props.products.map((x) => (
+              <Product
+                  key={x.title}
+                currentPrice={x.currentPrice}
+                measure={x.measure}
+                title={x.title}
+                weight={x.weight}
+                lastPrice={x.lastPrice}
+                image={x.image}
+                category={x.category}
+                description={x.description}
+                id={x.id}
+              />
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
 };
 
-export default  Catalog;
+export default Catalog;

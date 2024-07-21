@@ -1,8 +1,6 @@
-import Layout from '../components/Layout';
-import AdminPanel from '../components/AdminPanel';
+import Layout from "../components/Layout";
+import AdminPanel from "../components/AdminPanel";
 
-const AdminPanelPage = () => (
-    <AdminPanel />
-);
+const AdminPanelPage = () => <AdminPanel />;
 
 export default AdminPanelPage;
