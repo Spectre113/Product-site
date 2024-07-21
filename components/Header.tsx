@@ -270,7 +270,7 @@ const Header: React.FC = () => {
                 burgerMenu.classList.remove('header__burger--active');
             });
         }
-  }, []);
+  }, [onRegister]);
 
   return (
     <header className="header">
