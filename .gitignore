@@ -6,7 +6,9 @@
 .pnp.js
 .yarn/install-state.gz
 /public/uploads
+/data.json
 /.idea
+/users.json
 
 # testing
 /coverage

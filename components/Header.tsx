@@ -1,19 +1,51 @@
 "use client"
 
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import JustValidate from 'just-validate';
 import { useRouter } from 'next/router';
 import { useCart } from './Basket';
+import { Form } from 'react-bootstrap';
 
 const Header: React.FC = () => {
     const router = useRouter();
     const { cart, removeFromCart } = useCart();
 
+    const [name, setName] = useState('')
+    const [password, setPassword] = useState('')
+
+    const onRegister = (registerBlock: any, logContent: any, registerSuccessMessage: any) => {
+        console.log(name, password);
+        try {
+            const data = new FormData()
+            data.set('name', name)
+            data.set('password', password)
+
+            const res = fetch('/api/register', {
+                method: 'POST',
+                body: data
+            }).then(res => res.json(), err => err.json())
+                .then((res) => {
+                    if (res.status == 'ok') {
+                        if (registerBlock && logContent && registerSuccessMessage) {
+                            registerBlock.classList.add('none');
+                            logContent.classList.remove('none');
+                            registerSuccessMessage.classList.remove('none');
+                        }
+                    } else {
+                        console.log(res.message)
+                    }
+                    console.log(res)
+                }, (err) => console.log(err))
+        } catch (e: any) {
+            // Handle errors here
+            console.error(e)
+        }
+    }
+
     useEffect(() => {
         const basketBtn = document.querySelector('.header__basket');
         const basketBlock = document.querySelector('.header__basket-block');
-
         const handleBasketBtnClick = (event: Event) => {
             event.stopPropagation();
             basketBlock?.classList.remove('none');
@@ -24,7 +56,7 @@ const Header: React.FC = () => {
                 basketBlock.classList.add('none');
             }
         };
-
+      
         if (basketBtn && basketBlock) {
             if (cart.length > 0) {
                 basketBtn.addEventListener('click', handleBasketBtnClick);
@@ -52,24 +84,24 @@ const Header: React.FC = () => {
         const registerSuccessMessage = document.querySelector('.register--successful');
 
         if (logBtn && logContent && logClose && registerBtn && registerBlock && registerClose && registerSuccessMessage) {
-            logBtn.addEventListener('click', function(event){
+            logBtn.addEventListener('click', function (event) {
                 event.stopPropagation();
                 logContent.classList.remove('none');
             });
 
-            logClose.addEventListener('click', function(event) {
+            logClose.addEventListener('click', function (event) {
                 event.stopPropagation();
                 logContent.classList.add('none');
                 registerSuccessMessage.classList.add('none');
             });
 
-            registerBtn.addEventListener('click', function(event) {
+            registerBtn.addEventListener('click', function (event) {
                 event.stopPropagation();
                 logContent.classList.add('none');
                 registerBlock.classList.remove('none');
             });
 
-            registerClose.addEventListener('click', function(event) {
+            registerClose.addEventListener('click', function (event) {
                 event.stopPropagation();
                 registerBlock.classList.add('none');
             });
@@ -123,41 +155,41 @@ const Header: React.FC = () => {
         const validator3 = new JustValidate('#log-form-3');
 
         validator3
-        .addField('#register-name', [
-            {
-            rule: 'required',
-            errorMessage: 'You did not enter a name',
-            },
-            {
-            rule: 'minLength',
-            value: 3,
-            errorMessage: '3 symbols minimum',
-            },
-            {
-            rule: 'maxLength',
-            value: 30,
-            errorMessage: '30 symbols maximum',
-            },
-        ])
-        .addField('#register-password', [
-            {
-            rule: 'required',
-            errorMessage: 'You did not enter a password',
-            },
-            {
-            rule: 'minLength',
-            value: 3,
-            errorMessage: '3 symbols minimum',
-            },
-        ])
-        .onSuccess((event : Event) => {
-            event.stopPropagation();
-            if (registerBlock && logContent && registerSuccessMessage) {
-                registerBlock.classList.add('none');
-                logContent.classList.remove('none');
-                registerSuccessMessage.classList.remove('none');
-            }
-        });
+            .addField('#name', [
+                {
+                    rule: 'required',
+                    errorMessage: 'You did not enter a name',
+                },
+                {
+                    rule: 'minLength',
+                    value: 3,
+                    errorMessage: '3 symbols minimum',
+                },
+                {
+                    rule: 'maxLength',
+                    value: 30,
+                    errorMessage: '30 symbols maximum',
+                },
+            ])
+            .addField('#password', [
+                {
+                    rule: 'required',
+                    errorMessage: 'You did not enter a password',
+                },
+                {
+                    rule: 'minLength',
+                    value: 3,
+                    errorMessage: '3 symbols minimum',
+                },
+            ])
+            .onSuccess((event: Event) => {
+                event.stopPropagation();
+                event.preventDefault()
+                onRegister(registerBlock, logContent, registerSuccessMessage)
+                
+            });
+    }, [router, name, password]);
+
 
         const basketBtnPage = document.querySelector('.header__basket-menu');
 
@@ -175,7 +207,7 @@ const Header: React.FC = () => {
         if(burgerBtn && burgerMenu && burgerClose) {
 
         }
-    }, [cart, router]);
+    }, [cart, router, name, password]);
 
     return (
         <header className="header">
@@ -197,16 +229,14 @@ const Header: React.FC = () => {
                             </Link>
                         </li>
                         <li className="header__item">
-                            <Link href="/products" legacyBehavior>
-                                <a href="" className="header__link">
-                                    Products
-                                </a>
+                            <Link href="/products" className='header__link'>
+                                Products
                             </Link>
                         </li>
                         <li className="header__item">
                             <Link href="/combo" legacyBehavior>
                                 <a href="" className="header__link">
-                                    Combo 
+                                    Combo
                                 </a>
                             </Link>
                         </li>
@@ -272,9 +302,9 @@ const Header: React.FC = () => {
                 <div className="header__controls flex">
                     <button className="header__log btn-reset flex">
                         <svg width="28" height="28" viewBox="0 0 19 18" fill="#fff" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9.5 1.5L2 5.25L9.5 9L17 5.25L9.5 1.5Z" stroke="#121723" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                            <path d="M2 12.75L9.5 16.5L17 12.75" stroke="#121723" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                            <path d="M2 9L9.5 12.75L17 9" stroke="#121723" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M9.5 1.5L2 5.25L9.5 9L17 5.25L9.5 1.5Z" stroke="#121723" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M2 12.75L9.5 16.5L17 12.75" stroke="#121723" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M2 9L9.5 12.75L17 9" stroke="#121723" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                         <span>
                             Log-in
@@ -321,12 +351,16 @@ const Header: React.FC = () => {
                             <h2 className="header__log-title">
                                 Register
                             </h2>
-                            <form action="https://jsonplaceholder.typicode.com/posts" method="POST" className="header__log-form flex" id="log-form-3">
+                            <form action={'/api/register'} method='POST' className="header__log-form flex" id="log-form-3">
                                 <label htmlFor="name" className="header__log-label">
-                                    <input type="text" className="header__log-input" placeholder="Enter a name" name="name" id="register-name"></input>
+                                    <input value={name} onChange={(e => {
+                                        console.log(e.target.value, name)
+                                        setName(e.target.value)
+                                    })} type="text" className="header__log-input" placeholder="Enter a name" name="name" id="name"></input>
                                 </label>
                                 <label htmlFor="password" className="header__log-label">
-                                    <input type="password" className="header__log-input" placeholder="Enter your password" name="password" id="register-password"></input>
+                                    <input value={password} onChange={e => setPassword(e.target.value)} type="password" className="header__log-input" placeholder="Enter your password" name="password" id="password"></input>
+                                    <input type="text" className="header__log-input" placeholder="Enter a name" name="name" id="register-name"></input>
                                 </label>
                                 <button className="header__log-button btn-reset">
                                     Register
