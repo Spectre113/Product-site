@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { ProductProps } from './Product';
 import Image from 'next/image';
-import styled from 'styled-components';
+import '../src/css/media.css';
 import JustValidate from 'just-validate';
 
 const AdminPanel: React.FC = () => {

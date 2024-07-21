@@ -20,6 +20,18 @@
         padding: 10px 20px;
     }
 
+    .apanel-row >.container{
+        flex-direction: column;
+    }
+
+    .apanel-row>.container>p {
+        margin-bottom: 20px;
+    }
+
+    .apanel-row>.container>button {
+        margin-bottom: 20px;
+    }
+
     .hero>.container {
         padding-left: 25px;
         padding-right: 25px;
@@ -421,6 +433,15 @@
     .basket-item-details>div>p {
         margin-top: 8px;
         font-size: 12px;
+    }
+
+    .apanel__additional {
+        width: 270px;
+        font-size: 22px;
+    }
+
+    .apanel__update {
+        font-size: 22px;
     }
 }
 
