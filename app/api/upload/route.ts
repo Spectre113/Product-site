@@ -4,12 +4,12 @@ import path from 'path';
 import fs from 'fs';
 import { ProductProps } from '@/components/Product';
 
-export const save = (products: ProductProps[]) => {
+const save = (products: ProductProps[]) => {
   const jsonString = JSON.stringify(products, null, 4);
   fs.writeFileSync('data.json', jsonString);
 };
 
-export const load = (): ProductProps[] => {
+const load = (): ProductProps[] => {
   let products: ProductProps[] = [];
   if (!fs.existsSync('data.json')) save(products);
   const data = fs.readFileSync('data.json', 'utf8');
