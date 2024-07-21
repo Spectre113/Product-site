@@ -188,8 +188,6 @@ const Header: React.FC = () => {
                 onRegister(registerBlock, logContent, registerSuccessMessage)
                 
             });
-    }, [router, name, password]);
-
 
         const basketBtnPage = document.querySelector('.header__basket-menu');
 
@@ -360,7 +358,6 @@ const Header: React.FC = () => {
                                 </label>
                                 <label htmlFor="password" className="header__log-label">
                                     <input value={password} onChange={e => setPassword(e.target.value)} type="password" className="header__log-input" placeholder="Enter your password" name="password" id="password"></input>
-                                    <input type="text" className="header__log-input" placeholder="Enter a name" name="name" id="register-name"></input>
                                 </label>
                                 <button className="header__log-button btn-reset">
                                     Register
