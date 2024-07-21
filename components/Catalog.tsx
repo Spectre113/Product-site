@@ -13,7 +13,7 @@ export interface CatalogProps {
 }
 
 const Catalog = (props: CatalogProps) => {
-    const [selectedOption, setSelectedOption] = useState<string>('Everything');
+    const [selectedOption, setSelectedOption] = useState<ProductCategories>('Everything');
 
     const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
         setSelectedOption(event.target.value as ProductCategories);
@@ -42,16 +42,16 @@ const Catalog = (props: CatalogProps) => {
                             <option value="Sause">Sause</option>
                             <option value="Giros">Giros</option>
                             <option value="Salat">Salat</option>
-                            <option value="Mexicam">Mexican</option>
+                            <option value="Mexican">Mexican</option>
                             <option value="Burgers">Burgers</option>
                         </select>
                     </div>
                 </div>
                 <div className="catalog__items-block">
                     <ul className="catalog__list list-reset row">
-                    {true ?
-                        props.products.map(x => <Product currentPrice={x.currentPrice} measure={x.measure} title={x.title} weight={x.weight} lastPrice={x.lastPrice} image={x.image} category={x.category} description={x.description} id={x.id}/>) :
-                        props.products.filter(x => x.category == selectedOption).map(x => <Product currentPrice={x.currentPrice} measure={x.measure} title={x.title} weight={x.weight} lastPrice={x.lastPrice} image={x.image} category={x.category} description={x.description} id={x.id}/>)}
+                    {selectedOption === 'Everything' ?
+                        props.products.map(x => <Product key={x.id} {...x} />) :
+                        props.products.filter(x => x.category === selectedOption).map(x => <Product key={x.id} {...x} />)}
                     </ul>
                 </div>
             </div>
@@ -59,4 +59,4 @@ const Catalog = (props: CatalogProps) => {
     );
 };
 
-export default  Catalog;
+export default Catalog;
