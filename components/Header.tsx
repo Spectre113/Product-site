@@ -254,22 +254,6 @@ const Header: React.FC = () => {
         event.preventDefault();
         onRegister(registerBlock, logContent, registerSuccessMessage);
       });
-
-      const burgerBtn = document.querySelector('.header__burger-btn');
-        const burgerMenu = document.querySelector('.header__burger');
-        const burgerClose = document.querySelector('.header__burger-close')
-        
-        if(burgerBtn && burgerMenu && burgerClose) {
-            burgerBtn.addEventListener('click', function(event) {
-                event.stopPropagation();
-                burgerMenu.classList.add('header__burger--active');
-            });
-
-            burgerClose.addEventListener('click', function(event) {
-                event.stopPropagation();
-                burgerMenu.classList.remove('header__burger--active');
-            });
-        }
   }, []);
 
   return (
@@ -311,62 +295,60 @@ const Header: React.FC = () => {
           </ul>
         </nav>
         <div className="header__burger-menu none">
-            <button className="header__burger-btn btn-reset">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g clip-path="url(#clip0_24531_4514)">
-                        <rect width="24" height="3" rx="1.5" fill="#fff"/>
-                        <rect y="21" width="24" height="3" rx="1.5" fill="#fff"/>
-                        <rect y="11" width="24" height="3" rx="1.5" fill="#fff"/>
-                    </g>
-                    <defs>
-                        <clipPath id="clip0_24531_4514">
-                            <rect width="24" height="24" fill="white"/>
-                        </clipPath>
-                    </defs>
-                </svg>
-            </button>
-            <div className="header__burger">
-                <div>
-                    <button className="header__burger-close btn-reset">
-                        <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="21" cy="21" r="19.5" stroke="#A1A6B4" strokeWidth="3"></circle>
-                            <path d="M29.6777 12L12 29.6777M29.6777 29.6777L12 12" stroke="#A1A6B4" strokeWidth="3"></path>
-                        </svg>
-                    </button>
-                    <nav className="header__burger-nav header__burger-nav--active">
-                        <ul className="header__burger-list list-reset flex">
-                            <li className="header__burger-item">
-                                <Link href="/about" legacyBehavior>
-                                    <a href="" className="header__link">
-                                        About-us
-                                    </a>
-                                </Link>
-                            </li>
-                            <li className="header__burger-item">
-                                <Link href="/products" legacyBehavior>
-                                    <a href="" className="header__link">
-                                        Products
-                                    </a>
-                                </Link>
-                            </li>
-                            <li className="header__burger-item">
-                                <Link href="/combo" legacyBehavior>
-                                    <a href="" className="header__link">
-                                        Combo 
-                                    </a>
-                                </Link>
-                            </li>
-                            <li className="header__burger-item">
-                                <Link href="/news" legacyBehavior>
-                                    <a href="" className="header__link">
-                                        Newsletter
-                                    </a>
-                                </Link>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
+          <button className="header__burger-btn btn-reset">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clip-path="url(#clip0_24531_4514)">
+                <rect width="24" height="3" rx="1.5" fill="#fff" />
+                <rect y="21" width="24" height="3" rx="1.5" fill="#fff" />
+                <rect y="11" width="24" height="3" rx="1.5" fill="#fff" />
+              </g>
+              <defs>
+                <clipPath id="clip0_24531_4514">
+                  <rect width="24" height="24" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </button>
+          <div className="header__burger--active">
+            <nav className="header__nav header__nav--active">
+              <ul className="header__list list-reset flex">
+                <li className="header__item">
+                  <Link href="/about" legacyBehavior>
+                    <a href="" className="header__link">
+                      About-us
+                    </a>
+                  </Link>
+                </li>
+                <li className="header__item">
+                  <Link href="/products" legacyBehavior>
+                    <a href="" className="header__link">
+                      Products
+                    </a>
+                  </Link>
+                </li>
+                <li className="header__item">
+                  <Link href="/combo" legacyBehavior>
+                    <a href="" className="header__link">
+                      Combo
+                    </a>
+                  </Link>
+                </li>
+                <li className="header__item">
+                  <Link href="/news" legacyBehavior>
+                    <a href="" className="header__link">
+                      Newsletter
+                    </a>
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
         </div>
         <div className="header__controls flex">
           <button className="header__log btn-reset flex">
