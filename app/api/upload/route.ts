@@ -4,18 +4,10 @@ import path from "path";
 import fs from "fs";
 import { ProductProps } from "@/components/Product";
 import multer from "multer";
-import { filter, images, products } from "../Users";
+import { filter, getFileExtension, images, products } from "../Users";
 
 function saveToMemory(name: string, data: Buffer) {
   images.set(name, data);
-}
-
-function getFileExtension(filename: string) {
-  const parts = filename.split(".");
-  if (parts.length > 1) {
-    return parts.pop();
-  }
-  return ""; // Return an empty string if there is no extension
 }
 
 export async function POST(request: NextRequest) {

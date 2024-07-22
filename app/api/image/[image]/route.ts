@@ -1,14 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
-import { images, products } from "../../Users";
-
-function getFileExtension(filename: string) {
-  const parts = filename.split(".");
-  if (parts.length > 1) {
-    return parts.pop();
-  }
-  return ""; // Return an empty string if there is no extension
-}
+import { getFileExtension, getMimeType, images, products } from "../../Users";
 
 export async function GET(req: NextRequest, resp: NextResponse) {
   let url = req.url;
@@ -20,9 +12,9 @@ export async function GET(req: NextRequest, resp: NextResponse) {
   console.log(filename, imageBuffer, products, images);
   return new NextResponse(imageBuffer, {
     headers: {
-      "Content-Type": "image/" + getFileExtension(filename), // Set the appropriate content type for your image
+      "Content-Type": "image/" + getMimeType(getFileExtension(filename)), // Set the appropriate content type for your image
       "Content-Disposition":
-        'inline; filename="example.' + getFileExtension(filename),
+        'inline; filename="example.' + getMimeType(getFileExtension(filename)),
     },
   });
 }
