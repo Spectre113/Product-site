@@ -4,19 +4,25 @@ import path from "path";
 import fs from "fs";
 import { ProductProps } from "@/components/Product";
 import multer from "multer";
-
-export const images = new Map<string, Buffer>();
-export let products: ProductProps[] = [];
+import { filter, images, products } from "../Users";
 
 function saveToMemory(name: string, data: Buffer) {
   images.set(name, data);
+}
+
+function getFileExtension(filename: string) {
+  const parts = filename.split(".");
+  if (parts.length > 1) {
+    return parts.pop();
+  }
+  return ""; // Return an empty string if there is no extension
 }
 
 export async function POST(request: NextRequest) {
   const data = await request.formData();
   const file: File | null = data.get("file") as unknown as File;
   const milliseconds = new Date().getTime();
-  const filename = "/api/image/" + milliseconds + file.name;
+  const filename = "/api/image/" + milliseconds + getFileExtension(file.name);
   const buffer2: Buffer = Buffer.from(await file.arrayBuffer());
   saveToMemory(filename, buffer2);
   const measure: string = data.get("measure") as string;
@@ -60,6 +66,6 @@ export async function DELETE(request: NextRequest) {
       break;
     }
   }
-  products = products.filter((x) => x.id != id);
+  filter(id);
   return NextResponse.json(products);
 }

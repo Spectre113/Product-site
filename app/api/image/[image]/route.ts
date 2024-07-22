@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
-import { images, products } from "../../upload/route";
+import { images, products } from "../../Users";
 
 function getFileExtension(filename: string) {
   const parts = filename.split(".");

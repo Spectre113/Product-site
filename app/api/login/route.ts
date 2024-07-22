@@ -1,7 +1,7 @@
 import fs from "fs";
 import { NextRequest, NextResponse } from "next/server";
 import { use } from "react";
-import { users } from "../register/route";
+import { users } from "../Users";
 
 export async function POST(request: NextRequest) {
   const data = await request.formData();

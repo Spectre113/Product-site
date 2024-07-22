@@ -1,13 +1,5 @@
-import fs from "fs";
 import { NextRequest, NextResponse } from "next/server";
-import { use } from "react";
-
-interface User {
-  name: string;
-  password: string;
-}
-
-export let users: User[] = [];
+import { users } from "../Users";
 
 export async function POST(request: NextRequest) {
   const data = await request.formData();
