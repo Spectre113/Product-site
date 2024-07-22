@@ -1,9 +1,0 @@
-<Form.Group controlId='description'>
-                            <Form.Label>Сomposition</Form.Label>
-                            <Form.Control
-                                type='text'
-                                placeholder='Enter composition'
-                                onChange={(e) => setDescription(e.target.value)}
-                                name='composition'
-                            />
-                        </Form.Group>
