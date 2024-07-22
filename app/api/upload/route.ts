@@ -1,9 +1,5 @@
 import { writeFile } from "fs/promises";
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
-import fs from "fs";
-import { ProductProps } from "@/components/Product";
-import multer from "multer";
 import { filter, getFileExtension, images, products } from "../Users";
 
 function saveToMemory(name: string, data: Buffer) {
