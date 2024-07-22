@@ -7,6 +7,7 @@ import { ProductProps } from './Product';
 import Image from 'next/image';
 import '../src/css/media.css';
 import JustValidate from 'just-validate';
+import Link from 'next/link';
 
 const AdminPanel: React.FC = () => {
     const [file, setFile] = useState<File | null>(null);
@@ -63,8 +64,39 @@ const AdminPanel: React.FC = () => {
         }
     };
 
-    const handleUpdateItem = async (data: ProductProps) => {
-        return
+    const handleUpdateItem = async (dataProps: ProductProps) => {
+        if (!file) return;
+        console.log('It is OK, bro!');
+        try {
+            const data = new FormData();
+            data.set('category', dataProps.category);
+            data.set('currentPrice', dataProps.currentPrice + '');
+            data.set('measure', dataProps.measure);
+            data.set('lastPrice', dataProps.lastPrice + '');
+            data.set('title', dataProps.title);
+            data.set('weight', dataProps.weight);
+            data.set('image', dataProps.image +'');
+            data.set('description', dataProps.description);
+            data.set('id', dataProps.id + '');
+
+
+            const res = await fetch('/api/update', {
+                method: 'POST',
+                body: data
+            });
+            if (!res.ok) throw new Error(await res.text());
+            const newItems = await res.json();
+            if (Array.isArray(newItems)) {
+                setItems(newItems);
+            } else {
+                throw new Error('Invalid response format');
+            }
+            setIsAddItemModalOpen(false);
+            reset();
+        } 
+        catch (e: any) {
+            console.error(e);
+        }
     };
 
     const handleDeleteItem = (id: number) => {
@@ -245,7 +277,9 @@ const AdminPanel: React.FC = () => {
                 ))}
                 <div className="add-items container flex">
                     <button className="add-items__button btn-reset" onClick={() => setIsAddItemModalOpen(true)}>Add Items</button>
-                    <a href="/" className="return-link">Return</a>
+                    <Link href="/" legacyBehavior>
+                        <a href="" className="return-link">Return</a>
+                    </Link>
                 </div>
             </div>
 
@@ -402,7 +436,7 @@ const AdminPanel: React.FC = () => {
                     <Form className='d-flex flex-column' id="log-form-4" onSubmit={handleSubmit(handleUpdateItem)}>
                         <Form.Group controlId='category'>
                             <Form.Label>Category</Form.Label>
-                            <Form.Select {...register('category')} name='category'>
+                            <Form.Select {...register('category')} name='category' onChange={e => setCategory(e.target.value)}>
                                 <option value='Sause'>Sause</option>
                                 <option value='Giros'>Giros</option>
                                 <option value='Salat'>Salat</option>
@@ -418,6 +452,7 @@ const AdminPanel: React.FC = () => {
                                 placeholder='Enter current price'
                                 {...register('currentPrice')}
                                 name='currentPrice'
+                                onChange={(e) => setCurrentPrice(e.target.value)}
                             />
                         </Form.Group>
 
@@ -428,6 +463,7 @@ const AdminPanel: React.FC = () => {
                                 placeholder='Enter measure'
                                 {...register('measure')}
                                 name='measure'
+                                onChange={(e) => setMeasure(e.target.value)}
                             />
                         </Form.Group>
 
@@ -438,6 +474,7 @@ const AdminPanel: React.FC = () => {
                                 placeholder='Enter last price'
                                 {...register('lastPrice')}
                                 name='lastPrice'
+                                onChange={(e) => setLastPrice(e.target.value)}
                             />
                         </Form.Group>
 
@@ -448,6 +485,7 @@ const AdminPanel: React.FC = () => {
                                 placeholder='Enter title'
                                 {...register('title')}
                                 name='title'
+                                onChange={(e) => setTitle(e.target.value)}
                             />
                         </Form.Group>
 
@@ -458,6 +496,7 @@ const AdminPanel: React.FC = () => {
                                 placeholder='Enter weight'
                                 {...register('weight')}
                                 name='weight'
+                                onChange={(e) => setWeight(e.target.value)}
                             />
                         </Form.Group>
 
@@ -477,6 +516,7 @@ const AdminPanel: React.FC = () => {
                                 placeholder='Enter composition'
                                 {...register('description')}
                                 name='description'
+                                onChange={(e) => setDescription(e.target.value)}
                             />
                         </Form.Group>
 

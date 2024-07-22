@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
   const description: string = data.get("description") as string;
 
   if (!file) {
-    return NextResponse.json({ success: false });
+    return NextResponse.json({ success: false })
   }
   products.push({
     title,
